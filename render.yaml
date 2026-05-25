@@ -1,6 +1,6 @@
 databases:
   - name: walkie-postgres
-    plan: basic-1gb
+    plan: free
     region: frankfurt
     postgresMajorVersion: "17"
     ipAllowList: []
