@@ -27,5 +27,8 @@ services:
         value: "2"
       - key: RAILS_MAX_THREADS
         value: "3"
-      - key: SOLID_QUEUE_IN_PUMA
-        value: "false"
+      # SOLID_QUEUE_IN_PUMA intentionally unset for free-tier smoke deploy.
+      # config/puma.rb treats any non-empty value (including "false") as truthy,
+      # so the only way to disable is to omit the env var.
+      # Re-add with value: "true" together with Postgres upgrade to Basic-1GB
+      # and config/queue.yml tuning.
