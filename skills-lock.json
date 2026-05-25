@@ -6,6 +6,12 @@
       "sourceType": "github",
       "skillPath": "skills/10x-cli-setup/SKILL.md",
       "computedHash": "4249d2c3bfd9031c4a08e73962a95c2e73ddc53d0a3c3799db9a7be26477e083"
+    },
+    "rails-architecture": {
+      "source": "thibautbaissac/rails_ai_agents",
+      "sourceType": "github",
+      "skillPath": ".agents/skills/rails-architecture/SKILL.md",
+      "computedHash": "bc8a36272e7fe245fe9cfccbbd847cb36d2a98fb4ef76f02237c01018525e448"
     }
   }
 }
