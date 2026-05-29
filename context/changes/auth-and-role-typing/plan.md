@@ -298,26 +298,26 @@ Two migration steps: the generator's `create_users` + `create_sessions`, then `a
 
 #### Automated
 
-- [x] 3.1 Integration test passes: `docker compose exec web bin/rails test test/integration/registration_test.rb`
-- [x] 3.2 Full suite passes: `docker compose exec web bin/rails test`
-- [x] 3.3 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 3.1 Integration test passes: `docker compose exec web bin/rails test test/integration/registration_test.rb` — 8d847f1
+- [x] 3.2 Full suite passes: `docker compose exec web bin/rails test` — 8d847f1
+- [x] 3.3 Linting passes: `docker compose exec web bundle exec rubocop` — 8d847f1
 
 #### Manual
 
-- [x] 3.4 Sign-up with role "Walker" creates user, signs in, lands on root
-- [x] 3.5 Created user has `role == "walker"`
-- [x] 3.6 Submitting without a role re-renders the form with an error
+- [x] 3.4 Sign-up with role "Walker" creates user, signs in, lands on root — 8d847f1
+- [x] 3.5 Created user has `role == "walker"` — 8d847f1
+- [x] 3.6 Submitting without a role re-renders the form with an error — 8d847f1
 
 ### Phase 4: Guardrail verification & hardening
 
 #### Automated
 
-- [ ] 4.1 Full suite passes: `docker compose exec web bin/rails test`
-- [ ] 4.2 Linting passes: `docker compose exec web bundle exec rubocop`
-- [ ] 4.3 Security scan clean: `docker compose exec web bundle exec brakeman --no-pager`
-- [ ] 4.4 Dependency audit clean: `docker compose exec web bundle exec bundler-audit check --update`
+- [x] 4.1 Full suite passes: `docker compose exec web bin/rails test`
+- [x] 4.2 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 4.3 Security scan clean: `docker compose exec web bundle exec brakeman --no-pager`
+- [x] 4.4 Dependency audit clean: `docker compose exec web bundle exec bundler-audit check --update`
 
 #### Manual
 
-- [ ] 4.5 Protected route while signed out redirects to sign-in
-- [ ] 4.6 Full round-trip: sign up (Owner) → root → sign out → sign in → root
+- [x] 4.5 Protected route while signed out redirects to sign-in
+- [x] 4.6 Full round-trip: sign up (Owner) → root → sign out → sign in → root
