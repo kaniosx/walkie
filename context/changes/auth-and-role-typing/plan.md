@@ -270,29 +270,29 @@ Two migration steps: the generator's `create_users` + `create_sessions`, then `a
 
 #### Automated
 
-- [x] 1.1 Bundle installs cleanly: `docker compose exec web bundle install`
-- [x] 1.2 Generator migrations apply: `docker compose exec web bin/rails db:migrate`
-- [x] 1.3 Generated suite passes: `docker compose exec web bin/rails test`
-- [x] 1.4 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 1.1 Bundle installs cleanly: `docker compose exec web bundle install` — 34e3349
+- [x] 1.2 Generator migrations apply: `docker compose exec web bin/rails db:migrate` — 34e3349
+- [x] 1.3 Generated suite passes: `docker compose exec web bin/rails test` — 34e3349
+- [x] 1.4 Linting passes: `docker compose exec web bundle exec rubocop` — 34e3349
 
 #### Manual
 
-- [x] 1.5 App boots at `http://localhost:3000` with no exceptions (`/up` returns 200)
-- [x] 1.6 `/session/new` renders the sign-in form
-- [x] 1.7 A reset attempt via `/passwords/new` does not raise (delivery is inert)
+- [x] 1.5 App boots at `http://localhost:3000` with no exceptions (`/up` returns 200) — 34e3349
+- [x] 1.6 `/session/new` renders the sign-in form — 34e3349
+- [x] 1.7 A reset attempt via `/passwords/new` does not raise (delivery is inert) — 34e3349
 
 ### Phase 2: Role-typed User model
 
 #### Automated
 
-- [ ] 2.1 Migration applies: `docker compose exec web bin/rails db:migrate`
-- [ ] 2.2 Model tests pass: `docker compose exec web bin/rails test test/models/user_test.rb`
-- [ ] 2.3 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 2.1 Migration applies: `docker compose exec web bin/rails db:migrate`
+- [x] 2.2 Model tests pass: `docker compose exec web bin/rails test test/models/user_test.rb`
+- [x] 2.3 Linting passes: `docker compose exec web bundle exec rubocop`
 
 #### Manual
 
-- [ ] 2.4 Console: create with role succeeds; create without role raises validation error
-- [ ] 2.5 Console: changing role on a persisted user is rejected
+- [x] 2.4 Console: create with role succeeds; create without role raises validation error
+- [x] 2.5 Console: changing role on a persisted user is rejected
 
 ### Phase 3: Sign-up (registration) path
 

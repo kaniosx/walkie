@@ -22,10 +22,15 @@ services:
     command: >
       bash -c "rm -f tmp/pids/server.pid &&
                bin/rails db:prepare &&
+               RAILS_ENV=test bin/rails db:prepare &&
                bin/rails server -b 0.0.0.0 -p 3000"
     environment:
       RAILS_ENV: development
-      DATABASE_URL: postgres://postgres:postgres@db:5432/bootstrap_scaffold_development
+      # Connect by host so the per-environment database names in config/database.yml
+      # apply (dev → _development, test → _test) instead of a single DATABASE_URL
+      # forcing every env onto the dev database. DB_USERNAME/DB_PASSWORD default to
+      # postgres/postgres, matching the db service above.
+      DB_HOST: db
       RAILS_MAX_THREADS: 5
       BINDING: 0.0.0.0
     ports:
