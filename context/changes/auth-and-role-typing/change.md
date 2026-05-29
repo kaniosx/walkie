@@ -1,7 +1,7 @@
 ---
 change_id: auth-and-role-typing
 title: Rails 8 auth + role-typed accounts (F-01 foundation)
-status: implementing
+status: implemented
 created: 2026-05-29
 updated: 2026-05-29
 archived_at: null
