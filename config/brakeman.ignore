@@ -1,0 +1,25 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Mass Assignment",
+      "warning_code": 105,
+      "fingerprint": "424536d00a0a8c0fb781245e0abffce4b19bdef22e0761508bfa30fdfc660c46",
+      "check_name": "PermitAttributes",
+      "message": "Potentially dangerous key allowed for mass assignment",
+      "file": "app/controllers/registrations_controller.rb",
+      "line": 22,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "code": "params.permit(:email_address, :password, :password_confirmation, :role)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "RegistrationsController",
+        "method": "registration_params"
+      },
+      "user_input": null,
+      "confidence": "Medium",
+      "note": "Intentional (F-01). Role is chosen at registration per PRD Access Control. It is permitted ONLY in RegistrationsController#create, never on any update path, and User enforces role immutability after create (role_is_immutable validation, on: :update). Reviewed and accepted."
+    }
+  ],
+  "brakeman_version": "8.0.4"
+}
