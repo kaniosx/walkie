@@ -56,6 +56,11 @@ Rails.application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
 
+  # F-01: v1 ships password reset inert (no SMTP / no email dependency, per FR-003).
+  # Don't attempt delivery and don't raise if the reset flow is reached before SMTP is wired.
+  config.action_mailer.perform_deliveries = false
+  config.action_mailer.raise_delivery_errors = false
+
   # Set host to be used by links generated in mailer templates.
   config.action_mailer.default_url_options = { host: ENV.fetch("APP_HOST", "walkie.onrender.com") }
 
