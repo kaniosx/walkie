@@ -312,12 +312,12 @@ Two migration steps: the generator's `create_users` + `create_sessions`, then `a
 
 #### Automated
 
-- [x] 4.1 Full suite passes: `docker compose exec web bin/rails test`
-- [x] 4.2 Linting passes: `docker compose exec web bundle exec rubocop`
-- [x] 4.3 Security scan clean: `docker compose exec web bundle exec brakeman --no-pager`
-- [x] 4.4 Dependency audit clean: `docker compose exec web bundle exec bundler-audit check --update`
+- [x] 4.1 Full suite passes: `docker compose exec web bin/rails test` — 3fad848
+- [x] 4.2 Linting passes: `docker compose exec web bundle exec rubocop` — 3fad848
+- [x] 4.3 Security scan clean: `docker compose exec web bundle exec brakeman --no-pager` — 3fad848
+- [x] 4.4 Dependency audit clean: `docker compose exec web bundle exec bundler-audit check --update` — 3fad848
 
 #### Manual
 
-- [x] 4.5 Protected route while signed out redirects to sign-in
-- [x] 4.6 Full round-trip: sign up (Owner) → root → sign out → sign in → root
+- [x] 4.5 Protected route while signed out redirects to sign-in — 3fad848
+- [x] 4.6 Full round-trip: sign up (Owner) → root → sign out → sign in → root — 3fad848
