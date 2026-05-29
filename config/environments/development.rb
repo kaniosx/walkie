@@ -34,6 +34,10 @@ Rails.application.configure do
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 
+  # F-01: password reset ships structurally (per PRD §Access Control) but inert in v1 —
+  # FR-003 rejected an email dependency. :test captures mail in memory, never sends, never raises.
+  config.action_mailer.delivery_method = :test
+
   # Make template changes take effect immediately.
   config.action_mailer.perform_caching = false
 
