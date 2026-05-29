@@ -285,28 +285,28 @@ Two migration steps: the generator's `create_users` + `create_sessions`, then `a
 
 #### Automated
 
-- [x] 2.1 Migration applies: `docker compose exec web bin/rails db:migrate`
-- [x] 2.2 Model tests pass: `docker compose exec web bin/rails test test/models/user_test.rb`
-- [x] 2.3 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 2.1 Migration applies: `docker compose exec web bin/rails db:migrate` — eed77d6
+- [x] 2.2 Model tests pass: `docker compose exec web bin/rails test test/models/user_test.rb` — eed77d6
+- [x] 2.3 Linting passes: `docker compose exec web bundle exec rubocop` — eed77d6
 
 #### Manual
 
-- [x] 2.4 Console: create with role succeeds; create without role raises validation error
-- [x] 2.5 Console: changing role on a persisted user is rejected
+- [x] 2.4 Console: create with role succeeds; create without role raises validation error — eed77d6
+- [x] 2.5 Console: changing role on a persisted user is rejected — eed77d6
 
 ### Phase 3: Sign-up (registration) path
 
 #### Automated
 
-- [ ] 3.1 Integration test passes: `docker compose exec web bin/rails test test/integration/registration_test.rb`
-- [ ] 3.2 Full suite passes: `docker compose exec web bin/rails test`
-- [ ] 3.3 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 3.1 Integration test passes: `docker compose exec web bin/rails test test/integration/registration_test.rb`
+- [x] 3.2 Full suite passes: `docker compose exec web bin/rails test`
+- [x] 3.3 Linting passes: `docker compose exec web bundle exec rubocop`
 
 #### Manual
 
-- [ ] 3.4 Sign-up with role "Walker" creates user, signs in, lands on root
-- [ ] 3.5 Created user has `role == "walker"`
-- [ ] 3.6 Submitting without a role re-renders the form with an error
+- [x] 3.4 Sign-up with role "Walker" creates user, signs in, lands on root
+- [x] 3.5 Created user has `role == "walker"`
+- [x] 3.6 Submitting without a role re-renders the form with an error
 
 ### Phase 4: Guardrail verification & hardening
 
