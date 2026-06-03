@@ -318,28 +318,28 @@ Two new migrations: `create_dogs`, then `create_walks` (with FKs + check constra
 
 #### Automated
 
-- [x] 2.1 Migration applies: `docker compose exec web bin/rails db:migrate`
-- [x] 2.2 Constraint tests pass: `docker compose exec web bin/rails test test/models/walk_constraints_test.rb`
-- [x] 2.3 Schema regenerated with both `t.check_constraint` entries
-- [x] 2.4 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 2.1 Migration applies: `docker compose exec web bin/rails db:migrate` — 7092c1d
+- [x] 2.2 Constraint tests pass: `docker compose exec web bin/rails test test/models/walk_constraints_test.rb` — 7092c1d
+- [x] 2.3 Schema regenerated with both `t.check_constraint` entries — 7092c1d
+- [x] 2.4 Linting passes: `docker compose exec web bundle exec rubocop` — 7092c1d
 
 #### Manual
 
-- [x] 2.5 Console: raw insert of `accepted` walk with no walker raises `ActiveRecord::StatementInvalid`
-- [x] 2.6 `db/schema.rb` shows both check constraints and the `[state, city]` index
+- [x] 2.5 Console: raw insert of `accepted` walk with no walker raises `ActiveRecord::StatementInvalid` — 7092c1d
+- [x] 2.6 `db/schema.rb` shows both check constraints and the `[state, city]` index — 7092c1d
 
 ### Phase 3: Walk model + transition methods
 
 #### Automated
 
-- [ ] 3.1 Walk model tests pass: `docker compose exec web bin/rails test test/models/walk_test.rb`
-- [ ] 3.2 Full suite passes: `docker compose exec web bin/rails test`
-- [ ] 3.3 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 3.1 Walk model tests pass: `docker compose exec web bin/rails test test/models/walk_test.rb`
+- [x] 3.2 Full suite passes: `docker compose exec web bin/rails test`
+- [x] 3.3 Linting passes: `docker compose exec web bundle exec rubocop`
 
 #### Manual
 
-- [ ] 3.4 Console: `accept! → start! → complete!` in order succeeds and stamps timestamps
-- [ ] 3.5 Console: `start!` on a `requested` walk returns falsy, state unchanged
+- [x] 3.4 Console: `accept! → start! → complete!` in order succeeds and stamps timestamps
+- [x] 3.5 Console: `start!` on a `requested` walk returns falsy, state unchanged
 
 ### Phase 4: Concurrency invariant + hardening
 
