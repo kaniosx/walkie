@@ -305,53 +305,53 @@ Two new migrations: `create_dogs`, then `create_walks` (with FKs + check constra
 
 #### Automated
 
-- [ ] 1.1 Migration applies: `docker compose exec web bin/rails db:migrate`
-- [ ] 1.2 Dog model tests pass: `docker compose exec web bin/rails test test/models/dog_test.rb`
-- [ ] 1.3 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 1.1 Migration applies: `docker compose exec web bin/rails db:migrate` — 603768f
+- [x] 1.2 Dog model tests pass: `docker compose exec web bin/rails test test/models/dog_test.rb` — 603768f
+- [x] 1.3 Linting passes: `docker compose exec web bundle exec rubocop` — 603768f
 
 #### Manual
 
-- [ ] 1.4 Console: Owner can create a dog; it appears in `Dog.active`
-- [ ] 1.5 Console: `deactivate!` removes it from `Dog.active` but the row persists
+- [x] 1.4 Console: Owner can create a dog; it appears in `Dog.active` — 603768f
+- [x] 1.5 Console: `deactivate!` removes it from `Dog.active` but the row persists — 603768f
 
 ### Phase 2: Walk schema + DB invariants
 
 #### Automated
 
-- [ ] 2.1 Migration applies: `docker compose exec web bin/rails db:migrate`
-- [ ] 2.2 Constraint tests pass: `docker compose exec web bin/rails test test/models/walk_constraints_test.rb`
-- [ ] 2.3 Schema regenerated with both `t.check_constraint` entries
-- [ ] 2.4 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 2.1 Migration applies: `docker compose exec web bin/rails db:migrate` — 7092c1d
+- [x] 2.2 Constraint tests pass: `docker compose exec web bin/rails test test/models/walk_constraints_test.rb` — 7092c1d
+- [x] 2.3 Schema regenerated with both `t.check_constraint` entries — 7092c1d
+- [x] 2.4 Linting passes: `docker compose exec web bundle exec rubocop` — 7092c1d
 
 #### Manual
 
-- [ ] 2.5 Console: raw insert of `accepted` walk with no walker raises `ActiveRecord::StatementInvalid`
-- [ ] 2.6 `db/schema.rb` shows both check constraints and the `[state, city]` index
+- [x] 2.5 Console: raw insert of `accepted` walk with no walker raises `ActiveRecord::StatementInvalid` — 7092c1d
+- [x] 2.6 `db/schema.rb` shows both check constraints and the `[state, city]` index — 7092c1d
 
 ### Phase 3: Walk model + transition methods
 
 #### Automated
 
-- [ ] 3.1 Walk model tests pass: `docker compose exec web bin/rails test test/models/walk_test.rb`
-- [ ] 3.2 Full suite passes: `docker compose exec web bin/rails test`
-- [ ] 3.3 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 3.1 Walk model tests pass: `docker compose exec web bin/rails test test/models/walk_test.rb` — 97aa4ca
+- [x] 3.2 Full suite passes: `docker compose exec web bin/rails test` — 97aa4ca
+- [x] 3.3 Linting passes: `docker compose exec web bundle exec rubocop` — 97aa4ca
 
 #### Manual
 
-- [ ] 3.4 Console: `accept! → start! → complete!` in order succeeds and stamps timestamps
-- [ ] 3.5 Console: `start!` on a `requested` walk returns falsy, state unchanged
+- [x] 3.4 Console: `accept! → start! → complete!` in order succeeds and stamps timestamps — 97aa4ca
+- [x] 3.5 Console: `start!` on a `requested` walk returns falsy, state unchanged — 97aa4ca
 
 ### Phase 4: Concurrency invariant + hardening
 
 #### Automated
 
-- [ ] 4.1 Concurrency test passes: `docker compose exec web bin/rails test test/models/walk_concurrency_test.rb`
-- [ ] 4.2 Full suite passes: `docker compose exec web bin/rails test`
-- [ ] 4.3 Linting passes: `docker compose exec web bundle exec rubocop`
-- [ ] 4.4 Security scan clean: `docker compose exec web bundle exec brakeman --no-pager`
-- [ ] 4.5 Dependency audit clean: `docker compose exec web bundle exec bundler-audit check --update`
+- [x] 4.1 Concurrency test passes: `docker compose exec web bin/rails test test/models/walk_concurrency_test.rb` — 4521a3c
+- [x] 4.2 Full suite passes: `docker compose exec web bin/rails test` — 4521a3c
+- [x] 4.3 Linting passes: `docker compose exec web bundle exec rubocop` — 4521a3c
+- [x] 4.4 Security scan clean: `docker compose exec web bundle exec brakeman --no-pager` — 4521a3c
+- [x] 4.5 Dependency audit clean: `docker compose exec web bundle exec bundler-audit check --update` — 4521a3c
 
 #### Manual
 
-- [ ] 4.6 Breaking `accept!` to a non-conditional update makes the race test fail (>1 winner), then revert — confirms a real race test
-- [ ] 4.7 `db/schema.rb` reflects both tables, all FKs, and both check constraints
+- [x] 4.6 Breaking `accept!` to a non-conditional update makes the race test fail (>1 winner), then revert — confirms a real race test — 4521a3c
+- [x] 4.7 `db/schema.rb` reflects both tables, all FKs, and both check constraints — 4521a3c
