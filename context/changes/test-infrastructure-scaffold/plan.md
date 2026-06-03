@@ -216,28 +216,28 @@ No data migrations. One new dev/test dependency (`simplecov`). The coverage gate
 
 #### Automated
 
-- [x] 1.1 Bundle installs cleanly: `docker compose exec web bundle install`
-- [x] 1.2 Full suite stays green: `docker compose exec web bin/rails test`
-- [x] 1.3 Coverage report generated: `coverage/index.html` exists after a test run
-- [x] 1.4 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 1.1 Bundle installs cleanly: `docker compose exec web bundle install` — 1b3571f
+- [x] 1.2 Full suite stays green: `docker compose exec web bin/rails test` — 1b3571f
+- [x] 1.3 Coverage report generated: `coverage/index.html` exists after a test run — 1b3571f
+- [x] 1.4 Linting passes: `docker compose exec web bundle exec rubocop` — 1b3571f
 
 #### Manual
 
-- [x] 1.5 Test run prints a console coverage summary (line + branch %)
-- [x] 1.6 `coverage/index.html` shows `app/` files with boilerplate filtered out
-- [x] 1.7 Report-only confirmed: a low-coverage run does not exit non-zero
+- [x] 1.5 Test run prints a console coverage summary (line + branch %) — 1b3571f
+- [x] 1.6 `coverage/index.html` shows `app/` files with boilerplate filtered out — 1b3571f
+- [x] 1.7 Report-only confirmed: a low-coverage run does not exit non-zero — 1b3571f
 
 ### Phase 2: Wire tests into the local `bin/ci` runner
 
 #### Automated
 
-- [ ] 2.1 Local CI pipeline passes end-to-end including tests: `docker compose exec web bin/ci`
-- [ ] 2.2 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 2.1 Local CI pipeline passes end-to-end including tests: `docker compose exec web bin/ci`
+- [x] 2.2 Linting passes: `docker compose exec web bundle exec rubocop`
 
 #### Manual
 
-- [ ] 2.3 `bin/ci` output shows the "Tests" step running `bin/rails test` + coverage summary
-- [ ] 2.4 Pipeline fails fast on an intentionally-failing test (then reverted)
+- [x] 2.3 `bin/ci` output shows the "Tests" step running `bin/rails test` + coverage summary
+- [x] 2.4 Pipeline fails fast on an intentionally-failing test (then reverted)
 
 ### Phase 3: GitHub Actions test job
 

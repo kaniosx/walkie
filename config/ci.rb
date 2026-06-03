@@ -3,6 +3,10 @@
 CI.run do
   step "Setup", "bin/setup --skip-server"
 
+  # Run tests early so failures (and the SimpleCov coverage gate, once COVERAGE_MIN
+  # is raised in S-04/S-05/S-07) surface before the slower style/security steps.
+  step "Tests", "bin/rails test"
+
   step "Style: Ruby", "bin/rubocop"
 
   step "Security: Gem audit", "bin/bundler-audit"
