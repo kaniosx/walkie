@@ -231,20 +231,20 @@ No data migrations. One new dev/test dependency (`simplecov`). The coverage gate
 
 #### Automated
 
-- [x] 2.1 Local CI pipeline passes end-to-end including tests: `docker compose exec web bin/ci`
-- [x] 2.2 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 2.1 Local CI pipeline passes end-to-end including tests: `docker compose exec web bin/ci` — 46590e9
+- [x] 2.2 Linting passes: `docker compose exec web bundle exec rubocop` — 46590e9
 
 #### Manual
 
-- [x] 2.3 `bin/ci` output shows the "Tests" step running `bin/rails test` + coverage summary
-- [x] 2.4 Pipeline fails fast on an intentionally-failing test (then reverted)
+- [x] 2.3 `bin/ci` output shows the "Tests" step running `bin/rails test` + coverage summary — 46590e9
+- [x] 2.4 Pipeline fails fast on an intentionally-failing test (then reverted) — 46590e9
 
 ### Phase 3: GitHub Actions test job
 
 #### Automated
 
-- [ ] 3.1 Workflow YAML is valid (parses / no syntax error on push)
-- [ ] 3.2 `test` job runs `db:prepare` + `bin/rails test` and the suite passes in CI
+- [x] 3.1 Workflow YAML is valid (parses / no syntax error on push)
+- [x] 3.2 `test` job runs `db:prepare` + `bin/rails test` and the suite passes in CI
 
 #### Manual
 
