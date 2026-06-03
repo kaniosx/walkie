@@ -305,28 +305,28 @@ Two new migrations: `create_dogs`, then `create_walks` (with FKs + check constra
 
 #### Automated
 
-- [x] 1.1 Migration applies: `docker compose exec web bin/rails db:migrate`
-- [x] 1.2 Dog model tests pass: `docker compose exec web bin/rails test test/models/dog_test.rb`
-- [x] 1.3 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 1.1 Migration applies: `docker compose exec web bin/rails db:migrate` — 603768f
+- [x] 1.2 Dog model tests pass: `docker compose exec web bin/rails test test/models/dog_test.rb` — 603768f
+- [x] 1.3 Linting passes: `docker compose exec web bundle exec rubocop` — 603768f
 
 #### Manual
 
-- [x] 1.4 Console: Owner can create a dog; it appears in `Dog.active`
-- [x] 1.5 Console: `deactivate!` removes it from `Dog.active` but the row persists
+- [x] 1.4 Console: Owner can create a dog; it appears in `Dog.active` — 603768f
+- [x] 1.5 Console: `deactivate!` removes it from `Dog.active` but the row persists — 603768f
 
 ### Phase 2: Walk schema + DB invariants
 
 #### Automated
 
-- [ ] 2.1 Migration applies: `docker compose exec web bin/rails db:migrate`
-- [ ] 2.2 Constraint tests pass: `docker compose exec web bin/rails test test/models/walk_constraints_test.rb`
-- [ ] 2.3 Schema regenerated with both `t.check_constraint` entries
-- [ ] 2.4 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 2.1 Migration applies: `docker compose exec web bin/rails db:migrate`
+- [x] 2.2 Constraint tests pass: `docker compose exec web bin/rails test test/models/walk_constraints_test.rb`
+- [x] 2.3 Schema regenerated with both `t.check_constraint` entries
+- [x] 2.4 Linting passes: `docker compose exec web bundle exec rubocop`
 
 #### Manual
 
-- [ ] 2.5 Console: raw insert of `accepted` walk with no walker raises `ActiveRecord::StatementInvalid`
-- [ ] 2.6 `db/schema.rb` shows both check constraints and the `[state, city]` index
+- [x] 2.5 Console: raw insert of `accepted` walk with no walker raises `ActiveRecord::StatementInvalid`
+- [x] 2.6 `db/schema.rb` shows both check constraints and the `[state, city]` index
 
 ### Phase 3: Walk model + transition methods
 
