@@ -345,13 +345,13 @@ Two new migrations: `create_dogs`, then `create_walks` (with FKs + check constra
 
 #### Automated
 
-- [x] 4.1 Concurrency test passes: `docker compose exec web bin/rails test test/models/walk_concurrency_test.rb`
-- [x] 4.2 Full suite passes: `docker compose exec web bin/rails test`
-- [x] 4.3 Linting passes: `docker compose exec web bundle exec rubocop`
-- [x] 4.4 Security scan clean: `docker compose exec web bundle exec brakeman --no-pager`
-- [x] 4.5 Dependency audit clean: `docker compose exec web bundle exec bundler-audit check --update`
+- [x] 4.1 Concurrency test passes: `docker compose exec web bin/rails test test/models/walk_concurrency_test.rb` — 4521a3c
+- [x] 4.2 Full suite passes: `docker compose exec web bin/rails test` — 4521a3c
+- [x] 4.3 Linting passes: `docker compose exec web bundle exec rubocop` — 4521a3c
+- [x] 4.4 Security scan clean: `docker compose exec web bundle exec brakeman --no-pager` — 4521a3c
+- [x] 4.5 Dependency audit clean: `docker compose exec web bundle exec bundler-audit check --update` — 4521a3c
 
 #### Manual
 
-- [x] 4.6 Breaking `accept!` to a non-conditional update makes the race test fail (>1 winner), then revert — confirms a real race test
-- [x] 4.7 `db/schema.rb` reflects both tables, all FKs, and both check constraints
+- [x] 4.6 Breaking `accept!` to a non-conditional update makes the race test fail (>1 winner), then revert — confirms a real race test — 4521a3c
+- [x] 4.7 `db/schema.rb` reflects both tables, all FKs, and both check constraints — 4521a3c
