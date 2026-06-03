@@ -243,11 +243,11 @@ No data migrations. One new dev/test dependency (`simplecov`). The coverage gate
 
 #### Automated
 
-- [x] 3.1 Workflow YAML is valid (parses / no syntax error on push)
-- [x] 3.2 `test` job runs `db:prepare` + `bin/rails test` and the suite passes in CI
+- [x] 3.1 Workflow YAML is valid (parses / no syntax error on push) — f04b72e
+- [x] 3.2 `test` job runs `db:prepare` + `bin/rails test` and the suite passes in CI — f04b72e
 
 #### Manual
 
-- [ ] 3.3 GitHub Actions run shows a green `test` job alongside the existing jobs
-- [ ] 3.4 Postgres service connects (no connection error in the job log)
-- [ ] 3.5 No deploy is triggered (Auto-Deploy remains off)
+- [x] 3.3 GitHub Actions run shows a green `test` job alongside the existing jobs — f04b72e
+- [x] 3.4 Postgres service connects (no connection error in the job log) — f04b72e
+- [x] 3.5 No deploy is triggered (Auto-Deploy remains off) — f04b72e
