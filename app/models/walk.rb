@@ -31,6 +31,11 @@ class Walk < ApplicationRecord
   # backstop. See plan §Critical Implementation Details.
 
   def accept!(walker)
+    # update_all skips AR validations and the DB CHECKs don't cover role or
+    # owner != walker, so guard both here. Race-free: role is immutable
+    # (User#role_is_immutable) and owner_id is fixed at creation.
+    return false unless walker.walker? && walker.id != owner_id
+
     swap_state(from: "requested", to: "accepted",
                guard: {},
                set: { accepted_by_walker_id: walker.id, accepted_at: Time.current })

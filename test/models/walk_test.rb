@@ -76,6 +76,14 @@ class WalkTest < ActiveSupport::TestCase
     assert @walk.accepted?
   end
 
+  test "accept! refuses a non-walker and refuses the owner self-accepting" do
+    # accept! goes through update_all, which skips the role / owner!=walker
+    # validations — so the guard must live in the method itself.
+    assert_not @walk.accept!(@owner)
+    assert @walk.requested?
+    assert_nil @walk.accepted_by_walker_id
+  end
+
   # --- Validations ---------------------------------------------------------
 
   test "owner_matches_dog_owner rejects a mismatched owner_id" do
