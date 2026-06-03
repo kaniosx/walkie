@@ -216,38 +216,38 @@ No data migrations. One new dev/test dependency (`simplecov`). The coverage gate
 
 #### Automated
 
-- [ ] 1.1 Bundle installs cleanly: `docker compose exec web bundle install`
-- [ ] 1.2 Full suite stays green: `docker compose exec web bin/rails test`
-- [ ] 1.3 Coverage report generated: `coverage/index.html` exists after a test run
-- [ ] 1.4 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 1.1 Bundle installs cleanly: `docker compose exec web bundle install` — 1b3571f
+- [x] 1.2 Full suite stays green: `docker compose exec web bin/rails test` — 1b3571f
+- [x] 1.3 Coverage report generated: `coverage/index.html` exists after a test run — 1b3571f
+- [x] 1.4 Linting passes: `docker compose exec web bundle exec rubocop` — 1b3571f
 
 #### Manual
 
-- [ ] 1.5 Test run prints a console coverage summary (line + branch %)
-- [ ] 1.6 `coverage/index.html` shows `app/` files with boilerplate filtered out
-- [ ] 1.7 Report-only confirmed: a low-coverage run does not exit non-zero
+- [x] 1.5 Test run prints a console coverage summary (line + branch %) — 1b3571f
+- [x] 1.6 `coverage/index.html` shows `app/` files with boilerplate filtered out — 1b3571f
+- [x] 1.7 Report-only confirmed: a low-coverage run does not exit non-zero — 1b3571f
 
 ### Phase 2: Wire tests into the local `bin/ci` runner
 
 #### Automated
 
-- [ ] 2.1 Local CI pipeline passes end-to-end including tests: `docker compose exec web bin/ci`
-- [ ] 2.2 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 2.1 Local CI pipeline passes end-to-end including tests: `docker compose exec web bin/ci` — 46590e9
+- [x] 2.2 Linting passes: `docker compose exec web bundle exec rubocop` — 46590e9
 
 #### Manual
 
-- [ ] 2.3 `bin/ci` output shows the "Tests" step running `bin/rails test` + coverage summary
-- [ ] 2.4 Pipeline fails fast on an intentionally-failing test (then reverted)
+- [x] 2.3 `bin/ci` output shows the "Tests" step running `bin/rails test` + coverage summary — 46590e9
+- [x] 2.4 Pipeline fails fast on an intentionally-failing test (then reverted) — 46590e9
 
 ### Phase 3: GitHub Actions test job
 
 #### Automated
 
-- [ ] 3.1 Workflow YAML is valid (parses / no syntax error on push)
-- [ ] 3.2 `test` job runs `db:prepare` + `bin/rails test` and the suite passes in CI
+- [x] 3.1 Workflow YAML is valid (parses / no syntax error on push) — f04b72e
+- [x] 3.2 `test` job runs `db:prepare` + `bin/rails test` and the suite passes in CI — f04b72e
 
 #### Manual
 
-- [ ] 3.3 GitHub Actions run shows a green `test` job alongside the existing jobs
-- [ ] 3.4 Postgres service connects (no connection error in the job log)
-- [ ] 3.5 No deploy is triggered (Auto-Deploy remains off)
+- [x] 3.3 GitHub Actions run shows a green `test` job alongside the existing jobs — f04b72e
+- [x] 3.4 Postgres service connects (no connection error in the job log) — f04b72e
+- [x] 3.5 No deploy is triggered (Auto-Deploy remains off) — f04b72e
