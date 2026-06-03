@@ -305,14 +305,14 @@ Two new migrations: `create_dogs`, then `create_walks` (with FKs + check constra
 
 #### Automated
 
-- [ ] 1.1 Migration applies: `docker compose exec web bin/rails db:migrate`
-- [ ] 1.2 Dog model tests pass: `docker compose exec web bin/rails test test/models/dog_test.rb`
-- [ ] 1.3 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 1.1 Migration applies: `docker compose exec web bin/rails db:migrate`
+- [x] 1.2 Dog model tests pass: `docker compose exec web bin/rails test test/models/dog_test.rb`
+- [x] 1.3 Linting passes: `docker compose exec web bundle exec rubocop`
 
 #### Manual
 
-- [ ] 1.4 Console: Owner can create a dog; it appears in `Dog.active`
-- [ ] 1.5 Console: `deactivate!` removes it from `Dog.active` but the row persists
+- [x] 1.4 Console: Owner can create a dog; it appears in `Dog.active`
+- [x] 1.5 Console: `deactivate!` removes it from `Dog.active` but the row persists
 
 ### Phase 2: Walk schema + DB invariants
 
