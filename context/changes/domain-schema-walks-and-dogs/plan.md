@@ -332,26 +332,26 @@ Two new migrations: `create_dogs`, then `create_walks` (with FKs + check constra
 
 #### Automated
 
-- [x] 3.1 Walk model tests pass: `docker compose exec web bin/rails test test/models/walk_test.rb`
-- [x] 3.2 Full suite passes: `docker compose exec web bin/rails test`
-- [x] 3.3 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 3.1 Walk model tests pass: `docker compose exec web bin/rails test test/models/walk_test.rb` — 97aa4ca
+- [x] 3.2 Full suite passes: `docker compose exec web bin/rails test` — 97aa4ca
+- [x] 3.3 Linting passes: `docker compose exec web bundle exec rubocop` — 97aa4ca
 
 #### Manual
 
-- [x] 3.4 Console: `accept! → start! → complete!` in order succeeds and stamps timestamps
-- [x] 3.5 Console: `start!` on a `requested` walk returns falsy, state unchanged
+- [x] 3.4 Console: `accept! → start! → complete!` in order succeeds and stamps timestamps — 97aa4ca
+- [x] 3.5 Console: `start!` on a `requested` walk returns falsy, state unchanged — 97aa4ca
 
 ### Phase 4: Concurrency invariant + hardening
 
 #### Automated
 
-- [ ] 4.1 Concurrency test passes: `docker compose exec web bin/rails test test/models/walk_concurrency_test.rb`
-- [ ] 4.2 Full suite passes: `docker compose exec web bin/rails test`
-- [ ] 4.3 Linting passes: `docker compose exec web bundle exec rubocop`
-- [ ] 4.4 Security scan clean: `docker compose exec web bundle exec brakeman --no-pager`
-- [ ] 4.5 Dependency audit clean: `docker compose exec web bundle exec bundler-audit check --update`
+- [x] 4.1 Concurrency test passes: `docker compose exec web bin/rails test test/models/walk_concurrency_test.rb`
+- [x] 4.2 Full suite passes: `docker compose exec web bin/rails test`
+- [x] 4.3 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 4.4 Security scan clean: `docker compose exec web bundle exec brakeman --no-pager`
+- [x] 4.5 Dependency audit clean: `docker compose exec web bundle exec bundler-audit check --update`
 
 #### Manual
 
-- [ ] 4.6 Breaking `accept!` to a non-conditional update makes the race test fail (>1 winner), then revert — confirms a real race test
-- [ ] 4.7 `db/schema.rb` reflects both tables, all FKs, and both check constraints
+- [x] 4.6 Breaking `accept!` to a non-conditional update makes the race test fail (>1 winner), then revert — confirms a real race test
+- [x] 4.7 `db/schema.rb` reflects both tables, all FKs, and both check constraints
