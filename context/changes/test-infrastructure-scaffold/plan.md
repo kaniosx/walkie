@@ -216,16 +216,16 @@ No data migrations. One new dev/test dependency (`simplecov`). The coverage gate
 
 #### Automated
 
-- [ ] 1.1 Bundle installs cleanly: `docker compose exec web bundle install`
-- [ ] 1.2 Full suite stays green: `docker compose exec web bin/rails test`
-- [ ] 1.3 Coverage report generated: `coverage/index.html` exists after a test run
-- [ ] 1.4 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 1.1 Bundle installs cleanly: `docker compose exec web bundle install`
+- [x] 1.2 Full suite stays green: `docker compose exec web bin/rails test`
+- [x] 1.3 Coverage report generated: `coverage/index.html` exists after a test run
+- [x] 1.4 Linting passes: `docker compose exec web bundle exec rubocop`
 
 #### Manual
 
-- [ ] 1.5 Test run prints a console coverage summary (line + branch %)
-- [ ] 1.6 `coverage/index.html` shows `app/` files with boilerplate filtered out
-- [ ] 1.7 Report-only confirmed: a low-coverage run does not exit non-zero
+- [x] 1.5 Test run prints a console coverage summary (line + branch %)
+- [x] 1.6 `coverage/index.html` shows `app/` files with boilerplate filtered out
+- [x] 1.7 Report-only confirmed: a low-coverage run does not exit non-zero
 
 ### Phase 2: Wire tests into the local `bin/ci` runner
 

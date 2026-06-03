@@ -52,6 +52,10 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # Code coverage (line + branch); started explicitly in test/test_helper.rb,
+  # so require: false to avoid auto-loading it outside the test run.
+  gem "simplecov", require: false
 end
 
 group :development do
