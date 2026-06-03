@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_secure_password
   has_many :sessions, dependent: :destroy
+  has_many :dogs, dependent: :restrict_with_exception
 
   # Binding account type, chosen at registration. A user is Owner XOR Walker;
   # dual-role and role switching are out of scope (PRD §Access Control).
