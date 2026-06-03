@@ -9,13 +9,17 @@ class WalkConcurrencyTest < ActiveSupport::TestCase
   self.use_transactional_tests = false
 
   WALKER_COUNT = 10
+  # Dedicated email domain for this class's rows. Purging by it makes setup
+  # self-healing: a row leaked by an earlier run can't collide on uniqueness.
+  EMAIL_DOMAIN = "walk-race.test"
 
   def setup
-    @owner = User.create!(email_address: "race-owner@example.com", password: "secret123",
+    purge_fixtures # clear any leftovers from a prior interrupted run first
+    @owner = User.create!(email_address: "owner@#{EMAIL_DOMAIN}", password: "secret123",
                           password_confirmation: "secret123", role: "owner")
     @dog = Dog.create!(name: "Rex", user: @owner)
     @walkers = WALKER_COUNT.times.map do |i|
-      User.create!(email_address: "racer#{i}@example.com", password: "secret123",
+      User.create!(email_address: "racer#{i}@#{EMAIL_DOMAIN}", password: "secret123",
                    password_confirmation: "secret123", role: "walker")
     end
     @walk = Walk.create!(dog: @dog, owner: @owner, city: "Kraków")
@@ -23,9 +27,7 @@ class WalkConcurrencyTest < ActiveSupport::TestCase
 
   # No transactional rollback here — tear the rows down by hand.
   def teardown
-    Walk.where(owner_id: @owner.id).delete_all
-    Dog.where(user_id: @owner.id).delete_all
-    User.where(id: [ @owner.id, *@walkers.map(&:id) ]).delete_all
+    purge_fixtures
   end
 
   test "exactly one walker wins a simultaneous accept! race" do
@@ -55,4 +57,17 @@ class WalkConcurrencyTest < ActiveSupport::TestCase
     assert_not_nil @walk.accepted_by_walker_id, "winner must be recorded"
     assert_includes @walkers.map(&:id), @walk.accepted_by_walker_id
   end
+
+  private
+    # Delete every row tied to this class's users, by email domain rather than
+    # by the @ivars — so it cleans up regardless of how far setup got. Order
+    # respects the RESTRICT FKs: walks → dogs → users.
+    def purge_fixtures
+      user_ids = User.where("email_address LIKE ?", "%@#{EMAIL_DOMAIN}").pluck(:id)
+      return if user_ids.empty?
+
+      Walk.where(owner_id: user_ids).delete_all
+      Dog.where(user_id: user_ids).delete_all
+      User.where(id: user_ids).delete_all
+    end
 end
