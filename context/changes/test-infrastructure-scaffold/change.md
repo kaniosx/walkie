@@ -1,7 +1,7 @@
 ---
 change_id: test-infrastructure-scaffold
 title: Test infrastructure scaffold — Minitest baseline + coverage tooling
-status: implemented
+status: impl_reviewed
 created: 2026-06-02
 updated: 2026-06-03
 archived_at: null
