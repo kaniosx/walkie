@@ -1,0 +1,8 @@
+# Local-only override (not committed): drop host port publishing so this
+# worktree's containers don't collide with another running walkie instance.
+# Rails commands run via `docker compose exec`, which uses the internal network.
+services:
+  db:
+    ports: !reset []
+  web:
+    ports: !reset []
