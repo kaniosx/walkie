@@ -1,7 +1,7 @@
 ---
 change_id: signup-and-signin-with-role
 title: Sign-up + sign-in with role choice (S-01)
-status: implementing
+status: implemented
 created: 2026-06-15
 updated: 2026-06-15
 ---

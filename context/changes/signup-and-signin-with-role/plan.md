@@ -284,13 +284,13 @@ No migrations. All changes are to views, the application layout, and the CSS fil
 
 #### Automated
 
-- [x] 3.1 New navigation tests pass: `docker compose exec web bin/rails test test/integration/navigation_test.rb`
-- [x] 3.2 Full suite passes: `docker compose exec web bin/rails test`
-- [x] 3.3 Linting passes: `docker compose exec web bundle exec rubocop`
-- [x] 3.4 Security scan clean: `docker compose exec web bundle exec brakeman --no-pager`
+- [x] 3.1 New navigation tests pass: `docker compose exec web bin/rails test test/integration/navigation_test.rb` — b5c2270
+- [x] 3.2 Full suite passes: `docker compose exec web bin/rails test` — b5c2270
+- [x] 3.3 Linting passes: `docker compose exec web bundle exec rubocop` — b5c2270
+- [x] 3.4 Security scan clean: `docker compose exec web bundle exec brakeman --no-pager` — b5c2270
 
 #### Manual
 
-- [x] 3.5 Full Owner round-trip: sign up → home (Dog Owner hint + nav) → sign out → sign in → home
-- [x] 3.6 Full Walker round-trip: sign up → home (Dog Walker hint + nav)
-- [x] 3.7 Flash visible after wrong-password sign-in attempt
+- [x] 3.5 Full Owner round-trip: sign up → home (Dog Owner hint + nav) → sign out → sign in → home — b5c2270
+- [x] 3.6 Full Walker round-trip: sign up → home (Dog Walker hint + nav) — b5c2270
+- [x] 3.7 Flash visible after wrong-password sign-in attempt — b5c2270
