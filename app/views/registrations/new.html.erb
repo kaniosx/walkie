@@ -1,31 +1,35 @@
-<%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
+<div class="form-container">
+  <h1>Sign up</h1>
 
-<% if @user.errors.any? %>
-  <div style="color:red">
-    <ul>
-      <% @user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
+  <% if @user.errors.any? %>
+    <div class="form-errors">
+      <ul>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-<%= form_with url: registration_path do |form| %>
-  <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address] %><br>
-  <%= form.password_field :password, required: true, autocomplete: "new-password", placeholder: "Enter a password", maxlength: 72 %><br>
-  <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", placeholder: "Confirm your password", maxlength: 72 %><br>
+  <%= form_with url: registration_path do |form| %>
+    <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address] %><br>
+    <%= form.password_field :password, required: true, autocomplete: "new-password", placeholder: "Enter a password", maxlength: 72 %><br>
+    <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", placeholder: "Confirm your password", maxlength: 72 %><br>
 
-  <fieldset>
-    <legend>I am signing up as a…</legend>
-    <% User.roles.keys.each do |role| %>
+    <fieldset>
+      <legend>Choose your role</legend>
       <label>
-        <%= form.radio_button :role, role, checked: params[:role] == role %>
-        <%= role.capitalize %>
+        <%= form.radio_button :role, "owner", checked: params[:role] == "owner" %>
+        I'm a Dog Owner
       </label>
-    <% end %>
-  </fieldset>
+      <label>
+        <%= form.radio_button :role, "walker", checked: params[:role] == "walker" %>
+        I'm a Dog Walker
+      </label>
+    </fieldset>
 
-  <%= form.submit "Sign up" %>
-<% end %>
-<br>
-<%= link_to "Already have an account? Sign in", new_session_path %>
+    <%= form.submit "Sign up" %>
+  <% end %>
+  <br>
+  <%= link_to "Already have an account? Sign in", new_session_path %>
+</div>
