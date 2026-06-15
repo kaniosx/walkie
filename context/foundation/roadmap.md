@@ -36,7 +36,7 @@ PRD §Business Logic §Singleness states: *"the binding IS the confirmation"*. S
 | F-01  | auth-and-role-typing               | (foundation) Rails 8 auth + role column on User                   | —                         | FR-001..004, §Access    | done     |
 | F-02  | domain-schema-walks-and-dogs       | (foundation) Dog + Walk schema + state machine + constraints      | F-01                      | NFR (Singleness, role)  | done     |
 | F-03  | test-infrastructure-scaffold       | (foundation) `test/` dir + coverage tooling baseline              | —                         | §Guardrails (80%)       | done     |
-| S-01  | signup-and-signin-with-role        | Visitor signs up as Owner or Walker, signs in, signs out          | F-01                      | FR-001, 002, 003, 004   | ready    |
+| S-01  | signup-and-signin-with-role        | Visitor signs up as Owner or Walker, signs in, signs out          | F-01                      | FR-001, 002, 003, 004   | done     |
 | S-02  | profile-with-city                  | Signed-in user views + edits profile (display name + city)        | S-01                      | FR-005                  | proposed |
 | S-03  | owner-manages-dog                  | Owner adds + edits their own dog                                  | S-01, F-02                | FR-006, 007, US-01      | proposed |
 | S-04  | owner-creates-walk-request         | Owner creates a walk request (REQUESTED), sees it in history      | S-01, S-02, S-03, F-02    | FR-009, US-01           | proposed |
@@ -125,7 +125,7 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 - **Unknowns:**
   - Is the role choice a radio on sign-up, or two separate pages (`/owners/sign_up` + `/walkers/sign_up`)? — Owner: user. Block: no (UX decision, both satisfy the PRD).
 - **Risk:** The only slice where role typing surfaces in the UI. If F-01 types role as an enum, this slice must enforce a one-time role choice in the UI (no role switching post-signup per §Access Control).
-- **Status:** ready
+- **Status:** done
 
 ### S-02: Profile with city / postcode
 
@@ -296,3 +296,4 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 - **F-01: (foundation) Rails 8 auth + role column on User** — Archived 2026-06-15 → `context/archive/2026-05-29-auth-and-role-typing/`. Lesson: —.
 - **F-02: (foundation) Dog + Walk schema + state machine + constraints** — Archived 2026-06-15 → `context/archive/2026-06-02-domain-schema-walks-and-dogs/`. Lesson: —.
 - **F-03: (foundation) `test/` dir + coverage tooling baseline** — Archived 2026-06-15 → `context/archive/2026-06-02-test-infrastructure-scaffold/`. Lesson: —.
+- **S-01: Visitor signs up as Owner or Walker, signs in, signs out** — Archived 2026-06-15 → `context/archive/2026-06-15-signup-and-signin-with-role/`. Lesson: —.
