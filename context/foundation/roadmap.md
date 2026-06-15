@@ -3,7 +3,7 @@ project: Walkie
 version: 1
 status: draft
 created: 2026-05-25
-updated: 2026-05-25
+updated: 2026-06-15
 prd_version: 1
 main_goal: market-feedback
 top_blocker: time
@@ -33,7 +33,7 @@ PRD §Business Logic §Singleness states: *"the binding IS the confirmation"*. S
 
 | ID    | Change ID                          | Outcome (user can …)                                              | Prerequisites             | PRD refs                | Status   |
 | ----- | ---------------------------------- | ----------------------------------------------------------------- | ------------------------- | ----------------------- | -------- |
-| F-01  | auth-and-role-typing               | (foundation) Rails 8 auth + role column on User                   | —                         | FR-001..004, §Access    | ready    |
+| F-01  | auth-and-role-typing               | (foundation) Rails 8 auth + role column on User                   | —                         | FR-001..004, §Access    | done     |
 | F-02  | domain-schema-walks-and-dogs       | (foundation) Dog + Walk schema + state machine + constraints      | F-01                      | NFR (Singleness, role)  | proposed |
 | F-03  | test-infrastructure-scaffold       | (foundation) `test/` dir + coverage tooling baseline              | —                         | §Guardrails (80%)       | ready    |
 | S-01  | signup-and-signin-with-role        | Visitor signs up as Owner or Walker, signs in, signs out          | F-01                      | FR-001, 002, 003, 004   | proposed |
@@ -83,7 +83,7 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** If role typing is designed poorly (STI vs enum vs polymorphic), every later slice has to work around it. PRD §Access Control states "A user is one or the other" — dual-role is explicitly out of scope, so a simple `enum role: { owner: 0, walker: 1 }` or a typed column is sufficient.
-- **Status:** ready
+- **Status:** done
 
 ### F-02: Domain data schema (Dog + Walk + state machine + constraints)
 
@@ -292,3 +292,5 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 ## Done
 
 (Empty on first generation. `/10x-archive` will append an entry here — and flip the matching item's Status to `done` — when a change whose `Change ID` matches is archived.)
+
+- **F-01: (foundation) Rails 8 auth + role column on User** — Archived 2026-06-15 → `context/archive/2026-05-29-auth-and-role-typing/`. Lesson: —.
