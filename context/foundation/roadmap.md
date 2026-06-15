@@ -36,7 +36,7 @@ PRD §Business Logic §Singleness states: *"the binding IS the confirmation"*. S
 | F-01  | auth-and-role-typing               | (foundation) Rails 8 auth + role column on User                   | —                         | FR-001..004, §Access    | done     |
 | F-02  | domain-schema-walks-and-dogs       | (foundation) Dog + Walk schema + state machine + constraints      | F-01                      | NFR (Singleness, role)  | done     |
 | F-03  | test-infrastructure-scaffold       | (foundation) `test/` dir + coverage tooling baseline              | —                         | §Guardrails (80%)       | done     |
-| S-01  | signup-and-signin-with-role        | Visitor signs up as Owner or Walker, signs in, signs out          | F-01                      | FR-001, 002, 003, 004   | proposed |
+| S-01  | signup-and-signin-with-role        | Visitor signs up as Owner or Walker, signs in, signs out          | F-01                      | FR-001, 002, 003, 004   | ready    |
 | S-02  | profile-with-city                  | Signed-in user views + edits profile (display name + city)        | S-01                      | FR-005                  | proposed |
 | S-03  | owner-manages-dog                  | Owner adds + edits their own dog                                  | S-01, F-02                | FR-006, 007, US-01      | proposed |
 | S-04  | owner-creates-walk-request         | Owner creates a walk request (REQUESTED), sees it in history      | S-01, S-02, S-03, F-02    | FR-009, US-01           | proposed |
@@ -125,7 +125,7 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 - **Unknowns:**
   - Is the role choice a radio on sign-up, or two separate pages (`/owners/sign_up` + `/walkers/sign_up`)? — Owner: user. Block: no (UX decision, both satisfy the PRD).
 - **Risk:** The only slice where role typing surfaces in the UI. If F-01 types role as an enum, this slice must enforce a one-time role choice in the UI (no role switching post-signup per §Access Control).
-- **Status:** proposed
+- **Status:** ready
 
 ### S-02: Profile with city / postcode
 
@@ -245,14 +245,14 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 
 | Roadmap ID | Change ID                          | Suggested issue title                                            | Ready for `/10x-plan` | Notes                                                                 |
 | ---------- | ---------------------------------- | ---------------------------------------------------------------- | --------------------- | --------------------------------------------------------------------- |
-| F-01       | auth-and-role-typing               | Foundation: Rails 8 auth + role-typed accounts                   | yes                   | `/10x-plan auth-and-role-typing` — recommended next move              |
-| F-02       | domain-schema-walks-and-dogs       | Foundation: Dog + Walk schema with DB-level invariants           | no                    | Waits on F-01 (needs the `users` table for `belongs_to`)              |
-| F-03       | test-infrastructure-scaffold       | Foundation: Minitest + coverage tooling                          | yes                   | Parallel with F-01; one open Unknown about CI (does not block work)   |
-| S-01       | signup-and-signin-with-role        | Sign-up + sign-in with role choice (Owner/Walker)                | no                    | Waits on F-01                                                         |
+| F-01       | auth-and-role-typing               | Foundation: Rails 8 auth + role-typed accounts                   | done                  | Archived 2026-06-15 → `context/archive/2026-05-29-auth-and-role-typing/`  |
+| F-02       | domain-schema-walks-and-dogs       | Foundation: Dog + Walk schema with DB-level invariants           | done                  | Archived 2026-06-15 → `context/archive/2026-06-02-domain-schema-walks-and-dogs/` |
+| F-03       | test-infrastructure-scaffold       | Foundation: Minitest + coverage tooling                          | done                  | Archived 2026-06-15 → `context/archive/2026-06-02-test-infrastructure-scaffold/` |
+| S-01       | signup-and-signin-with-role        | Sign-up + sign-in with role choice (Owner/Walker)                | yes                   | All Foundations done — **recommended next move** (`/10x-plan signup-and-signin-with-role`) |
 | S-02       | profile-with-city                  | User profile with city/postcode                                  | no                    | Waits on S-01                                                         |
-| S-03       | owner-manages-dog                  | Owner adds + edits their own dog                                 | no                    | Waits on S-01, F-02                                                   |
-| S-04       | owner-creates-walk-request         | Owner creates a walk request (US-01)                             | no                    | Waits on S-01, S-02, S-03, F-02                                       |
-| S-05       | walker-accepts-request             | **North star.** Walker accepts a request (US-02)                 | no                    | Waits on S-04 and Foundations                                         |
+| S-03       | owner-manages-dog                  | Owner adds + edits their own dog                                 | no                    | Waits on S-01 (F-02 done)                                            |
+| S-04       | owner-creates-walk-request         | Owner creates a walk request (US-01)                             | no                    | Waits on S-01, S-02, S-03 (F-02 done)                                |
+| S-05       | walker-accepts-request             | **North star.** Walker accepts a request (US-02)                 | no                    | Waits on S-04 (Foundations done)                                     |
 | S-06       | owner-cancels-requested-walk       | Owner cancels a request in REQUESTED                             | no                    | Waits on S-04                                                         |
 | S-07       | walker-starts-and-completes-walk   | Walker start + end walk (US-03)                                  | no                    | Waits on S-05                                                         |
 | S-08       | owner-walk-history                 | Owner sees their own walk history                                | no                    | Waits on S-04                                                         |
