@@ -1,9 +1,10 @@
 ---
 change_id: signup-and-signin-with-role
 title: Sign-up + sign-in with role choice (S-01)
-status: impl_reviewed
+status: archived
 created: 2026-06-15
 updated: 2026-06-15
+archived_at: 2026-06-15T17:34:38Z
 ---
 
 ## Notes
