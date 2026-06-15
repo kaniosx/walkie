@@ -269,28 +269,28 @@ No migrations. All changes are to views, the application layout, and the CSS fil
 
 #### Automated
 
-- [x] 2.1 Full suite stays green: `docker compose exec web bin/rails test`
-- [x] 2.2 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 2.1 Full suite stays green: `docker compose exec web bin/rails test` — 7f9ecba
+- [x] 2.2 Linting passes: `docker compose exec web bundle exec rubocop` — 7f9ecba
 
 #### Manual
 
-- [x] 2.3 Sign-up form shows "I'm a Dog Owner" / "I'm a Dog Walker" radio labels
-- [x] 2.4 Submitting sign-up without a role still shows validation errors
-- [x] 2.5 Password-reset page shows v1 notice above the form
-- [x] 2.6 Home page shows role-specific hint; sign-out button absent from page body
-- [x] 2.7 Forms are visually centered; flash alert and notice are visually distinct
+- [x] 2.3 Sign-up form shows "I'm a Dog Owner" / "I'm a Dog Walker" radio labels — 7f9ecba
+- [x] 2.4 Submitting sign-up without a role still shows validation errors — 7f9ecba
+- [x] 2.5 Password-reset page shows v1 notice above the form — 7f9ecba
+- [x] 2.6 Home page shows role-specific hint; sign-out button absent from page body — 7f9ecba
+- [x] 2.7 Forms are visually centered; flash alert and notice are visually distinct — 7f9ecba
 
 ### Phase 3: Navigation + flash integration tests, full gate
 
 #### Automated
 
-- [ ] 3.1 New navigation tests pass: `docker compose exec web bin/rails test test/integration/navigation_test.rb`
-- [ ] 3.2 Full suite passes: `docker compose exec web bin/rails test`
-- [ ] 3.3 Linting passes: `docker compose exec web bundle exec rubocop`
-- [ ] 3.4 Security scan clean: `docker compose exec web bundle exec brakeman --no-pager`
+- [x] 3.1 New navigation tests pass: `docker compose exec web bin/rails test test/integration/navigation_test.rb`
+- [x] 3.2 Full suite passes: `docker compose exec web bin/rails test`
+- [x] 3.3 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 3.4 Security scan clean: `docker compose exec web bundle exec brakeman --no-pager`
 
 #### Manual
 
-- [ ] 3.5 Full Owner round-trip: sign up → home (Dog Owner hint + nav) → sign out → sign in → home
-- [ ] 3.6 Full Walker round-trip: sign up → home (Dog Walker hint + nav)
-- [ ] 3.7 Flash visible after wrong-password sign-in attempt
+- [x] 3.5 Full Owner round-trip: sign up → home (Dog Owner hint + nav) → sign out → sign in → home
+- [x] 3.6 Full Walker round-trip: sign up → home (Dog Walker hint + nav)
+- [x] 3.7 Flash visible after wrong-password sign-in attempt
