@@ -34,7 +34,7 @@ PRD §Business Logic §Singleness states: *"the binding IS the confirmation"*. S
 | ID    | Change ID                          | Outcome (user can …)                                              | Prerequisites             | PRD refs                | Status   |
 | ----- | ---------------------------------- | ----------------------------------------------------------------- | ------------------------- | ----------------------- | -------- |
 | F-01  | auth-and-role-typing               | (foundation) Rails 8 auth + role column on User                   | —                         | FR-001..004, §Access    | done     |
-| F-02  | domain-schema-walks-and-dogs       | (foundation) Dog + Walk schema + state machine + constraints      | F-01                      | NFR (Singleness, role)  | proposed |
+| F-02  | domain-schema-walks-and-dogs       | (foundation) Dog + Walk schema + state machine + constraints      | F-01                      | NFR (Singleness, role)  | done     |
 | F-03  | test-infrastructure-scaffold       | (foundation) `test/` dir + coverage tooling baseline              | —                         | §Guardrails (80%)       | ready    |
 | S-01  | signup-and-signin-with-role        | Visitor signs up as Owner or Walker, signs in, signs out          | F-01                      | FR-001, 002, 003, 004   | proposed |
 | S-02  | profile-with-city                  | Signed-in user views + edits profile (display name + city)        | S-01                      | FR-005                  | proposed |
@@ -96,7 +96,7 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** The Singleness invariant must be enforced **in the DB**, not only in Active Record (PRD §Guardrails: "Both invariants are binding outside the UI, not advisory hints"). A concurrency test inside F-02 is load-bearing — without it the entire marketplace hypothesis wobbles. Second risk: a wrong state column type (string vs integer enum) — integer enum is cheaper to index.
-- **Status:** proposed
+- **Status:** done
 
 ### F-03: Test infrastructure scaffold
 
@@ -294,3 +294,4 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 (Empty on first generation. `/10x-archive` will append an entry here — and flip the matching item's Status to `done` — when a change whose `Change ID` matches is archived.)
 
 - **F-01: (foundation) Rails 8 auth + role column on User** — Archived 2026-06-15 → `context/archive/2026-05-29-auth-and-role-typing/`. Lesson: —.
+- **F-02: (foundation) Dog + Walk schema + state machine + constraints** — Archived 2026-06-15 → `context/archive/2026-06-02-domain-schema-walks-and-dogs/`. Lesson: —.

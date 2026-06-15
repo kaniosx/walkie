@@ -1,10 +1,10 @@
 ---
 change_id: domain-schema-walks-and-dogs
 title: Domain data schema — Dog + Walk + state machine + DB-level invariants
-status: impl_reviewed
+status: archived
 created: 2026-06-02
-updated: 2026-06-03
-archived_at: null
+updated: 2026-06-15
+archived_at: 2026-06-15T12:49:11Z
 ---
 
 ## Notes
