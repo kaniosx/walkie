@@ -255,30 +255,30 @@ No migrations. All changes are to views, the application layout, and the CSS fil
 
 #### Automated
 
-- [x] 1.1 Full suite stays green: `docker compose exec web bin/rails test`
-- [x] 1.2 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 1.1 Full suite stays green: `docker compose exec web bin/rails test` — 2262993
+- [x] 1.2 Linting passes: `docker compose exec web bundle exec rubocop` — 2262993
 
 #### Manual
 
-- [x] 1.3 Browser tab title reads "Walkie" on all pages
-- [x] 1.4 Failed sign-in shows flash alert visibly on the sign-in page
-- [x] 1.5 Authenticated home page nav shows "Sign out" button
-- [x] 1.6 Unauthenticated sign-in page nav shows no "Sign out"
+- [x] 1.3 Browser tab title reads "Walkie" on all pages — 2262993
+- [x] 1.4 Failed sign-in shows flash alert visibly on the sign-in page — 2262993
+- [x] 1.5 Authenticated home page nav shows "Sign out" button — 2262993
+- [x] 1.6 Unauthenticated sign-in page nav shows no "Sign out" — 2262993
 
 ### Phase 2: Auth view polish + home page + minimal CSS
 
 #### Automated
 
-- [ ] 2.1 Full suite stays green: `docker compose exec web bin/rails test`
-- [ ] 2.2 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 2.1 Full suite stays green: `docker compose exec web bin/rails test`
+- [x] 2.2 Linting passes: `docker compose exec web bundle exec rubocop`
 
 #### Manual
 
-- [ ] 2.3 Sign-up form shows "I'm a Dog Owner" / "I'm a Dog Walker" radio labels
-- [ ] 2.4 Submitting sign-up without a role still shows validation errors
-- [ ] 2.5 Password-reset page shows v1 notice above the form
-- [ ] 2.6 Home page shows role-specific hint; sign-out button absent from page body
-- [ ] 2.7 Forms are visually centered; flash alert and notice are visually distinct
+- [x] 2.3 Sign-up form shows "I'm a Dog Owner" / "I'm a Dog Walker" radio labels
+- [x] 2.4 Submitting sign-up without a role still shows validation errors
+- [x] 2.5 Password-reset page shows v1 notice above the form
+- [x] 2.6 Home page shows role-specific hint; sign-out button absent from page body
+- [x] 2.7 Forms are visually centered; flash alert and notice are visually distinct
 
 ### Phase 3: Navigation + flash integration tests, full gate
 

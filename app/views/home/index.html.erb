@@ -2,4 +2,8 @@
 
 <p>Signed in as <%= current_user.email_address %> (<%= current_user.role %>).</p>
 
-<%= button_to "Sign out", session_path, method: :delete %>
+<% if current_user.owner? %>
+  <p>As a Dog Owner, you'll be able to post walk requests for your dogs.</p>
+<% elsif current_user.walker? %>
+  <p>As a Dog Walker, you'll be able to see and accept walk requests in your area.</p>
+<% end %>
