@@ -47,3 +47,6 @@ desktop.ini
 
 # Ignore key files for decrypting credentials and more.
 /config/*.key
+
+# Ignore generated SimpleCov coverage reports.
+/coverage
