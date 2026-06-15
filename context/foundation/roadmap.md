@@ -35,7 +35,7 @@ PRD §Business Logic §Singleness states: *"the binding IS the confirmation"*. S
 | ----- | ---------------------------------- | ----------------------------------------------------------------- | ------------------------- | ----------------------- | -------- |
 | F-01  | auth-and-role-typing               | (foundation) Rails 8 auth + role column on User                   | —                         | FR-001..004, §Access    | done     |
 | F-02  | domain-schema-walks-and-dogs       | (foundation) Dog + Walk schema + state machine + constraints      | F-01                      | NFR (Singleness, role)  | done     |
-| F-03  | test-infrastructure-scaffold       | (foundation) `test/` dir + coverage tooling baseline              | —                         | §Guardrails (80%)       | ready    |
+| F-03  | test-infrastructure-scaffold       | (foundation) `test/` dir + coverage tooling baseline              | —                         | §Guardrails (80%)       | done     |
 | S-01  | signup-and-signin-with-role        | Visitor signs up as Owner or Walker, signs in, signs out          | F-01                      | FR-001, 002, 003, 004   | proposed |
 | S-02  | profile-with-city                  | Signed-in user views + edits profile (display name + city)        | S-01                      | FR-005                  | proposed |
 | S-03  | owner-manages-dog                  | Owner adds + edits their own dog                                  | S-01, F-02                | FR-006, 007, US-01      | proposed |
@@ -110,7 +110,7 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 - **Unknowns:**
   - Do we wire up CI now (GitHub Actions matrix Ruby 3.4.9 + Postgres 17), or only the local-test loop? — Owner: user. Block: no (CI can be deferred; local tests are enough for skill-level validation in v1).
 - **Risk:** CLAUDE.md tripwire: "No `test/` directory yet. Do not claim tests pass before the suite exists; generating models with `bin/rails g` will create the directory as a side effect." F-03 formalizes that side effect ahead of the first `bin/rails g`, so SimpleCov isn't bolted onto an existing suite later.
-- **Status:** ready
+- **Status:** done
 
 ## Slices
 
@@ -295,3 +295,4 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 
 - **F-01: (foundation) Rails 8 auth + role column on User** — Archived 2026-06-15 → `context/archive/2026-05-29-auth-and-role-typing/`. Lesson: —.
 - **F-02: (foundation) Dog + Walk schema + state machine + constraints** — Archived 2026-06-15 → `context/archive/2026-06-02-domain-schema-walks-and-dogs/`. Lesson: —.
+- **F-03: (foundation) `test/` dir + coverage tooling baseline** — Archived 2026-06-15 → `context/archive/2026-06-02-test-infrastructure-scaffold/`. Lesson: —.
