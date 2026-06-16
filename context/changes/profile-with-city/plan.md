@@ -217,28 +217,28 @@ One migration adds `display_name` (nullable), `city`, `postcode`. The NOT-NULL c
 
 #### Automated
 
-- [x] 1.1 Migration applies cleanly: `docker compose exec web bin/rails db:migrate`
-- [x] 1.2 Full suite passes: `docker compose exec web bin/rails test`
-- [x] 1.3 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 1.1 Migration applies cleanly: `docker compose exec web bin/rails db:migrate` — d5e745e
+- [x] 1.2 Full suite passes: `docker compose exec web bin/rails test` — d5e745e
+- [x] 1.3 Linting passes: `docker compose exec web bundle exec rubocop` — d5e745e
 
 #### Manual
 
-- [x] 1.4 Sign-up form shows required City/Postcode; missing either re-renders with errors, no user created
-- [x] 1.5 Successful sign-up persists city/postcode
-- [x] 1.6 Existing (backfilled) users still load without error
+- [x] 1.4 Sign-up form shows required City/Postcode; missing either re-renders with errors, no user created — d5e745e
+- [x] 1.5 Successful sign-up persists city/postcode — d5e745e
+- [x] 1.6 Existing (backfilled) users still load without error — d5e745e
 
 ### Phase 2: Profile resource + nav/home integration
 
 #### Automated
 
-- [ ] 2.1 Profile tests pass: `docker compose exec web bin/rails test test/integration/profiles_test.rb`
-- [ ] 2.2 Full suite passes: `docker compose exec web bin/rails test`
-- [ ] 2.3 Linting passes: `docker compose exec web bundle exec rubocop`
-- [ ] 2.4 Security scan clean: `docker compose exec web bundle exec brakeman --no-pager`
+- [x] 2.1 Profile tests pass: `docker compose exec web bin/rails test test/integration/profiles_test.rb`
+- [x] 2.2 Full suite passes: `docker compose exec web bin/rails test`
+- [x] 2.3 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 2.4 Security scan clean: `docker compose exec web bundle exec brakeman --no-pager`
 
 #### Manual
 
-- [ ] 2.5 Nav shows "Profile" link when signed in; opens the profile show page
-- [ ] 2.6 Editing display name + city + postcode saves and reflects on profile + home
-- [ ] 2.7 Blank city or postcode on edit shows an error and does not save
-- [ ] 2.8 Visiting the profile while signed out redirects to sign-in
+- [x] 2.5 Nav shows "Profile" link when signed in; opens the profile show page
+- [x] 2.6 Editing display name + city + postcode saves and reflects on profile + home
+- [x] 2.7 Blank city or postcode on edit shows an error and does not save
+- [x] 2.8 Visiting the profile while signed out redirects to sign-in
