@@ -50,6 +50,16 @@ class ProfilesTest < ActionDispatch::IntegrationTest
     assert_nil @user.display_name
   end
 
+  test "updating with a blank postcode re-renders edit and does not change the record" do
+    sign_in
+    patch profile_path, params: { display_name: "Ada", city: "Gdańsk", postcode: "" }
+    assert_response :unprocessable_entity
+
+    @user.reload
+    assert_equal "30-001", @user.postcode
+    assert_nil @user.display_name
+  end
+
   test "unauthenticated access to the profile redirects to sign-in" do
     get profile_path
     assert_redirected_to new_session_path
