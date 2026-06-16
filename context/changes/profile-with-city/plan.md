@@ -231,14 +231,14 @@ One migration adds `display_name` (nullable), `city`, `postcode`. The NOT-NULL c
 
 #### Automated
 
-- [x] 2.1 Profile tests pass: `docker compose exec web bin/rails test test/integration/profiles_test.rb`
-- [x] 2.2 Full suite passes: `docker compose exec web bin/rails test`
-- [x] 2.3 Linting passes: `docker compose exec web bundle exec rubocop`
-- [x] 2.4 Security scan clean: `docker compose exec web bundle exec brakeman --no-pager`
+- [x] 2.1 Profile tests pass: `docker compose exec web bin/rails test test/integration/profiles_test.rb` — 31bf5b4
+- [x] 2.2 Full suite passes: `docker compose exec web bin/rails test` — 31bf5b4
+- [x] 2.3 Linting passes: `docker compose exec web bundle exec rubocop` — 31bf5b4
+- [x] 2.4 Security scan clean: `docker compose exec web bundle exec brakeman --no-pager` — 31bf5b4
 
 #### Manual
 
-- [x] 2.5 Nav shows "Profile" link when signed in; opens the profile show page
-- [x] 2.6 Editing display name + city + postcode saves and reflects on profile + home
-- [x] 2.7 Blank city or postcode on edit shows an error and does not save
-- [x] 2.8 Visiting the profile while signed out redirects to sign-in
+- [x] 2.5 Nav shows "Profile" link when signed in; opens the profile show page — 31bf5b4
+- [x] 2.6 Editing display name + city + postcode saves and reflects on profile + home — 31bf5b4
+- [x] 2.7 Blank city or postcode on edit shows an error and does not save — 31bf5b4
+- [x] 2.8 Visiting the profile while signed out redirects to sign-in — 31bf5b4
