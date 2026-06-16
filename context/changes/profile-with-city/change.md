@@ -1,7 +1,7 @@
 ---
 change_id: profile-with-city
 title: User profile with city/postcode (S-02)
-status: implemented
+status: impl_reviewed
 created: 2026-06-16
 updated: 2026-06-16
 ---
