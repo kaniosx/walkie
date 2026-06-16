@@ -1,0 +1,22 @@
+<% if @dog.errors.any? %>
+  <div class="form-errors">
+    <ul>
+      <% @dog.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with model: @dog do |form| %>
+  <%= form.label :name, "Name" %><br>
+  <%= form.text_field :name, required: true, maxlength: 100 %><br>
+  <%= form.label :breed, "Breed" %><br>
+  <%= form.text_field :breed, required: true, maxlength: 100 %><br>
+  <%= form.label :weight, "Weight (kg, optional)" %><br>
+  <%= form.number_field :weight, min: 1, max: 150, step: 1 %><br>
+  <%= form.label :notes, "Notes (optional)" %><br>
+  <%= form.text_area :notes, maxlength: 1000, rows: 3 %><br>
+
+  <%= form.submit %>
+<% end %>

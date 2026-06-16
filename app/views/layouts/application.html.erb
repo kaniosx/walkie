@@ -27,6 +27,9 @@
       <%= link_to "Walkie", root_path %>
       <% if authenticated? %>
         <%= link_to "Profile", profile_path %>
+        <% if current_user.owner? %>
+          <%= link_to "My dogs", dogs_path %>
+        <% end %>
         <%= button_to "Sign out", session_path, method: :delete %>
       <% end %>
     </nav>

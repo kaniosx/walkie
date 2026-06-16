@@ -212,27 +212,27 @@ One migration adds `breed` (→ NOT NULL via add→backfill→change-null), `wei
 
 #### Automated
 
-- [x] 1.1 Migration applies cleanly: `docker compose exec web bin/rails db:migrate`
-- [x] 1.2 Full suite passes: `docker compose exec web bin/rails test`
-- [x] 1.3 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 1.1 Migration applies cleanly: `docker compose exec web bin/rails db:migrate` — 7ea42b6
+- [x] 1.2 Full suite passes: `docker compose exec web bin/rails test` — 7ea42b6
+- [x] 1.3 Linting passes: `docker compose exec web bundle exec rubocop` — 7ea42b6
 
 #### Manual
 
-- [x] 1.4 Console: name+breed saves; missing breed invalid; weight 0/-1/12.5/999 rejected, nil/12 accepted
-- [x] 1.5 Existing (backfilled) dogs still load without error
+- [x] 1.4 Console: name+breed saves; missing breed invalid; weight 0/-1/12.5/999 rejected, nil/12 accepted — 7ea42b6
+- [x] 1.5 Existing (backfilled) dogs still load without error — 7ea42b6
 
 ### Phase 2: Owner-scoped /dogs CRUD + nav/home
 
 #### Automated
 
-- [ ] 2.1 Dogs tests pass: `docker compose exec web bin/rails test test/integration/dogs_test.rb`
-- [ ] 2.2 Full suite passes: `docker compose exec web bin/rails test`
-- [ ] 2.3 Linting passes: `docker compose exec web bundle exec rubocop`
-- [ ] 2.4 Security scan clean: `docker compose exec web bundle exec brakeman --no-pager`
+- [x] 2.1 Dogs tests pass: `docker compose exec web bin/rails test test/integration/dogs_test.rb`
+- [x] 2.2 Full suite passes: `docker compose exec web bin/rails test`
+- [x] 2.3 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 2.4 Security scan clean: `docker compose exec web bundle exec brakeman --no-pager`
 
 #### Manual
 
-- [ ] 2.5 Owner: "My dogs" in nav; add dog (name+breed) lists; edit works; missing breed errors
-- [ ] 2.6 Walker: no "My dogs" link; `/dogs` redirects with alert
-- [ ] 2.7 Owner A cannot edit Owner B's dog (404)
-- [ ] 2.8 Signed out, `/dogs` redirects to sign-in
+- [x] 2.5 Owner: "My dogs" in nav; add dog (name+breed) lists; edit works; missing breed errors
+- [x] 2.6 Walker: no "My dogs" link; `/dogs` redirects with alert
+- [x] 2.7 Owner A cannot edit Owner B's dog (404)
+- [x] 2.8 Signed out, `/dogs` redirects to sign-in

@@ -4,6 +4,7 @@
 
 <% if current_user.owner? %>
   <p>As a Dog Owner, you'll be able to post walk requests for your dogs.</p>
+  <p><%= link_to "Add or manage your dogs", dogs_path %></p>
 <% elsif current_user.walker? %>
   <p>As a Dog Walker, you'll be able to see and accept walk requests in your area.</p>
 <% end %>
