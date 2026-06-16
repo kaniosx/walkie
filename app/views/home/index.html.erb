@@ -1,6 +1,6 @@
 <h1>Walkie</h1>
 
-<p>Signed in as <%= current_user.email_address %> (<%= current_user.role %>).</p>
+<p>Signed in as <%= current_user.display_label %> (<%= current_user.role %>).</p>
 
 <% if current_user.owner? %>
   <p>As a Dog Owner, you'll be able to post walk requests for your dogs.</p>
