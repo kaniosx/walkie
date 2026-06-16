@@ -3,7 +3,7 @@ project: Walkie
 version: 1
 status: draft
 created: 2026-05-25
-updated: 2026-06-15
+updated: 2026-06-16
 prd_version: 1
 main_goal: market-feedback
 top_blocker: time
@@ -37,7 +37,7 @@ PRD §Business Logic §Singleness states: *"the binding IS the confirmation"*. S
 | F-02  | domain-schema-walks-and-dogs       | (foundation) Dog + Walk schema + state machine + constraints      | F-01                      | NFR (Singleness, role)  | done     |
 | F-03  | test-infrastructure-scaffold       | (foundation) `test/` dir + coverage tooling baseline              | —                         | §Guardrails (80%)       | done     |
 | S-01  | signup-and-signin-with-role        | Visitor signs up as Owner or Walker, signs in, signs out          | F-01                      | FR-001, 002, 003, 004   | done     |
-| S-02  | profile-with-city                  | Signed-in user views + edits profile (display name + city)        | S-01                      | FR-005                  | proposed |
+| S-02  | profile-with-city                  | Signed-in user views + edits profile (display name + city)        | S-01                      | FR-005                  | done     |
 | S-03  | owner-manages-dog                  | Owner adds + edits their own dog                                  | S-01, F-02                | FR-006, 007, US-01      | proposed |
 | S-04  | owner-creates-walk-request         | Owner creates a walk request (REQUESTED), sees it in history      | S-01, S-02, S-03, F-02    | FR-009, US-01           | proposed |
 | S-05  | walker-accepts-request             | Walker sees open list + accepts (REQ→ACCEPTED)                    | S-01, S-02, S-04, F-02    | FR-011, 012, US-02      | proposed |
@@ -138,7 +138,7 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 - **Unknowns:**
   - Is city/postcode required at sign-up (gating S-01), or can it be empty until first use? — Owner: user. Block: no (both satisfy FR-005; required-at-signup simplifies later "is city set?" checks in S-04/S-05).
 - **Risk:** Coarse city/postcode filtering (Open Q #6) is an accepted v1 limitation. This is the moment the field locks in — a later modelling change (geolocation) post-v1 will require a migration.
-- **Status:** proposed
+- **Status:** done
 
 ### S-03: Owner adds + edits a dog
 
@@ -297,3 +297,4 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 - **F-02: (foundation) Dog + Walk schema + state machine + constraints** — Archived 2026-06-15 → `context/archive/2026-06-02-domain-schema-walks-and-dogs/`. Lesson: —.
 - **F-03: (foundation) `test/` dir + coverage tooling baseline** — Archived 2026-06-15 → `context/archive/2026-06-02-test-infrastructure-scaffold/`. Lesson: —.
 - **S-01: Visitor signs up as Owner or Walker, signs in, signs out** — Archived 2026-06-15 → `context/archive/2026-06-15-signup-and-signin-with-role/`. Lesson: —.
+- **S-02: Signed-in user views + edits profile (display name + city)** — Archived 2026-06-16 → `context/archive/2026-06-16-profile-with-city/`. Lesson: —.

@@ -1,9 +1,10 @@
 ---
 change_id: profile-with-city
 title: User profile with city/postcode (S-02)
-status: impl_reviewed
+status: archived
 created: 2026-06-16
 updated: 2026-06-16
+archived_at: 2026-06-16T07:31:30Z
 ---
 
 ## Notes
