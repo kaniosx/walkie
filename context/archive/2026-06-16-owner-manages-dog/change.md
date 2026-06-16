@@ -1,9 +1,10 @@
 ---
 change_id: owner-manages-dog
 title: Owner adds + edits their own dog (S-03)
-status: impl_reviewed
+status: archived
 created: 2026-06-16
 updated: 2026-06-16
+archived_at: 2026-06-16T12:08:50Z
 ---
 
 ## Notes
