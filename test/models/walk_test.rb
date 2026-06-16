@@ -8,7 +8,7 @@ class WalkTest < ActiveSupport::TestCase
                            password_confirmation: "secret123", role: "walker", city: "Kraków", postcode: "30-001")
     @other_walker = User.create!(email_address: "walker2@example.com", password: "secret123",
                                  password_confirmation: "secret123", role: "walker", city: "Kraków", postcode: "30-001")
-    @dog = Dog.create!(name: "Rex", user: @owner)
+    @dog = Dog.create!(name: "Rex", breed: "Labrador", user: @owner)
     @walk = Walk.create!(dog: @dog, owner: @owner, city: "Kraków")
   end
 

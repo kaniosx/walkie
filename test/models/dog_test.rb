@@ -14,7 +14,7 @@ class DogTest < ActiveSupport::TestCase
 
   def build_dog(attrs = {})
     owner = attrs.delete(:user) || build_owner
-    Dog.new({ name: "Rex", user: owner }.merge(attrs))
+    Dog.new({ name: "Rex", breed: "Labrador", user: owner }.merge(attrs))
   end
 
   test "valid dog saves" do
@@ -34,10 +34,33 @@ class DogTest < ActiveSupport::TestCase
     assert_includes dog.errors[:user], "must exist"
   end
 
+  test "breed is required" do
+    dog = build_dog(breed: nil)
+    assert_not dog.valid?
+    assert_includes dog.errors[:breed], "can't be blank"
+  end
+
+  test "weight is optional but must be a positive bounded integer when present" do
+    owner = build_owner
+    assert build_dog(user: owner, weight: nil).valid?, "nil weight should be allowed"
+    assert build_dog(user: owner, weight: 12).valid?, "a sane integer weight should be allowed"
+
+    assert_not build_dog(user: owner, weight: 0).valid?
+    assert_not build_dog(user: owner, weight: -1).valid?
+    assert_not build_dog(user: owner, weight: 151).valid?
+    assert_not build_dog(user: owner, weight: 12.5).valid?, "non-integer weight should be rejected"
+  end
+
+  test "notes is optional" do
+    owner = build_owner
+    assert build_dog(user: owner, notes: nil).valid?
+    assert build_dog(user: owner, notes: "Friendly, pulls on the leash.").valid?
+  end
+
   test "scope :active excludes deactivated dogs" do
     owner = build_owner
-    active = Dog.create!(name: "Rex", user: owner)
-    gone = Dog.create!(name: "Fido", user: owner, deactivated_at: Time.current)
+    active = Dog.create!(name: "Rex", breed: "Labrador", user: owner)
+    gone = Dog.create!(name: "Fido", breed: "Beagle", user: owner, deactivated_at: Time.current)
 
     assert_includes Dog.active, active
     assert_not_includes Dog.active, gone
