@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_03_072527) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_16_061738) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -33,9 +33,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_03_072527) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.string "city", null: false
     t.datetime "created_at", null: false
+    t.string "display_name"
     t.string "email_address", null: false
     t.string "password_digest", null: false
+    t.string "postcode", null: false
     t.string "role", null: false
     t.datetime "updated_at", null: false
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
@@ -58,8 +61,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_03_072527) do
     t.index ["dog_id"], name: "index_walks_on_dog_id"
     t.index ["owner_id"], name: "index_walks_on_owner_id"
     t.index ["state", "city"], name: "index_walks_on_state_and_city"
-    t.check_constraint "(state::text = ANY (ARRAY['requested'::character varying, 'cancelled'::character varying]::text[])) AND accepted_by_walker_id IS NULL OR (state::text = ANY (ARRAY['accepted'::character varying, 'in_progress'::character varying, 'completed'::character varying]::text[])) AND accepted_by_walker_id IS NOT NULL", name: "walks_walker_presence"
-    t.check_constraint "state::text = ANY (ARRAY['requested'::character varying, 'accepted'::character varying, 'in_progress'::character varying, 'completed'::character varying, 'cancelled'::character varying]::text[])", name: "walks_state_valid"
+    t.check_constraint "(state::text = ANY (ARRAY['requested'::character varying::text, 'cancelled'::character varying::text])) AND accepted_by_walker_id IS NULL OR (state::text = ANY (ARRAY['accepted'::character varying::text, 'in_progress'::character varying::text, 'completed'::character varying::text])) AND accepted_by_walker_id IS NOT NULL", name: "walks_walker_presence"
+    t.check_constraint "state::text = ANY (ARRAY['requested'::character varying::text, 'accepted'::character varying::text, 'in_progress'::character varying::text, 'completed'::character varying::text, 'cancelled'::character varying::text])", name: "walks_state_valid"
   end
 
   add_foreign_key "dogs", "users", on_delete: :restrict

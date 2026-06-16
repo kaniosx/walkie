@@ -1,0 +1,26 @@
+<div class="form-container">
+  <h1>Edit profile</h1>
+
+  <% if @user.errors.any? %>
+    <div class="form-errors">
+      <ul>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form_with url: profile_path, method: :patch do |form| %>
+    <%= form.label :display_name, "Display name (optional)" %><br>
+    <%= form.text_field :display_name, placeholder: "How others see you", maxlength: 100, value: @user.display_name %><br>
+    <%= form.label :city, "City" %><br>
+    <%= form.text_field :city, required: true, placeholder: "Your city", maxlength: 100, value: @user.city %><br>
+    <%= form.label :postcode, "Postcode" %><br>
+    <%= form.text_field :postcode, required: true, placeholder: "Your postcode", maxlength: 100, value: @user.postcode %><br>
+
+    <%= form.submit "Save" %>
+  <% end %>
+  <br>
+  <%= link_to "Cancel", profile_path %>
+</div>
