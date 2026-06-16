@@ -3,11 +3,11 @@ require "test_helper"
 class WalkTest < ActiveSupport::TestCase
   def setup
     @owner = User.create!(email_address: "owner@example.com", password: "secret123",
-                          password_confirmation: "secret123", role: "owner")
+                          password_confirmation: "secret123", role: "owner", city: "Kraków", postcode: "30-001")
     @walker = User.create!(email_address: "walker@example.com", password: "secret123",
-                           password_confirmation: "secret123", role: "walker")
+                           password_confirmation: "secret123", role: "walker", city: "Kraków", postcode: "30-001")
     @other_walker = User.create!(email_address: "walker2@example.com", password: "secret123",
-                                 password_confirmation: "secret123", role: "walker")
+                                 password_confirmation: "secret123", role: "walker", city: "Kraków", postcode: "30-001")
     @dog = Dog.create!(name: "Rex", user: @owner)
     @walk = Walk.create!(dog: @dog, owner: @owner, city: "Kraków")
   end
@@ -88,7 +88,7 @@ class WalkTest < ActiveSupport::TestCase
 
   test "owner_matches_dog_owner rejects a mismatched owner_id" do
     stranger = User.create!(email_address: "stranger@example.com", password: "secret123",
-                            password_confirmation: "secret123", role: "owner")
+                            password_confirmation: "secret123", role: "owner", city: "Kraków", postcode: "30-001")
     walk = Walk.new(dog: @dog, owner: stranger, city: "Kraków")
     assert_not walk.valid?
     assert_includes walk.errors[:owner_id], "must match the dog's owner"

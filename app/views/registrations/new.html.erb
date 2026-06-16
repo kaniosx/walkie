@@ -19,6 +19,11 @@
     <%= form.label :password_confirmation, "Confirm password" %><br>
     <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", placeholder: "Confirm your password", maxlength: 72 %><br>
 
+    <%= form.label :city, "City" %><br>
+    <%= form.text_field :city, required: true, placeholder: "Your city", maxlength: 100, value: params[:city] %><br>
+    <%= form.label :postcode, "Postcode" %><br>
+    <%= form.text_field :postcode, required: true, placeholder: "Your postcode", maxlength: 100, value: params[:postcode] %><br>
+
     <fieldset>
       <legend>Choose your role</legend>
       <label>
