@@ -6,7 +6,9 @@ class UserTest < ActiveSupport::TestCase
       email_address: "owner@example.com",
       password: "secret123",
       password_confirmation: "secret123",
-      role: "owner"
+      role: "owner",
+      city: "Kraków",
+      postcode: "30-001"
     }.merge(attrs))
   end
 
@@ -58,5 +60,44 @@ class UserTest < ActiveSupport::TestCase
     user = build_user(email_address: "  Owner@Example.COM  ")
     user.save!
     assert_equal "owner@example.com", user.email_address
+  end
+
+  test "city is required" do
+    user = build_user(city: nil)
+    assert_not user.valid?
+    assert_includes user.errors[:city], "can't be blank"
+  end
+
+  test "postcode is required" do
+    user = build_user(postcode: nil)
+    assert_not user.valid?
+    assert_includes user.errors[:postcode], "can't be blank"
+  end
+
+  test "city and postcode reject overlong values" do
+    user = build_user(city: "a" * 101, postcode: "b" * 101)
+    assert_not user.valid?
+    assert_includes user.errors[:city], "is too long (maximum is 100 characters)"
+    assert_includes user.errors[:postcode], "is too long (maximum is 100 characters)"
+  end
+
+  test "city and postcode are stripped of surrounding whitespace" do
+    user = build_user(city: "  Kraków  ", postcode: "  30-001 ")
+    user.save!
+    assert_equal "Kraków", user.city
+    assert_equal "30-001", user.postcode
+  end
+
+  test "display_name is optional" do
+    user = build_user(display_name: nil)
+    assert user.valid?, user.errors.full_messages.to_sentence
+  end
+
+  test "display_label returns display_name when present, email when blank" do
+    named = build_user(display_name: "Ada")
+    assert_equal "Ada", named.display_label
+
+    unnamed = build_user(display_name: nil)
+    assert_equal unnamed.email_address, unnamed.display_label
   end
 end

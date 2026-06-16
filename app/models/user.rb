@@ -10,9 +10,23 @@ class User < ApplicationRecord
   enum :role, { owner: "owner", walker: "walker" }
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
+  # Coarse free-text locality (PRD §Open Q #6); strip surrounding whitespace
+  # only — no case/format change. display_name is trimmed too when present.
+  normalizes :city, with: ->(v) { v.strip }
+  normalizes :postcode, with: ->(v) { v.strip }
+  normalizes :display_name, with: ->(v) { v.strip.presence }
 
   validates :role, presence: true
+  # city/postcode are required (collected at sign-up); display_name is optional.
+  validates :city, presence: true, length: { maximum: 100 }
+  validates :postcode, presence: true, length: { maximum: 100 }
+  validates :display_name, length: { maximum: 100 }, allow_nil: true
   validate :role_is_immutable, on: :update
+
+  # Name to show in the UI: the chosen display name, or the email when unset.
+  def display_label
+    display_name.presence || email_address
+  end
 
   private
     # Enforce "no role switching" outside the UI: once persisted, role is fixed.
