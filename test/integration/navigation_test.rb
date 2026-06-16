@@ -5,7 +5,9 @@ class NavigationTest < ActionDispatch::IntegrationTest
     @user = User.create!(
       email_address: "nav@example.com",
       password: "secret123",
-      role: "owner"
+      role: "owner",
+      city: "Kraków",
+      postcode: "30-001"
     )
   end
 

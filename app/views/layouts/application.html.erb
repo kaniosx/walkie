@@ -26,6 +26,7 @@
     <nav>
       <%= link_to "Walkie", root_path %>
       <% if authenticated? %>
+        <%= link_to "Profile", profile_path %>
         <%= button_to "Sign out", session_path, method: :delete %>
       <% end %>
     </nav>
