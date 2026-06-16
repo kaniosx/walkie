@@ -225,14 +225,14 @@ One migration adds `breed` (→ NOT NULL via add→backfill→change-null), `wei
 
 #### Automated
 
-- [x] 2.1 Dogs tests pass: `docker compose exec web bin/rails test test/integration/dogs_test.rb`
-- [x] 2.2 Full suite passes: `docker compose exec web bin/rails test`
-- [x] 2.3 Linting passes: `docker compose exec web bundle exec rubocop`
-- [x] 2.4 Security scan clean: `docker compose exec web bundle exec brakeman --no-pager`
+- [x] 2.1 Dogs tests pass: `docker compose exec web bin/rails test test/integration/dogs_test.rb` — 68a9dbd
+- [x] 2.2 Full suite passes: `docker compose exec web bin/rails test` — 68a9dbd
+- [x] 2.3 Linting passes: `docker compose exec web bundle exec rubocop` — 68a9dbd
+- [x] 2.4 Security scan clean: `docker compose exec web bundle exec brakeman --no-pager` — 68a9dbd
 
 #### Manual
 
-- [x] 2.5 Owner: "My dogs" in nav; add dog (name+breed) lists; edit works; missing breed errors
-- [x] 2.6 Walker: no "My dogs" link; `/dogs` redirects with alert
-- [x] 2.7 Owner A cannot edit Owner B's dog (404)
-- [x] 2.8 Signed out, `/dogs` redirects to sign-in
+- [x] 2.5 Owner: "My dogs" in nav; add dog (name+breed) lists; edit works; missing breed errors — 68a9dbd
+- [x] 2.6 Walker: no "My dogs" link; `/dogs` redirects with alert — 68a9dbd
+- [x] 2.7 Owner A cannot edit Owner B's dog (404) — 68a9dbd
+- [x] 2.8 Signed out, `/dogs` redirects to sign-in — 68a9dbd
