@@ -1,5 +1,6 @@
 class DogsController < ApplicationController
-  before_action :require_owner
+  include OwnerOnly
+
   before_action :set_dog, only: %i[edit update]
 
   def index
@@ -31,12 +32,6 @@ class DogsController < ApplicationController
   end
 
   private
-    # Dog management is Owner-only (PRD §Access Control). The controller guard
-    # is binding; hiding the nav link from Walkers is cosmetic on top.
-    def require_owner
-      redirect_to root_path, alert: "Only Owners can manage dogs." unless current_user.owner?
-    end
-
     # Always scope through current_user.dogs so a foreign or absent id raises
     # RecordNotFound (404) — structurally no cross-owner access.
     def set_dog
