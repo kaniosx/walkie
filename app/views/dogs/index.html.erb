@@ -9,6 +9,7 @@
           <% if dog.weight.present? %>(<%= dog.weight %> kg)<% end %>
           <% if dog.notes.present? %><br><em><%= dog.notes %></em><% end %>
           <br><%= link_to "Edit", edit_dog_path(dog) %>
+          <%= button_to "Walk my dog", walks_path, params: { dog_id: dog.id } %>
         </li>
       <% end %>
     </ul>

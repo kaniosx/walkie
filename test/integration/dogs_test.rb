@@ -84,7 +84,7 @@ class DogsTest < ActionDispatch::IntegrationTest
 
     get dogs_path
     assert_redirected_to root_path
-    assert_equal "Only Owners can manage dogs.", flash[:alert]
+    assert_equal "Only Owners can do that.", flash[:alert]
 
     assert_no_difference -> { Dog.count } do
       post dogs_path, params: { dog: { name: "Rex", breed: "Labrador" } }
