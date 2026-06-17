@@ -1,0 +1,17 @@
+<div class="form-container">
+  <h1>My walk requests</h1>
+
+  <% if @walks.any? %>
+    <ul>
+      <% @walks.each do |walk| %>
+        <li>
+          <strong><%= walk.dog.name %></strong> —
+          <%= walk.state.humanize %>
+          <span><%= walk.created_at.to_fs(:short) %></span>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No walk requests yet.</p>
+  <% end %>
+</div>
