@@ -236,14 +236,14 @@ None — the F-02 walks schema (state default `requested`, city/postcode, constr
 
 #### Automated
 
-- [x] 2.1 Walks tests pass: `docker compose exec web bin/rails test test/integration/walks_test.rb`
-- [x] 2.2 Full suite passes: `docker compose exec web bin/rails test`
-- [x] 2.3 Linting passes: `docker compose exec web bundle exec rubocop`
-- [x] 2.4 Security scan clean: `docker compose exec web bundle exec brakeman --no-pager`
+- [x] 2.1 Walks tests pass: `docker compose exec web bin/rails test test/integration/walks_test.rb` — 420858e
+- [x] 2.2 Full suite passes: `docker compose exec web bin/rails test` — 420858e
+- [x] 2.3 Linting passes: `docker compose exec web bundle exec rubocop` — 420858e
+- [x] 2.4 Security scan clean: `docker compose exec web bundle exec brakeman --no-pager` — 420858e
 
 #### Manual
 
-- [x] 2.5 Owner: "Walk my dog" on home + /dogs; one tap creates request, lands on "My requests" under 30s
-- [x] 2.6 Second tap for same dog → dupe message, no duplicate
-- [x] 2.7 Walker: no buttons/link; `/walks` POST blocked
-- [x] 2.8 Signed out, `/walks` redirects to sign-in
+- [x] 2.5 Owner: "Walk my dog" on home + /dogs; one tap creates request, lands on "My requests" under 30s — 420858e
+- [x] 2.6 Second tap for same dog → dupe message, no duplicate — 420858e
+- [x] 2.7 Walker: no buttons/link; `/walks` POST blocked — 420858e
+- [x] 2.8 Signed out, `/walks` redirects to sign-in — 420858e
