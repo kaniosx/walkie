@@ -224,26 +224,26 @@ None — the F-02 walks schema (state default `requested`, city/postcode, constr
 
 #### Automated
 
-- [x] 1.1 Full suite passes: `docker compose exec web bin/rails test`
-- [x] 1.2 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 1.1 Full suite passes: `docker compose exec web bin/rails test` — f7c06dd
+- [x] 1.2 Linting passes: `docker compose exec web bundle exec rubocop` — f7c06dd
 
 #### Manual
 
-- [x] 1.3 Console: second active walk for a dog is invalid; allowed again after prior completed/cancelled
-- [x] 1.4 DogsController still blocks Walkers (generic alert)
+- [x] 1.3 Console: second active walk for a dog is invalid; allowed again after prior completed/cancelled — f7c06dd
+- [x] 1.4 DogsController still blocks Walkers (generic alert) — f7c06dd
 
 ### Phase 2: Owner walk-request flow + listing
 
 #### Automated
 
-- [ ] 2.1 Walks tests pass: `docker compose exec web bin/rails test test/integration/walks_test.rb`
-- [ ] 2.2 Full suite passes: `docker compose exec web bin/rails test`
-- [ ] 2.3 Linting passes: `docker compose exec web bundle exec rubocop`
-- [ ] 2.4 Security scan clean: `docker compose exec web bundle exec brakeman --no-pager`
+- [x] 2.1 Walks tests pass: `docker compose exec web bin/rails test test/integration/walks_test.rb`
+- [x] 2.2 Full suite passes: `docker compose exec web bin/rails test`
+- [x] 2.3 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 2.4 Security scan clean: `docker compose exec web bundle exec brakeman --no-pager`
 
 #### Manual
 
-- [ ] 2.5 Owner: "Walk my dog" on home + /dogs; one tap creates request, lands on "My requests" under 30s
-- [ ] 2.6 Second tap for same dog → dupe message, no duplicate
-- [ ] 2.7 Walker: no buttons/link; `/walks` POST blocked
-- [ ] 2.8 Signed out, `/walks` redirects to sign-in
+- [x] 2.5 Owner: "Walk my dog" on home + /dogs; one tap creates request, lands on "My requests" under 30s
+- [x] 2.6 Second tap for same dog → dupe message, no duplicate
+- [x] 2.7 Walker: no buttons/link; `/walks` POST blocked
+- [x] 2.8 Signed out, `/walks` redirects to sign-in

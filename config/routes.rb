@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resource :registration, only: %i[ new create ]
   resource :profile, only: %i[ show edit update ]
   resources :dogs, only: %i[ index new create edit update ]
+  resources :walks, only: %i[ index create ]
   resources :passwords, param: :token
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
