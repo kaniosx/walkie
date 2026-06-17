@@ -19,5 +19,6 @@
   <% end %>
   <p><%= link_to "Manage your dogs", dogs_path %> · <%= link_to "My walk requests", walks_path %></p>
 <% elsif current_user.walker? %>
-  <p>As a Dog Walker, you'll be able to see and accept walk requests in your area.</p>
+  <p>As a Dog Walker, see and accept walk requests in your area.</p>
+  <p><%= link_to "See open walk requests", open_requests_path %></p>
 <% end %>
