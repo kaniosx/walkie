@@ -9,7 +9,7 @@ class WalkTest < ActiveSupport::TestCase
     @other_walker = User.create!(email_address: "walker2@example.com", password: "secret123",
                                  password_confirmation: "secret123", role: "walker", city: "Kraków", postcode: "30-001")
     @dog = Dog.create!(name: "Rex", breed: "Labrador", user: @owner)
-    @walk = Walk.create!(dog: @dog, owner: @owner, city: "Kraków")
+    @walk = Walk.create!(dog: @dog, owner: @owner, city: "Kraków", postcode: "30-001")
   end
 
   # --- Happy path ----------------------------------------------------------
@@ -107,6 +107,12 @@ class WalkTest < ActiveSupport::TestCase
     assert_includes walk.errors[:city], "can't be blank"
   end
 
+  test "postcode is required" do
+    walk = Walk.new(dog: @dog, owner: @owner, city: "Kraków")
+    assert_not walk.valid?
+    assert_includes walk.errors[:postcode], "can't be blank"
+  end
+
   # --- One active request per dog ------------------------------------------
 
   test "a dog cannot have a second active walk request" do
@@ -118,7 +124,7 @@ class WalkTest < ActiveSupport::TestCase
 
   test "a new request is allowed once the dog's prior walk is finished" do
     @walk.cancel!(@owner) # requested -> cancelled (no longer active)
-    fresh = Walk.new(dog: @dog, owner: @owner, city: "Kraków")
+    fresh = Walk.new(dog: @dog, owner: @owner, city: "Kraków", postcode: "30-001")
     assert fresh.valid?, fresh.errors.full_messages.to_sentence
   end
 

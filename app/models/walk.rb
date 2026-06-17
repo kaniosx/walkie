@@ -24,6 +24,7 @@ class Walk < ApplicationRecord
 
   validates :state, presence: true
   validates :city, presence: true
+  validates :postcode, presence: true
   validate :owner_matches_dog_owner
   validate :walker_is_not_owner
   validate :owner_has_owner_role

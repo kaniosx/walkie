@@ -22,7 +22,7 @@ class WalkConcurrencyTest < ActiveSupport::TestCase
       User.create!(email_address: "racer#{i}@#{EMAIL_DOMAIN}", password: "secret123",
                    password_confirmation: "secret123", role: "walker", city: "Kraków", postcode: "30-001")
     end
-    @walk = Walk.create!(dog: @dog, owner: @owner, city: "Kraków")
+    @walk = Walk.create!(dog: @dog, owner: @owner, city: "Kraków", postcode: "30-001")
   end
 
   # No transactional rollback here — tear the rows down by hand.
