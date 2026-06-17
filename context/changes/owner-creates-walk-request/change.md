@@ -1,7 +1,7 @@
 ---
 change_id: owner-creates-walk-request
 title: Owner creates a walk request (S-04)
-status: implemented
+status: impl_reviewed
 created: 2026-06-16
 updated: 2026-06-16
 ---

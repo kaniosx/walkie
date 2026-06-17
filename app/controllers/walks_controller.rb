@@ -2,7 +2,7 @@ class WalksController < ApplicationController
   include OwnerOnly
 
   def index
-    @walks = current_user.owned_walks.order(created_at: :desc)
+    @walks = current_user.owned_walks.includes(:dog).order(created_at: :desc)
   end
 
   def create
