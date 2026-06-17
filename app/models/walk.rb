@@ -17,8 +17,14 @@ class Walk < ApplicationRecord
   # cancelled). Used to enforce one active request per dog at creation.
   scope :active, -> { where(state: %w[requested accepted in_progress]) }
 
+  # Open requests a walker in this locality can accept: REQUESTED + exact
+  # city + postcode match (PRD coarse locality, §Open Q #6). Backed by the
+  # [state, city] index; postcode is a cheap residual filter.
+  scope :open_in_locality, ->(city, postcode) { requested.where(city: city, postcode: postcode) }
+
   validates :state, presence: true
   validates :city, presence: true
+  validates :postcode, presence: true
   validate :owner_matches_dog_owner
   validate :walker_is_not_owner
   validate :owner_has_owner_role
