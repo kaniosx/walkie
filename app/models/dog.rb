@@ -5,7 +5,16 @@ class Dog < ApplicationRecord
   # (see deactivate!), so completed/in-flight walks survive removal.
   has_many :walks, dependent: :restrict_with_exception
 
-  validates :name, presence: true
+  # Strip surrounding whitespace on the free-text fields (consistent with User).
+  normalizes :name, with: ->(v) { v.strip }
+  normalizes :breed, with: ->(v) { v.strip }
+
+  validates :name, presence: true, length: { maximum: 100 }
+  # breed is required (collected at creation); weight is optional kilograms,
+  # a positive bounded integer when present; notes is free-form.
+  validates :breed, presence: true, length: { maximum: 100 }
+  validates :weight, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 150 }, allow_nil: true
+  validates :notes, length: { maximum: 1000 }, allow_nil: true
 
   # Explicit active-only scope instead of a default_scope. A default_scope on
   # soft-delete is a known foot-gun (leaks into associations, unscoped

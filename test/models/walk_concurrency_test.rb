@@ -17,7 +17,7 @@ class WalkConcurrencyTest < ActiveSupport::TestCase
     purge_fixtures # clear any leftovers from a prior interrupted run first
     @owner = User.create!(email_address: "owner@#{EMAIL_DOMAIN}", password: "secret123",
                           password_confirmation: "secret123", role: "owner", city: "Kraków", postcode: "30-001")
-    @dog = Dog.create!(name: "Rex", user: @owner)
+    @dog = Dog.create!(name: "Rex", breed: "Labrador", user: @owner)
     @walkers = WALKER_COUNT.times.map do |i|
       User.create!(email_address: "racer#{i}@#{EMAIL_DOMAIN}", password: "secret123",
                    password_confirmation: "secret123", role: "walker", city: "Kraków", postcode: "30-001")
