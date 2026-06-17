@@ -1,7 +1,7 @@
 ---
 change_id: walker-accepts-request
 title: Walker accepts an open request (S-05, north star)
-status: implementing
+status: implemented
 created: 2026-06-17
 updated: 2026-06-17
 ---

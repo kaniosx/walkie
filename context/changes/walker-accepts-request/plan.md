@@ -217,14 +217,14 @@ None — F-02's walks schema, CHECK constraints, and `[state, city]` index are s
 
 #### Automated
 
-- [x] 2.1 Open-requests tests pass: `docker compose exec web bin/rails test test/integration/open_requests_test.rb`
-- [x] 2.2 Full suite passes: `docker compose exec web bin/rails test`
-- [x] 2.3 Linting passes: `docker compose exec web bundle exec rubocop`
-- [x] 2.4 Security scan clean: `docker compose exec web bundle exec brakeman --no-pager`
+- [x] 2.1 Open-requests tests pass: `docker compose exec web bin/rails test test/integration/open_requests_test.rb` — 4a268c7
+- [x] 2.2 Full suite passes: `docker compose exec web bin/rails test` — 4a268c7
+- [x] 2.3 Linting passes: `docker compose exec web bundle exec rubocop` — 4a268c7
+- [x] 2.4 Security scan clean: `docker compose exec web bundle exec brakeman --no-pager` — 4a268c7
 
 #### Manual
 
-- [x] 2.5 Walker: "Open requests" in nav/home; list shows only same city+postcode requested walks (dog+breed+locality, no owner)
-- [x] 2.6 Accept → notice + request drops off; gone from a second walker's list
-- [x] 2.7 Accepting an already-taken walk → "already accepted", original acceptance unchanged
-- [x] 2.8 Owner blocked from `/open_requests` (redirect + alert); signed out redirects to sign-in
+- [x] 2.5 Walker: "Open requests" in nav/home; list shows only same city+postcode requested walks (dog+breed+locality, no owner) — 4a268c7
+- [x] 2.6 Accept → notice + request drops off; gone from a second walker's list — 4a268c7
+- [x] 2.7 Accepting an already-taken walk → "already accepted", original acceptance unchanged — 4a268c7
+- [x] 2.8 Owner blocked from `/open_requests` (redirect + alert); signed out redirects to sign-in — 4a268c7
