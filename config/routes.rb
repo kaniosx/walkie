@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   resource :profile, only: %i[ show edit update ]
   resources :dogs, only: %i[ index new create edit update ]
   resources :walks, only: %i[ index create ]
+  resources :open_requests, only: %i[ index ] do
+    member { post :accept }
+  end
   resources :passwords, param: :token
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

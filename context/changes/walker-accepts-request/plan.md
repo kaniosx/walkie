@@ -206,25 +206,25 @@ None — F-02's walks schema, CHECK constraints, and `[state, city]` index are s
 
 #### Automated
 
-- [x] 1.1 Full suite passes: `docker compose exec web bin/rails test`
-- [x] 1.2 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 1.1 Full suite passes: `docker compose exec web bin/rails test` — 7224aaa
+- [x] 1.2 Linting passes: `docker compose exec web bundle exec rubocop` — 7224aaa
 
 #### Manual
 
-- [x] 1.3 Console: `Walk.open_in_locality` returns only requested + exact city+postcode; excludes other-postcode + accepted
+- [x] 1.3 Console: `Walk.open_in_locality` returns only requested + exact city+postcode; excludes other-postcode + accepted — 7224aaa
 
 ### Phase 2: Walker open-requests flow + accept
 
 #### Automated
 
-- [ ] 2.1 Open-requests tests pass: `docker compose exec web bin/rails test test/integration/open_requests_test.rb`
-- [ ] 2.2 Full suite passes: `docker compose exec web bin/rails test`
-- [ ] 2.3 Linting passes: `docker compose exec web bundle exec rubocop`
-- [ ] 2.4 Security scan clean: `docker compose exec web bundle exec brakeman --no-pager`
+- [x] 2.1 Open-requests tests pass: `docker compose exec web bin/rails test test/integration/open_requests_test.rb`
+- [x] 2.2 Full suite passes: `docker compose exec web bin/rails test`
+- [x] 2.3 Linting passes: `docker compose exec web bundle exec rubocop`
+- [x] 2.4 Security scan clean: `docker compose exec web bundle exec brakeman --no-pager`
 
 #### Manual
 
-- [ ] 2.5 Walker: "Open requests" in nav/home; list shows only same city+postcode requested walks (dog+breed+locality, no owner)
-- [ ] 2.6 Accept → notice + request drops off; gone from a second walker's list
-- [ ] 2.7 Accepting an already-taken walk → "already accepted", original acceptance unchanged
-- [ ] 2.8 Owner blocked from `/open_requests` (redirect + alert); signed out redirects to sign-in
+- [x] 2.5 Walker: "Open requests" in nav/home; list shows only same city+postcode requested walks (dog+breed+locality, no owner)
+- [x] 2.6 Accept → notice + request drops off; gone from a second walker's list
+- [x] 2.7 Accepting an already-taken walk → "already accepted", original acceptance unchanged
+- [x] 2.8 Owner blocked from `/open_requests` (redirect + alert); signed out redirects to sign-in
