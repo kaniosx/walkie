@@ -3,7 +3,7 @@ project: Walkie
 version: 1
 status: draft
 created: 2026-05-25
-updated: 2026-06-16
+updated: 2026-06-17
 prd_version: 1
 main_goal: market-feedback
 top_blocker: time
@@ -39,7 +39,7 @@ PRD §Business Logic §Singleness states: *"the binding IS the confirmation"*. S
 | S-01  | signup-and-signin-with-role        | Visitor signs up as Owner or Walker, signs in, signs out          | F-01                      | FR-001, 002, 003, 004   | done     |
 | S-02  | profile-with-city                  | Signed-in user views + edits profile (display name + city)        | S-01                      | FR-005                  | done     |
 | S-03  | owner-manages-dog                  | Owner adds + edits their own dog                                  | S-01, F-02                | FR-006, 007, US-01      | done     |
-| S-04  | owner-creates-walk-request         | Owner creates a walk request (REQUESTED), sees it in history      | S-01, S-02, S-03, F-02    | FR-009, US-01           | proposed |
+| S-04  | owner-creates-walk-request         | Owner creates a walk request (REQUESTED), sees it in history      | S-01, S-02, S-03, F-02    | FR-009, US-01           | done     |
 | S-05  | walker-accepts-request             | Walker sees open list + accepts (REQ→ACCEPTED)                    | S-01, S-02, S-04, F-02    | FR-011, 012, US-02      | proposed |
 | S-06  | owner-cancels-requested-walk       | Owner cancels their request while still in REQUESTED              | S-04                      | FR-010                  | proposed |
 | S-07  | walker-starts-and-completes-walk   | Walker starts (ACC→IP) + ends walk (IP→COMPLETED)                 | S-05                      | FR-013, 014, US-03      | proposed |
@@ -164,7 +164,7 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 - **Unknowns:**
   - PRD US-01 Acceptance: "under 30 seconds for a logged-in Owner with one dog." Do we measure that as a test (Capybara instrumentation), or as a manual smoke target? — Owner: user. Block: no (both are acceptable; instrumented measurement is invest-deeply, manual is go-simple consistent with `main_goal: market-feedback`).
 - **Risk:** PRD §NFR "user-initiated action … within 2 seconds." Stock Rails + Postgres should fit, but caveat: the free Postgres cold start (an open issue from `deploy-plan.md` Risk Register row 3) can blow this target on the first request after idle. Measure the NFR against Basic-1GB Postgres, not the free tier — see `## Open Roadmap Questions` #3.
-- **Status:** proposed
+- **Status:** done
 
 ### S-05: Walker accepts an open request (north star)
 
@@ -299,3 +299,4 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 - **S-01: Visitor signs up as Owner or Walker, signs in, signs out** — Archived 2026-06-15 → `context/archive/2026-06-15-signup-and-signin-with-role/`. Lesson: —.
 - **S-02: Signed-in user views + edits profile (display name + city)** — Archived 2026-06-16 → `context/archive/2026-06-16-profile-with-city/`. Lesson: —.
 - **S-03: Owner adds + edits their own dog** — Archived 2026-06-16 → `context/archive/2026-06-16-owner-manages-dog/`. Lesson: —.
+- **S-04: Owner creates a walk request (REQUESTED), sees it in history** — Archived 2026-06-17 → `context/archive/2026-06-16-owner-creates-walk-request/`. Lesson: —.
