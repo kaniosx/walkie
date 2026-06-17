@@ -10,7 +10,7 @@ class WalkConstraintsTest < ActiveSupport::TestCase
                           password_confirmation: "secret123", role: "owner", city: "Kraków", postcode: "30-001")
     @walker = User.create!(email_address: "c-walker@example.com", password: "secret123",
                            password_confirmation: "secret123", role: "walker", city: "Kraków", postcode: "30-001")
-    @dog = Dog.create!(name: "Rex", user: @owner)
+    @dog = Dog.create!(name: "Rex", breed: "Labrador", user: @owner)
   end
 
   # Raw INSERT, no Active Record model in the path. accepted_by_walker_id is

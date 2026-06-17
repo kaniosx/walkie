@@ -1,0 +1,20 @@
+<div class="form-container">
+  <h1>My dogs</h1>
+
+  <% if @dogs.any? %>
+    <ul>
+      <% @dogs.each do |dog| %>
+        <li>
+          <strong><%= dog.name %></strong> — <%= dog.breed %>
+          <% if dog.weight.present? %>(<%= dog.weight %> kg)<% end %>
+          <% if dog.notes.present? %><br><em><%= dog.notes %></em><% end %>
+          <br><%= link_to "Edit", edit_dog_path(dog) %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>You haven't added any dogs yet.</p>
+  <% end %>
+
+  <%= link_to "Add a dog", new_dog_path %>
+</div>

@@ -38,7 +38,7 @@ PRD §Business Logic §Singleness states: *"the binding IS the confirmation"*. S
 | F-03  | test-infrastructure-scaffold       | (foundation) `test/` dir + coverage tooling baseline              | —                         | §Guardrails (80%)       | done     |
 | S-01  | signup-and-signin-with-role        | Visitor signs up as Owner or Walker, signs in, signs out          | F-01                      | FR-001, 002, 003, 004   | done     |
 | S-02  | profile-with-city                  | Signed-in user views + edits profile (display name + city)        | S-01                      | FR-005                  | done     |
-| S-03  | owner-manages-dog                  | Owner adds + edits their own dog                                  | S-01, F-02                | FR-006, 007, US-01      | proposed |
+| S-03  | owner-manages-dog                  | Owner adds + edits their own dog                                  | S-01, F-02                | FR-006, 007, US-01      | done     |
 | S-04  | owner-creates-walk-request         | Owner creates a walk request (REQUESTED), sees it in history      | S-01, S-02, S-03, F-02    | FR-009, US-01           | proposed |
 | S-05  | walker-accepts-request             | Walker sees open list + accepts (REQ→ACCEPTED)                    | S-01, S-02, S-04, F-02    | FR-011, 012, US-02      | proposed |
 | S-06  | owner-cancels-requested-walk       | Owner cancels their request while still in REQUESTED              | S-04                      | FR-010                  | proposed |
@@ -151,7 +151,7 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 - **Unknowns:**
   - Which fields exactly count as "basic details"? Name is unambiguous; breed/weight/notes are open. — Owner: user. Block: no (defer to `/10x-plan owner-manages-dog`).
 - **Risk:** PRD §FR-008 Socratic flag: "Removing a dog with past walks should keep history intact, not erase it." Edit (FR-007) doesn't carry that trap — only remove (S-10) does. S-03 is deliberately scoped to add+edit to avoid the blocking Open Q #4 inside this slice.
-- **Status:** proposed
+- **Status:** done
 
 ### S-04: Owner creates a walk request (US-01)
 
@@ -298,3 +298,4 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 - **F-03: (foundation) `test/` dir + coverage tooling baseline** — Archived 2026-06-15 → `context/archive/2026-06-02-test-infrastructure-scaffold/`. Lesson: —.
 - **S-01: Visitor signs up as Owner or Walker, signs in, signs out** — Archived 2026-06-15 → `context/archive/2026-06-15-signup-and-signin-with-role/`. Lesson: —.
 - **S-02: Signed-in user views + edits profile (display name + city)** — Archived 2026-06-16 → `context/archive/2026-06-16-profile-with-city/`. Lesson: —.
+- **S-03: Owner adds + edits their own dog** — Archived 2026-06-16 → `context/archive/2026-06-16-owner-manages-dog/`. Lesson: —.
