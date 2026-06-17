@@ -1,0 +1,17 @@
+<div class="form-container">
+  <h1>Open walk requests</h1>
+
+  <% if @walks.any? %>
+    <ul>
+      <% @walks.each do |walk| %>
+        <li>
+          <strong><%= walk.dog.name %></strong> (<%= walk.dog.breed %>) —
+          <%= walk.city %>, <%= walk.postcode %>
+          <%= button_to "Accept", accept_open_request_path(walk) %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No open walk requests in <%= current_user.city %> right now.</p>
+  <% end %>
+</div>
