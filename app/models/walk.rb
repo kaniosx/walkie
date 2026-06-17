@@ -13,12 +13,20 @@ class Walk < ApplicationRecord
     cancelled: "cancelled"
   }
 
+  # "Active" = the walk is occupying a dog right now (not yet finished or
+  # cancelled). Used to enforce one active request per dog at creation.
+  scope :active, -> { where(state: %w[requested accepted in_progress]) }
+
   validates :state, presence: true
   validates :city, presence: true
   validate :owner_matches_dog_owner
   validate :walker_is_not_owner
   validate :owner_has_owner_role
   validate :walker_has_walker_role
+  # One active request per dog (a dog is walked once at a time). Create-time
+  # only; NOT a PRD Singleness invariant (that's one walker per walk, enforced
+  # DB-side on accept), so a model guard is proportionate — no DB constraint.
+  validate :no_active_walk_for_dog, on: :create
 
   # --- Transitions ---------------------------------------------------------
   # Each transition is a single atomic compare-and-swap UPDATE: the expected
@@ -67,6 +75,15 @@ class Walk < ApplicationRecord
 
       reload
       true
+    end
+
+    # A dog can only be walked once at a time: reject a new request when the
+    # dog already has an active (requested/accepted/in_progress) walk. exists?
+    # hits the DB, so it counts only persisted walks, never the unsaved record.
+    def no_active_walk_for_dog
+      return if dog.nil?
+
+      errors.add(:base, "This dog already has an active walk request") if dog.walks.active.exists?
     end
 
     # owner_id is denormalized (= dog.user_id); reject any AR write that would

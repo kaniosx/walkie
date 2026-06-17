@@ -106,4 +106,29 @@ class WalkTest < ActiveSupport::TestCase
     assert_not walk.valid?
     assert_includes walk.errors[:city], "can't be blank"
   end
+
+  # --- One active request per dog ------------------------------------------
+
+  test "a dog cannot have a second active walk request" do
+    # @dog already has @walk (requested/active) from setup.
+    dupe = Walk.new(dog: @dog, owner: @owner, city: "Kraków")
+    assert_not dupe.valid?
+    assert_includes dupe.errors[:base], "This dog already has an active walk request"
+  end
+
+  test "a new request is allowed once the dog's prior walk is finished" do
+    @walk.cancel!(@owner) # requested -> cancelled (no longer active)
+    fresh = Walk.new(dog: @dog, owner: @owner, city: "Kraków")
+    assert fresh.valid?, fresh.errors.full_messages.to_sentence
+  end
+
+  test "active scope covers requested/accepted/in_progress and excludes finished states" do
+    assert_includes Walk.active, @walk # requested
+    @walk.accept!(@walker)
+    assert_includes Walk.active, @walk # accepted
+    @walk.start!(@walker)
+    assert_includes Walk.active, @walk # in_progress
+    @walk.complete!(@walker)
+    assert_not_includes Walk.active, @walk # completed
+  end
 end
