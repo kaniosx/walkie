@@ -1,9 +1,10 @@
 ---
 change_id: walker-accepts-request
 title: Walker accepts an open request (S-05, north star)
-status: impl_reviewed
+status: archived
 created: 2026-06-17
 updated: 2026-06-17
+archived_at: 2026-06-17T13:40:22Z
 ---
 
 ## Notes
