@@ -40,7 +40,7 @@ PRD §Business Logic §Singleness states: *"the binding IS the confirmation"*. S
 | S-02  | profile-with-city                  | Signed-in user views + edits profile (display name + city)        | S-01                      | FR-005                  | done     |
 | S-03  | owner-manages-dog                  | Owner adds + edits their own dog                                  | S-01, F-02                | FR-006, 007, US-01      | done     |
 | S-04  | owner-creates-walk-request         | Owner creates a walk request (REQUESTED), sees it in history      | S-01, S-02, S-03, F-02    | FR-009, US-01           | done     |
-| S-05  | walker-accepts-request             | Walker sees open list + accepts (REQ→ACCEPTED)                    | S-01, S-02, S-04, F-02    | FR-011, 012, US-02      | proposed |
+| S-05  | walker-accepts-request             | Walker sees open list + accepts (REQ→ACCEPTED)                    | S-01, S-02, S-04, F-02    | FR-011, 012, US-02      | done     |
 | S-06  | owner-cancels-requested-walk       | Owner cancels their request while still in REQUESTED              | S-04                      | FR-010                  | proposed |
 | S-07  | walker-starts-and-completes-walk   | Walker starts (ACC→IP) + ends walk (IP→COMPLETED)                 | S-05                      | FR-013, 014, US-03      | proposed |
 | S-08  | owner-walk-history                 | Owner sees their own walk history                                 | S-04                      | FR-015                  | proposed |
@@ -177,7 +177,7 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 - **Unknowns:**
   - Pessimistic locking (`SELECT FOR UPDATE`) vs optimistic (compare-and-swap on the state column) for the accept transition? — Owner: downstream `/10x-plan walker-accepts-request`. Block: no (both deliver Singleness; the choice shapes the test plan).
 - **Risk:** **This is the moment of truth for the hypothesis.** Also the only slice with an explicit concurrency invariant in PRD §Guardrails ("Both invariants are binding outside the UI"). The concurrency test must be an **integration test**, not just a unit test — the race is between *HTTP requests*, not between model methods. F-02 leaves the DB-level constraint as the backstop; S-05 must verify it under load (parallel test).
-- **Status:** proposed
+- **Status:** done
 
 ### S-06: Owner cancels a walk request in REQUESTED state
 
@@ -300,3 +300,4 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 - **S-02: Signed-in user views + edits profile (display name + city)** — Archived 2026-06-16 → `context/archive/2026-06-16-profile-with-city/`. Lesson: —.
 - **S-03: Owner adds + edits their own dog** — Archived 2026-06-16 → `context/archive/2026-06-16-owner-manages-dog/`. Lesson: —.
 - **S-04: Owner creates a walk request (REQUESTED), sees it in history** — Archived 2026-06-17 → `context/archive/2026-06-16-owner-creates-walk-request/`. Lesson: —.
+- **S-05: Walker sees open list + accepts (REQ→ACCEPTED)** — Archived 2026-06-17 → `context/archive/2026-06-17-walker-accepts-request/`. Lesson: —.
