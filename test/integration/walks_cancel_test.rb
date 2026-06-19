@@ -36,7 +36,7 @@ class WalksCancelTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to walks_path
     follow_redirect!
-    assert_includes response.body, "This request was already accepted by a walker."
+    assert_includes response.body, "This walk can no longer be cancelled."
     @walk.reload
     assert @walk.accepted?, "walk must remain accepted"
   end
