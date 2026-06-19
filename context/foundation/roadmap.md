@@ -3,7 +3,7 @@ project: Walkie
 version: 1
 status: draft
 created: 2026-05-25
-updated: 2026-06-17
+updated: 2026-06-19
 prd_version: 1
 main_goal: market-feedback
 top_blocker: time
@@ -41,7 +41,7 @@ PRD §Business Logic §Singleness states: *"the binding IS the confirmation"*. S
 | S-03  | owner-manages-dog                  | Owner adds + edits their own dog                                  | S-01, F-02                | FR-006, 007, US-01      | done     |
 | S-04  | owner-creates-walk-request         | Owner creates a walk request (REQUESTED), sees it in history      | S-01, S-02, S-03, F-02    | FR-009, US-01           | done     |
 | S-05  | walker-accepts-request             | Walker sees open list + accepts (REQ→ACCEPTED)                    | S-01, S-02, S-04, F-02    | FR-011, 012, US-02      | done     |
-| S-06  | owner-cancels-requested-walk       | Owner cancels their request while still in REQUESTED              | S-04                      | FR-010                  | proposed |
+| S-06  | owner-cancels-requested-walk       | Owner cancels their request while still in REQUESTED              | S-04                      | FR-010                  | done     |
 | S-07  | walker-starts-and-completes-walk   | Walker starts (ACC→IP) + ends walk (IP→COMPLETED)                 | S-05                      | FR-013, 014, US-03      | proposed |
 | S-08  | owner-walk-history                 | Owner sees their own walk history                                 | S-04                      | FR-015                  | proposed |
 | S-09  | walker-walk-history                | Walker sees their own walk history                                | S-05                      | FR-016                  | proposed |
@@ -189,7 +189,7 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Small and contained. Edge case: race between a Walker accepting (S-05) and the Owner cancelling near-simultaneously. The PRD does not specify who wins — propose a deterministic rule at `/10x-plan` time (e.g., first-write on state wins, the second action receives "already moved").
-- **Status:** proposed
+- **Status:** done
 
 ### S-07: Walker starts + completes a walk (US-03)
 
@@ -301,3 +301,4 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 - **S-03: Owner adds + edits their own dog** — Archived 2026-06-16 → `context/archive/2026-06-16-owner-manages-dog/`. Lesson: —.
 - **S-04: Owner creates a walk request (REQUESTED), sees it in history** — Archived 2026-06-17 → `context/archive/2026-06-16-owner-creates-walk-request/`. Lesson: —.
 - **S-05: Walker sees open list + accepts (REQ→ACCEPTED)** — Archived 2026-06-17 → `context/archive/2026-06-17-walker-accepts-request/`. Lesson: —.
+- **S-06: Owner cancels their request while still in REQUESTED** — Archived 2026-06-19 → `context/archive/2026-06-19-owner-cancels-requested-walk/`. Lesson: —.
