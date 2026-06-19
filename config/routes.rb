@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   resource :registration, only: %i[ new create ]
   resource :profile, only: %i[ show edit update ]
   resources :dogs, only: %i[ index new create edit update ]
-  resources :walks, only: %i[ index create ]
+  resources :walks, only: %i[ index create ] do
+    member { post :cancel }
+  end
   resources :open_requests, only: %i[ index ] do
     member { post :accept }
   end
