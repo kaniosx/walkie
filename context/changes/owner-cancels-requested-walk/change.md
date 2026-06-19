@@ -1,7 +1,7 @@
 ---
 change_id: owner-cancels-requested-walk
 title: Owner cancels a walk request in REQUESTED state (S-06)
-status: implemented
+status: impl_reviewed
 created: 2026-06-19
 updated: 2026-06-19
 ---

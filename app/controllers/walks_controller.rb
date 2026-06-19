@@ -6,12 +6,16 @@ class WalksController < ApplicationController
   end
 
   def cancel
+    # Scoped to owner's own walks: 404s on a foreign or missing id.
+    # Defense-in-depth on top of cancel!'s owner_id guard — intentionally
+    # diverges from the unscoped Walk.find in open_requests_controller.rb,
+    # which relies solely on the model guard.
     walk = current_user.owned_walks.find(params[:id])
 
     if walk.cancel!(current_user)
       redirect_to walks_path, notice: "Walk request cancelled."
     else
-      redirect_to walks_path, alert: "This request was already accepted by a walker."
+      redirect_to walks_path, alert: "This walk can no longer be cancelled."
     end
   end
 
