@@ -4,6 +4,7 @@ title: Owner cancels a walk request in REQUESTED state (S-06)
 status: implementing
 created: 2026-06-19
 updated: 2026-06-19
+
 ---
 
 ## Notes

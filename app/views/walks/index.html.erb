@@ -8,6 +8,10 @@
           <strong><%= walk.dog.name %></strong> —
           <%= walk.state.humanize %>
           <span><%= walk.created_at.to_fs(:short) %></span>
+          <% if walk.requested? %>
+            <%= button_to "Cancel", cancel_walk_path(walk), method: :post,
+                  data: { turbo_confirm: "Cancel this walk request?" } %>
+          <% end %>
         </li>
       <% end %>
     </ul>
