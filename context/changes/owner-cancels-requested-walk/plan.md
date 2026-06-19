@@ -179,13 +179,13 @@ Add the cancel button to the walks index view for REQUESTED-state walks. Write i
 
 #### Automated
 
-- [x] 2.1 Integration tests pass: walks_cancel_test.rb
-- [x] 2.2 Full suite passes: bin/rails test
-- [x] 2.3 Rubocop passes on index.html.erb and walks_cancel_test.rb
+- [x] 2.1 Integration tests pass: walks_cancel_test.rb — 41bf26a
+- [x] 2.2 Full suite passes: bin/rails test — 41bf26a
+- [x] 2.3 Rubocop passes on index.html.erb and walks_cancel_test.rb — 41bf26a
 
 #### Manual
 
-- [x] 2.4 Cancel button present on REQUESTED walks, absent on other states
-- [x] 2.5 Browser confirmation dialog appears on click
-- [x] 2.6 Cancel succeeds: walk disappears from list, notice shown
-- [x] 2.7 Race simulation (accept in tab 1, cancel in tab 2) shows "This request was already accepted by a walker."
+- [x] 2.4 Cancel button present on REQUESTED walks, absent on other states — 41bf26a
+- [x] 2.5 Browser confirmation dialog appears on click — 41bf26a
+- [x] 2.6 Cancel succeeds: walk disappears from list, notice shown — 41bf26a
+- [x] 2.7 Race simulation (accept in tab 1, cancel in tab 2) shows "This request was already accepted by a walker." — 41bf26a
