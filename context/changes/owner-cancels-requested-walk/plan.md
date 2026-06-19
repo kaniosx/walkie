@@ -167,25 +167,25 @@ Add the cancel button to the walks index view for REQUESTED-state walks. Write i
 
 #### Automated
 
-- [x] 1.1 Rubocop passes on walks_controller.rb and routes.rb
+- [x] 1.1 Rubocop passes on walks_controller.rb and routes.rb — 51d48d3
 
 #### Manual
 
-- [ ] 1.2 POST /walks/:id/cancel on REQUESTED walk → notice "Walk request cancelled."
-- [ ] 1.3 POST /walks/:id/cancel on ACCEPTED walk → alert "This request was already accepted by a walker."
-- [ ] 1.4 POST /walks/:id/cancel on another owner's walk → 404
+- [x] 1.2 POST /walks/:id/cancel on REQUESTED walk → notice "Walk request cancelled."
+- [x] 1.3 POST /walks/:id/cancel on ACCEPTED walk → alert "This request was already accepted by a walker."
+- [x] 1.4 POST /walks/:id/cancel on another owner's walk → 404
 
 ### Phase 2: View + Integration Tests
 
 #### Automated
 
-- [ ] 2.1 Integration tests pass: walks_cancel_test.rb
-- [ ] 2.2 Full suite passes: bin/rails test
-- [ ] 2.3 Rubocop passes on index.html.erb and walks_cancel_test.rb
+- [x] 2.1 Integration tests pass: walks_cancel_test.rb
+- [x] 2.2 Full suite passes: bin/rails test
+- [x] 2.3 Rubocop passes on index.html.erb and walks_cancel_test.rb
 
 #### Manual
 
-- [ ] 2.4 Cancel button present on REQUESTED walks, absent on other states
-- [ ] 2.5 Browser confirmation dialog appears on click
-- [ ] 2.6 Cancel succeeds: walk disappears from list, notice shown
-- [ ] 2.7 Race simulation (accept in tab 1, cancel in tab 2) shows "This request was already accepted by a walker."
+- [x] 2.4 Cancel button present on REQUESTED walks, absent on other states
+- [x] 2.5 Browser confirmation dialog appears on click
+- [x] 2.6 Cancel succeeds: walk disappears from list, notice shown
+- [x] 2.7 Race simulation (accept in tab 1, cancel in tab 2) shows "This request was already accepted by a walker."
