@@ -200,14 +200,14 @@ Add the "My active walk" view with conditional Start/End buttons, add the "My wa
 
 #### Automated
 
-- [x] 2.1 Integration tests pass: walker_walks_test.rb
-- [x] 2.2 Full suite passes: bin/rails test
-- [x] 2.3 Rubocop passes on walker_walks_test.rb
+- [x] 2.1 Integration tests pass: walker_walks_test.rb — 7753393
+- [x] 2.2 Full suite passes: bin/rails test — 7753393
+- [x] 2.3 Rubocop passes on walker_walks_test.rb — 7753393
 
 #### Manual
 
-- [x] 2.4 Walker with accepted walk sees "Start walk" button on /walker_walks
-- [x] 2.5 Walker with in-progress walk sees "End walk" button with confirm dialog
-- [x] 2.6 Walker with no active walk sees empty state + link to open requests
-- [x] 2.7 "My walk" nav link visible for walkers, absent for owners
-- [x] 2.8 Full start → complete flow works end to end
+- [x] 2.4 Walker with accepted walk sees "Start walk" button on /walker_walks — 7753393
+- [x] 2.5 Walker with in-progress walk sees "End walk" button with confirm dialog — 7753393
+- [x] 2.6 Walker with no active walk sees empty state + link to open requests — 7753393
+- [x] 2.7 "My walk" nav link visible for walkers, absent for owners — 7753393
+- [x] 2.8 Full start → complete flow works end to end — 7753393
