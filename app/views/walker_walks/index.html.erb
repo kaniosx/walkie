@@ -1,0 +1,20 @@
+<div class="form-container">
+  <h1>My active walk</h1>
+
+  <% if @walk %>
+    <p>
+      <strong><%= @walk.dog.name %></strong> (<%= @walk.dog.breed %>) —
+      <%= @walk.state.humanize %>
+    </p>
+
+    <% if @walk.accepted? %>
+      <%= button_to "Start walk", start_walker_walk_path(@walk), method: :post %>
+    <% elsif @walk.in_progress? %>
+      <%= button_to "End walk", complete_walker_walk_path(@walk), method: :post,
+            data: { turbo_confirm: "End walk? This cannot be undone." } %>
+    <% end %>
+  <% else %>
+    <p>You have no active walk right now.</p>
+    <p><%= link_to "See open walk requests", open_requests_path %></p>
+  <% end %>
+</div>

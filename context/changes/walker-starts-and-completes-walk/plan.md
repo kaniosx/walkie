@@ -186,28 +186,28 @@ Add the "My active walk" view with conditional Start/End buttons, add the "My wa
 
 #### Automated
 
-- [x] 1.1 Rubocop passes on walker_walks_controller.rb and routes.rb
+- [x] 1.1 Rubocop passes on walker_walks_controller.rb and routes.rb — f282576
 
 #### Manual
 
-- [ ] 1.2 GET /walker_walks with accepted walk → 200
-- [ ] 1.3 POST /walker_walks/:id/start on ACCEPTED walk → notice "Walk started — you're on your way!"
-- [ ] 1.4 POST /walker_walks/:id/start on IN_PROGRESS walk → alert "This walk can no longer be updated."
-- [ ] 1.5 POST /walker_walks/:id/complete on IN_PROGRESS walk → redirect to open_requests, notice "Walk completed. Well done!"
-- [ ] 1.6 POST /walker_walks/:id/complete on another walker's walk → 404
+- [x] 1.2 GET /walker_walks with accepted walk → 200
+- [x] 1.3 POST /walker_walks/:id/start on ACCEPTED walk → notice "Walk started — you're on your way!"
+- [x] 1.4 POST /walker_walks/:id/start on IN_PROGRESS walk → alert "This walk can no longer be updated."
+- [x] 1.5 POST /walker_walks/:id/complete on IN_PROGRESS walk → redirect to open_requests, notice "Walk completed. Well done!"
+- [x] 1.6 POST /walker_walks/:id/complete on another walker's walk → 404
 
 ### Phase 2: View + Nav Link + Integration Tests
 
 #### Automated
 
-- [ ] 2.1 Integration tests pass: walker_walks_test.rb
-- [ ] 2.2 Full suite passes: bin/rails test
-- [ ] 2.3 Rubocop passes on walker_walks_test.rb
+- [x] 2.1 Integration tests pass: walker_walks_test.rb
+- [x] 2.2 Full suite passes: bin/rails test
+- [x] 2.3 Rubocop passes on walker_walks_test.rb
 
 #### Manual
 
-- [ ] 2.4 Walker with accepted walk sees "Start walk" button on /walker_walks
-- [ ] 2.5 Walker with in-progress walk sees "End walk" button with confirm dialog
-- [ ] 2.6 Walker with no active walk sees empty state + link to open requests
-- [ ] 2.7 "My walk" nav link visible for walkers, absent for owners
-- [ ] 2.8 Full start → complete flow works end to end
+- [x] 2.4 Walker with accepted walk sees "Start walk" button on /walker_walks
+- [x] 2.5 Walker with in-progress walk sees "End walk" button with confirm dialog
+- [x] 2.6 Walker with no active walk sees empty state + link to open requests
+- [x] 2.7 "My walk" nav link visible for walkers, absent for owners
+- [x] 2.8 Full start → complete flow works end to end
