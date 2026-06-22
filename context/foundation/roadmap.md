@@ -3,7 +3,7 @@ project: Walkie
 version: 1
 status: draft
 created: 2026-05-25
-updated: 2026-06-19
+updated: 2026-06-22
 prd_version: 1
 main_goal: market-feedback
 top_blocker: time
@@ -42,7 +42,7 @@ PRD §Business Logic §Singleness states: *"the binding IS the confirmation"*. S
 | S-04  | owner-creates-walk-request         | Owner creates a walk request (REQUESTED), sees it in history      | S-01, S-02, S-03, F-02    | FR-009, US-01           | done     |
 | S-05  | walker-accepts-request             | Walker sees open list + accepts (REQ→ACCEPTED)                    | S-01, S-02, S-04, F-02    | FR-011, 012, US-02      | done     |
 | S-06  | owner-cancels-requested-walk       | Owner cancels their request while still in REQUESTED              | S-04                      | FR-010                  | done     |
-| S-07  | walker-starts-and-completes-walk   | Walker starts (ACC→IP) + ends walk (IP→COMPLETED)                 | S-05                      | FR-013, 014, US-03      | proposed |
+| S-07  | walker-starts-and-completes-walk   | Walker starts (ACC→IP) + ends walk (IP→COMPLETED)                 | S-05                      | FR-013, 014, US-03      | done     |
 | S-08  | owner-walk-history                 | Owner sees their own walk history                                 | S-04                      | FR-015                  | proposed |
 | S-09  | walker-walk-history                | Walker sees their own walk history                                | S-05                      | FR-016                  | proposed |
 | S-10  | owner-removes-dog                  | Owner removes their own dog                                       | S-03                      | FR-008                  | blocked  |
@@ -202,7 +202,7 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 - **Unknowns:**
   - Are "Start walk" and "End walk" two separate screens / actions, or one "Active walk" screen with two buttons? — Owner: downstream `/10x-plan`. Block: no (UX detail).
 - **Risk:** PRD §Open Q #7: no Owner-confirmation of completion. PRD explicitly trusts Walker self-report in v1. This risk is accepted, but it follows directly from S-07: the post-COMPLETED state is immutable, so a Walker error (premature end) is irreversible. Mitigation: clear UI copy ("End walk = walk is finished, this cannot be undone").
-- **Status:** proposed
+- **Status:** done
 
 ### S-08: Owner walk history
 
@@ -302,3 +302,4 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 - **S-04: Owner creates a walk request (REQUESTED), sees it in history** — Archived 2026-06-17 → `context/archive/2026-06-16-owner-creates-walk-request/`. Lesson: —.
 - **S-05: Walker sees open list + accepts (REQ→ACCEPTED)** — Archived 2026-06-17 → `context/archive/2026-06-17-walker-accepts-request/`. Lesson: —.
 - **S-06: Owner cancels their request while still in REQUESTED** — Archived 2026-06-19 → `context/archive/2026-06-19-owner-cancels-requested-walk/`. Lesson: —.
+- **S-07: Walker starts (ACC→IP) + ends walk (IP→COMPLETED)** — Archived 2026-06-22 → `context/archive/2026-06-22-walker-starts-and-completes-walk/`. Lesson: —.

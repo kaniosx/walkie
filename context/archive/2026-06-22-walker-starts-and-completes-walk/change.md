@@ -1,9 +1,10 @@
 ---
 change_id: walker-starts-and-completes-walk
 title: Walker starts + completes a walk (S-07, US-03)
-status: impl_reviewed
+status: archived
 created: 2026-06-22
 updated: 2026-06-22
+archived_at: 2026-06-22T07:41:11Z
 ---
 
 ## Notes
