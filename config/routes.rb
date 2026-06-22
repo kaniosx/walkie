@@ -9,6 +9,12 @@ Rails.application.routes.draw do
   resources :open_requests, only: %i[ index ] do
     member { post :accept }
   end
+  resources :walker_walks, only: %i[ index ] do
+    member do
+      post :start
+      post :complete
+    end
+  end
   resources :passwords, param: :token
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
