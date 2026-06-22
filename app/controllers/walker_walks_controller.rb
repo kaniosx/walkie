@@ -2,6 +2,10 @@ class WalkerWalksController < ApplicationController
   include WalkerOnly
 
   def index
+    # A walker holds at most one active walk at a time: the accept! compare-and-swap
+    # enforces Singleness at the DB level, and the one-active-per-dog guard prevents
+    # a second concurrent request for the same dog. .first is safe; a second matching
+    # row would indicate a data anomaly, not normal operation.
     @walk = Walk.where(accepted_by_walker_id: current_user.id, state: %w[accepted in_progress])
                 .includes(:dog)
                 .first
