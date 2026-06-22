@@ -1,0 +1,74 @@
+require "test_helper"
+
+class WalkerWalksTest < ActionDispatch::IntegrationTest
+  setup do
+    @owner = User.create!(email_address: "owner@example.com", password: "secret123",
+                          role: "owner", city: "Kraków", postcode: "30-001")
+    @walker = User.create!(email_address: "walker@example.com", password: "secret123",
+                           role: "walker", city: "Kraków", postcode: "30-001")
+    @walker2 = User.create!(email_address: "walker2@example.com", password: "secret123",
+                            role: "walker", city: "Kraków", postcode: "30-001")
+    @dog = @owner.dogs.create!(name: "Rex", breed: "Labrador")
+    @walk = @dog.walks.create!(owner: @owner, city: @owner.city, postcode: @owner.postcode)
+    @walk.accept!(@walker)
+  end
+
+  def sign_in_as(email)
+    post session_path, params: { email_address: email, password: "secret123" }
+  end
+
+  test "walker with accepted walk sees dog name and Start walk button" do
+    sign_in_as "walker@example.com"
+    get walker_walks_path
+    assert_response :success
+    assert_includes response.body, "Rex"
+    assert_includes response.body, "Start walk"
+  end
+
+  test "walker with no active walk sees empty state" do
+    @walk.update_columns(state: "completed", completed_at: Time.current)
+
+    sign_in_as "walker@example.com"
+    get walker_walks_path
+    assert_response :success
+    assert_includes response.body, "You have no active walk right now."
+  end
+
+  test "walker starts accepted walk: redirects with notice and walk is in_progress" do
+    sign_in_as "walker@example.com"
+
+    post start_walker_walk_path(@walk)
+
+    assert_redirected_to walker_walks_path
+    follow_redirect!
+    assert_includes response.body, "Walk started"
+    @walk.reload
+    assert @walk.in_progress?
+  end
+
+  test "walker completes in_progress walk: redirects to open_requests with notice and walk is completed" do
+    @walk.start!(@walker)
+
+    sign_in_as "walker@example.com"
+    post complete_walker_walk_path(@walk)
+
+    assert_redirected_to open_requests_path
+    follow_redirect!
+    assert_includes response.body, "Walk completed. Well done!"
+    @walk.reload
+    assert @walk.completed?
+  end
+
+  test "walker cannot start another walker's accepted walk: responds 404" do
+    sign_in_as "walker2@example.com"
+    post start_walker_walk_path(@walk)
+    assert_response :not_found
+  end
+
+  test "owner cannot reach walker_walks controller: redirected by WalkerOnly" do
+    sign_in_as "owner@example.com"
+    get walker_walks_path
+    assert_redirected_to root_path
+    assert_equal "Only Walkers can do that.", flash[:alert]
+  end
+end

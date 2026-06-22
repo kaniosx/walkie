@@ -32,6 +32,7 @@
           <%= link_to "My requests", walks_path %>
         <% elsif current_user.walker? %>
           <%= link_to "Open requests", open_requests_path %>
+          <%= link_to "My walk", walker_walks_path %>
         <% end %>
         <%= button_to "Sign out", session_path, method: :delete %>
       <% end %>
