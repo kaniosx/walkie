@@ -71,4 +71,22 @@ class WalkerWalksTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_path
     assert_equal "Only Walkers can do that.", flash[:alert]
   end
+
+  test "walker cannot complete another walker's in_progress walk: responds 404" do
+    @walk.start!(@walker)
+    sign_in_as "walker2@example.com"
+    post complete_walker_walk_path(@walk)
+    assert_response :not_found
+  end
+
+  test "unauthenticated access redirects to sign-in" do
+    get walker_walks_path
+    assert_redirected_to new_session_path
+
+    post start_walker_walk_path(@walk)
+    assert_redirected_to new_session_path
+
+    post complete_walker_walk_path(@walk)
+    assert_redirected_to new_session_path
+  end
 end
