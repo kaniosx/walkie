@@ -9,6 +9,14 @@ class WalkerWalksController < ApplicationController
     @walk = Walk.where(accepted_by_walker_id: current_user.id, state: %w[accepted in_progress])
                 .includes(:dog)
                 .first
+
+    # Strictly scoped to accepted_by_walker_id (not all visible walks) so open
+    # requests from other Owners can never leak into this walker's history.
+    @past_walks = Walk.where(accepted_by_walker_id: current_user.id)
+                      .where.not(state: %w[accepted in_progress])
+                      .includes(:dog, :owner)
+                      .order(created_at: :desc)
+                      .limit(50)
   end
 
   def start
