@@ -7,6 +7,7 @@ class WalksController < ApplicationController
                                 .where(state: %w[completed cancelled])
                                 .includes(:dog, :accepted_by_walker)
                                 .order(created_at: :desc)
+                                .limit(50)
   end
 
   def cancel
