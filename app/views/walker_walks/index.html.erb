@@ -17,4 +17,18 @@
     <p>You have no active walk right now.</p>
     <p><%= link_to "See open walk requests", open_requests_path %></p>
   <% end %>
+
+  <h2>Past walks</h2>
+  <% if @past_walks.any? %>
+    <ul>
+      <% @past_walks.each do |past| %>
+        <li>
+          <strong><%= past.dog.name %></strong> —
+          <%= past.state.humanize %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No past walks yet.</p>
+  <% end %>
 </div>

@@ -79,6 +79,36 @@ class WalkerWalksTest < ActionDispatch::IntegrationTest
     assert_response :not_found
   end
 
+  test "completed walk appears in walker's past walk history" do
+    @walk.start!(@walker)
+    @walk.complete!(@walker)
+
+    sign_in_as "walker@example.com"
+    get walker_walks_path
+    assert_response :success
+    assert_includes response.body, "Rex"
+    assert_includes response.body, "Completed"
+    assert_not_includes response.body, "No past walks yet."
+  end
+
+  test "walker with no completed walks sees past walks empty state" do
+    # Walk stays in accepted state (not completed), so @past_walks is empty
+    sign_in_as "walker@example.com"
+    get walker_walks_path
+    assert_response :success
+    assert_includes response.body, "No past walks yet."
+  end
+
+  test "walker cannot see another walker's completed walk in history" do
+    @walk.start!(@walker)
+    @walk.complete!(@walker)
+
+    sign_in_as "walker2@example.com"
+    get walker_walks_path
+    assert_response :success
+    assert_not_includes response.body, "Rex"
+  end
+
   test "unauthenticated access redirects to sign-in" do
     get walker_walks_path
     assert_redirected_to new_session_path
