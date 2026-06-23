@@ -54,6 +54,13 @@ class WalksTest < ActionDispatch::IntegrationTest
     assert_includes response.body, "already has an active walk request"
   end
 
+  test "a walker cannot access the walk index: redirected by OwnerOnly" do
+    sign_in_as "walker@example.com"
+    get walks_path
+    assert_redirected_to root_path
+    assert_equal "Only Owners can do that.", flash[:alert]
+  end
+
   test "a walker cannot create a walk request" do
     sign_in_as "walker@example.com"
     assert_no_difference -> { Walk.count } do
@@ -81,7 +88,20 @@ class WalksTest < ActionDispatch::IntegrationTest
     assert_redirected_to new_session_path
   end
 
-  test "cancelled walk appears in the walk index" do
+  test "past walks section does not show another owner's completed walk" do
+    other_dog = @other_owner.dogs.create!(name: "Fido", breed: "Beagle")
+    other_walk = other_dog.walks.create!(owner: @other_owner, city: @other_owner.city, postcode: @other_owner.postcode)
+    other_walk.accept!(@walker)
+    other_walk.start!(@walker)
+    other_walk.complete!(@walker)
+
+    sign_in_as "owner@example.com"
+    get walks_path
+    assert_response :success
+    assert_not_includes response.body, "Fido"
+  end
+
+  test "cancelled walk appears in the Past section of the walk index" do
     walk = @dog.walks.create!(owner: @owner, city: @owner.city, postcode: @owner.postcode)
     walk.cancel!(@owner)
 
@@ -90,9 +110,11 @@ class WalksTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_includes response.body, "Rex"
     assert_includes response.body, "Cancelled"
+    assert_not_includes response.body, "No past walks yet."
+    assert_includes response.body, "No active walk requests."
   end
 
-  test "completed walk appears in the walk index" do
+  test "completed walk appears in the Past section of the walk index" do
     walk = @dog.walks.create!(owner: @owner, city: @owner.city, postcode: @owner.postcode)
     walk.accept!(@walker)
     walk.start!(@walker)
@@ -103,5 +125,7 @@ class WalksTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_includes response.body, "Rex"
     assert_includes response.body, "Completed"
+    assert_not_includes response.body, "No past walks yet."
+    assert_includes response.body, "No active walk requests."
   end
 end

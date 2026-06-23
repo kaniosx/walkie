@@ -28,12 +28,12 @@
           <strong><%= walk.dog.name %></strong> (<%= walk.dog.breed %>) —
           <%= walk.state.humanize %>
           <% if walk.completed? %>
-            <span><%= walk.completed_at.to_fs(:short) %></span>
+            <span><%= walk.completed_at&.to_fs(:short) %></span>
             <% if walk.accepted_by_walker %>
               · Walked by <%= walk.accepted_by_walker.display_label %>
             <% end %>
           <% elsif walk.cancelled? %>
-            <span><%= walk.cancelled_at.to_fs(:short) %></span>
+            <span><%= walk.cancelled_at&.to_fs(:short) %></span>
           <% end %>
         </li>
       <% end %>
