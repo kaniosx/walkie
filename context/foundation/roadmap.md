@@ -248,22 +248,22 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 | F-01       | auth-and-role-typing               | Foundation: Rails 8 auth + role-typed accounts                   | done                  | Archived 2026-06-15 → `context/archive/2026-05-29-auth-and-role-typing/`  |
 | F-02       | domain-schema-walks-and-dogs       | Foundation: Dog + Walk schema with DB-level invariants           | done                  | Archived 2026-06-15 → `context/archive/2026-06-02-domain-schema-walks-and-dogs/` |
 | F-03       | test-infrastructure-scaffold       | Foundation: Minitest + coverage tooling                          | done                  | Archived 2026-06-15 → `context/archive/2026-06-02-test-infrastructure-scaffold/` |
-| S-01       | signup-and-signin-with-role        | Sign-up + sign-in with role choice (Owner/Walker)                | yes                   | All Foundations done — **recommended next move** (`/10x-plan signup-and-signin-with-role`) |
-| S-02       | profile-with-city                  | User profile with city/postcode                                  | no                    | Waits on S-01                                                         |
-| S-03       | owner-manages-dog                  | Owner adds + edits their own dog                                 | no                    | Waits on S-01 (F-02 done)                                            |
-| S-04       | owner-creates-walk-request         | Owner creates a walk request (US-01)                             | no                    | Waits on S-01, S-02, S-03 (F-02 done)                                |
-| S-05       | walker-accepts-request             | **North star.** Walker accepts a request (US-02)                 | no                    | Waits on S-04 (Foundations done)                                     |
-| S-06       | owner-cancels-requested-walk       | Owner cancels a request in REQUESTED                             | no                    | Waits on S-04                                                         |
-| S-07       | walker-starts-and-completes-walk   | Walker start + end walk (US-03)                                  | no                    | Waits on S-05                                                         |
-| S-08       | owner-walk-history                 | Owner sees their own walk history                                | no                    | Waits on S-04                                                         |
-| S-09       | walker-walk-history                | Walker sees their own walk history                               | no                    | Waits on S-05                                                         |
+| S-01       | signup-and-signin-with-role        | Sign-up + sign-in with role choice (Owner/Walker)                | done                  | Archived 2026-06-15 → `context/archive/2026-06-15-signup-and-signin-with-role/` |
+| S-02       | profile-with-city                  | User profile with city/postcode                                  | done                  | Archived 2026-06-16 → `context/archive/2026-06-16-profile-with-city/` |
+| S-03       | owner-manages-dog                  | Owner adds + edits their own dog                                 | done                  | Archived 2026-06-16 → `context/archive/2026-06-16-owner-manages-dog/` |
+| S-04       | owner-creates-walk-request         | Owner creates a walk request (US-01)                             | done                  | Archived 2026-06-17 → `context/archive/2026-06-16-owner-creates-walk-request/` |
+| S-05       | walker-accepts-request             | **North star.** Walker accepts a request (US-02)                 | done                  | Archived 2026-06-17 → `context/archive/2026-06-17-walker-accepts-request/` |
+| S-06       | owner-cancels-requested-walk       | Owner cancels a request in REQUESTED                             | done                  | Archived 2026-06-19 → `context/archive/2026-06-19-owner-cancels-requested-walk/` |
+| S-07       | walker-starts-and-completes-walk   | Walker start + end walk (US-03)                                  | done                  | Archived 2026-06-22 → `context/archive/2026-06-22-walker-starts-and-completes-walk/` |
+| S-08       | owner-walk-history                 | Owner sees their own walk history                                | done                  | Archived 2026-06-23 → `context/archive/2026-06-23-owner-walk-history/` |
+| S-09       | walker-walk-history                | Walker sees their own walk history                               | done                  | Archived 2026-06-23 → `context/archive/2026-06-23-walker-walk-history/` |
 | S-10       | owner-removes-dog                  | Owner removes own dog (with policy on past walks)                | no                    | **Blocked** by Open Q #4                                              |
 
 ## Open Roadmap Questions
 
 1. **Sharpen the Owner persona before v2 scope.** PRD §Open Q #1: v1 is deliberately broad ("anyone with a dog"). Risk: design tradeoffs resurfacing per feature. Owner: user. Block: **roadmap-wide** for v2; no v1 slice. Resolving it unblocks UI-heavy decisions in later slices (future, not v1).
 2. **Walker trust / verification.** PRD §Open Q #3. FR-002 leaves Walker self-sign-up open. Owner: user / downstream design. Block: **before any real (non-test) Owner uses Walkie**. This does NOT block implementation of v1 slices (the PRD knowingly leaves the gap), but it blocks any real launch beyond the two-test-user smoke. Resolving it promotes the entire roadmap from "MVP demonstrable" to "MVP launchable".
-3. **Postgres upgrade decision deadline 2026-06-17.** The free Postgres tier on Render expires 2026-06-24 (per `context/deployment/deploy-plan.md`). Decision: upgrade to Basic-256MB ($7) or Basic-1GB ($20 — recommended by `infrastructure.md` because of Solid Queue × connection pool). Owner: user. Block: **infra-wide** for measuring the 2s latency NFR; all NFR measurements over the free tier are irrevocably skewed by 60s cold start.
+3. **⚠️ URGENT — Postgres free tier expires 2026-06-24 (tomorrow).** Upgrade deadline (T-7) was 2026-06-17 and has passed. Decision: upgrade to Basic-256MB ($7) or Basic-1GB ($20 — recommended by `infrastructure.md` because of Solid Queue × connection pool). Owner: user. Block: **infra-wide** for measuring the 2s latency NFR; all NFR measurements over the free tier are irrevocably skewed by 60s cold start. **Action required today.**
 
 ## Parked
 
