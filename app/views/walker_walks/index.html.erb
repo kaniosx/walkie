@@ -25,8 +25,12 @@
         <li>
           <strong><%= past.dog.name %></strong> (<%= past.dog.breed %>) —
           <%= past.state.humanize %>
-          <span><%= past.completed_at&.to_fs(:short) %></span>
-          · Walked for <%= past.owner.display_label %>
+          <% if past.completed? %>
+            <span><%= past.completed_at&.to_fs(:short) %></span>
+          <% elsif past.cancelled? %>
+            <span><%= past.cancelled_at&.to_fs(:short) %></span>
+          <% end %>
+          <% if past.owner %> · Walked for <%= past.owner.display_label %><% end %>
         </li>
       <% end %>
     </ul>
