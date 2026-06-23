@@ -1,7 +1,7 @@
 ---
 change_id: owner-walk-history
 title: Owner walk history — active / past split with timestamps (S-08)
-status: implementing
+status: implemented
 created: 2026-06-23
 updated: 2026-06-23
 ---
