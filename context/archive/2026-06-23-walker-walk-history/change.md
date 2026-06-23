@@ -1,9 +1,10 @@
 ---
 change_id: walker-walk-history
 title: Walker walk history — Past section on My walk page (S-09)
-status: impl_reviewed
+status: archived
 created: 2026-06-23
 updated: 2026-06-23
+archived_at: 2026-06-23T11:48:06Z
 ---
 
 ## Notes

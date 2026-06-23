@@ -44,7 +44,7 @@ PRD §Business Logic §Singleness states: *"the binding IS the confirmation"*. S
 | S-06  | owner-cancels-requested-walk       | Owner cancels their request while still in REQUESTED              | S-04                      | FR-010                  | done     |
 | S-07  | walker-starts-and-completes-walk   | Walker starts (ACC→IP) + ends walk (IP→COMPLETED)                 | S-05                      | FR-013, 014, US-03      | done     |
 | S-08  | owner-walk-history                 | Owner sees their own walk history                                 | S-04                      | FR-015                  | done     |
-| S-09  | walker-walk-history                | Walker sees their own walk history                                | S-05                      | FR-016                  | proposed |
+| S-09  | walker-walk-history                | Walker sees their own walk history                                | S-05                      | FR-016                  | done     |
 | S-10  | owner-removes-dog                  | Owner removes their own dog                                       | S-03                      | FR-008                  | blocked  |
 
 ## Streams
@@ -226,7 +226,7 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Symmetric to S-08. Scoping: `Walk.where(accepted_by_walker: current_user)` — never `Walk.where(walker_visible_to: current_user)` (the latter would leak other Walkers' open requests into "history").
-- **Status:** proposed
+- **Status:** done
 
 ### S-10: Owner removes their own dog
 
@@ -304,3 +304,4 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 - **S-06: Owner cancels their request while still in REQUESTED** — Archived 2026-06-19 → `context/archive/2026-06-19-owner-cancels-requested-walk/`. Lesson: —.
 - **S-07: Walker starts (ACC→IP) + ends walk (IP→COMPLETED)** — Archived 2026-06-22 → `context/archive/2026-06-22-walker-starts-and-completes-walk/`. Lesson: —.
 - **S-08: Owner sees their own walk history** — Archived 2026-06-23 → `context/archive/2026-06-23-owner-walk-history/`. Lesson: —.
+- **S-09: Walker sees their own walk history** — Archived 2026-06-23 → `context/archive/2026-06-23-walker-walk-history/`. Lesson: —.
