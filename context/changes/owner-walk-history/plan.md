@@ -164,9 +164,9 @@ Past section:
 
 #### Automated
 
-- [x] 1.1 Integration tests pass: walks_test.rb
-- [x] 1.2 Full suite passes: bin/rails test
-- [x] 1.3 Rubocop passes on walks_controller.rb and walks_test.rb
+- [x] 1.1 Integration tests pass: walks_test.rb — 8d5ced2
+- [x] 1.2 Full suite passes: bin/rails test — 8d5ced2
+- [x] 1.3 Rubocop passes on walks_controller.rb and walks_test.rb — 8d5ced2
 
 #### Manual
 
@@ -176,12 +176,12 @@ Past section:
 
 #### Automated
 
-- [ ] 2.1 Full suite passes: bin/rails test
-- [ ] 2.2 Rubocop passes on walks/index.html.erb
+- [x] 2.1 Full suite passes: bin/rails test
+- [x] 2.2 Rubocop passes on walks/index.html.erb
 
 #### Manual
 
-- [ ] 2.3 REQUESTED walk appears in Active section with Cancel button
-- [ ] 2.4 COMPLETED walk appears in Past section with walker name and completed_at
-- [ ] 2.5 CANCELLED walk appears in Past section with cancelled_at, no walker name
-- [ ] 2.6 Cross-owner isolation: Owner B cannot see Owner A's walks
+- [x] 2.3 REQUESTED walk appears in Active section with Cancel button
+- [x] 2.4 COMPLETED walk appears in Past section with walker name and completed_at
+- [x] 2.5 CANCELLED walk appears in Past section with cancelled_at, no walker name
+- [x] 2.6 Cross-owner isolation: Owner B cannot see Owner A's walks

@@ -1,12 +1,12 @@
 <div class="form-container">
   <h1>My walk requests</h1>
 
-  <% all_walks = @active_walks + @past_walks %>
-  <% if all_walks.any? %>
+  <h2>Active</h2>
+  <% if @active_walks.any? %>
     <ul>
-      <% all_walks.each do |walk| %>
+      <% @active_walks.each do |walk| %>
         <li>
-          <strong><%= walk.dog.name %></strong> —
+          <strong><%= walk.dog.name %></strong> (<%= walk.dog.breed %>) —
           <%= walk.state.humanize %>
           <span><%= walk.created_at.to_fs(:short) %></span>
           <% if walk.requested? %>
@@ -17,6 +17,28 @@
       <% end %>
     </ul>
   <% else %>
-    <p>No walk requests yet.</p>
+    <p>No active walk requests.</p>
+  <% end %>
+
+  <h2>Past</h2>
+  <% if @past_walks.any? %>
+    <ul>
+      <% @past_walks.each do |walk| %>
+        <li>
+          <strong><%= walk.dog.name %></strong> (<%= walk.dog.breed %>) —
+          <%= walk.state.humanize %>
+          <% if walk.completed? %>
+            <span><%= walk.completed_at.to_fs(:short) %></span>
+            <% if walk.accepted_by_walker %>
+              · Walked by <%= walk.accepted_by_walker.display_label %>
+            <% end %>
+          <% elsif walk.cancelled? %>
+            <span><%= walk.cancelled_at.to_fs(:short) %></span>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No past walks yet.</p>
   <% end %>
 </div>
