@@ -23,8 +23,10 @@
     <ul>
       <% @past_walks.each do |past| %>
         <li>
-          <strong><%= past.dog.name %></strong> —
+          <strong><%= past.dog.name %></strong> (<%= past.dog.breed %>) —
           <%= past.state.humanize %>
+          <span><%= past.completed_at&.to_fs(:short) %></span>
+          · Walked for <%= past.owner.display_label %>
         </li>
       <% end %>
     </ul>
