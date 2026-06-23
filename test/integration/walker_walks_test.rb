@@ -26,7 +26,8 @@ class WalkerWalksTest < ActionDispatch::IntegrationTest
   end
 
   test "walker with no active walk sees empty state" do
-    @walk.update_columns(state: "completed", completed_at: Time.current)
+    @walk.start!(@walker)
+    @walk.complete!(@walker)
 
     sign_in_as "walker@example.com"
     get walker_walks_path
@@ -89,6 +90,8 @@ class WalkerWalksTest < ActionDispatch::IntegrationTest
     assert_includes response.body, "Rex"
     assert_includes response.body, "Completed"
     assert_not_includes response.body, "No past walks yet."
+    assert_not_includes response.body, "Start walk"
+    assert_not_includes response.body, "End walk"
   end
 
   test "walker with no completed walks sees past walks empty state" do
