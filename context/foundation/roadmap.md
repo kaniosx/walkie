@@ -3,7 +3,7 @@ project: Walkie
 version: 1
 status: draft
 created: 2026-05-25
-updated: 2026-06-22
+updated: 2026-06-23
 prd_version: 1
 main_goal: market-feedback
 top_blocker: time
@@ -43,7 +43,7 @@ PRD §Business Logic §Singleness states: *"the binding IS the confirmation"*. S
 | S-05  | walker-accepts-request             | Walker sees open list + accepts (REQ→ACCEPTED)                    | S-01, S-02, S-04, F-02    | FR-011, 012, US-02      | done     |
 | S-06  | owner-cancels-requested-walk       | Owner cancels their request while still in REQUESTED              | S-04                      | FR-010                  | done     |
 | S-07  | walker-starts-and-completes-walk   | Walker starts (ACC→IP) + ends walk (IP→COMPLETED)                 | S-05                      | FR-013, 014, US-03      | done     |
-| S-08  | owner-walk-history                 | Owner sees their own walk history                                 | S-04                      | FR-015                  | proposed |
+| S-08  | owner-walk-history                 | Owner sees their own walk history                                 | S-04                      | FR-015                  | done     |
 | S-09  | walker-walk-history                | Walker sees their own walk history                                | S-05                      | FR-016                  | proposed |
 | S-10  | owner-removes-dog                  | Owner removes their own dog                                       | S-03                      | FR-008                  | blocked  |
 
@@ -214,7 +214,7 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Low. Main gotcha: the scoping query must be binding (`Walk.where(owner: current_user)` enforced at the controller, not only in the view). Test must include "Owner B cannot see Owner A's walk" — a direct test for PRD §Guardrails "role separation never leaks".
-- **Status:** proposed
+- **Status:** done
 
 ### S-09: Walker walk history
 
@@ -303,3 +303,4 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 - **S-05: Walker sees open list + accepts (REQ→ACCEPTED)** — Archived 2026-06-17 → `context/archive/2026-06-17-walker-accepts-request/`. Lesson: —.
 - **S-06: Owner cancels their request while still in REQUESTED** — Archived 2026-06-19 → `context/archive/2026-06-19-owner-cancels-requested-walk/`. Lesson: —.
 - **S-07: Walker starts (ACC→IP) + ends walk (IP→COMPLETED)** — Archived 2026-06-22 → `context/archive/2026-06-22-walker-starts-and-completes-walk/`. Lesson: —.
+- **S-08: Owner sees their own walk history** — Archived 2026-06-23 → `context/archive/2026-06-23-owner-walk-history/`. Lesson: —.
