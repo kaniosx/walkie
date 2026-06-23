@@ -1,7 +1,7 @@
 ---
 change_id: walker-walk-history
 title: Walker walk history — Past section on My walk page (S-09)
-status: implementing
+status: implemented
 created: 2026-06-23
 updated: 2026-06-23
 ---

@@ -160,12 +160,12 @@ Add the Past walks section to the walker walks view, showing dog name, breed, co
 
 #### Automated
 
-- [x] 2.1 Full suite passes: bin/rails test
-- [x] 2.2 Rubocop passes on walker_walks_test.rb
+- [x] 2.1 Full suite passes: bin/rails test — 708d019
+- [x] 2.2 Rubocop passes on walker_walks_test.rb — 708d019
 
 #### Manual
 
-- [x] 2.3 Completed walk appears in Past section with dog name, breed, completed_at, and owner name
-- [x] 2.4 No completed walks → "No past walks yet." shown
-- [x] 2.5 Walker B cannot see Walker A's completed walks
-- [x] 2.6 Active walk still displays correctly above Past section
+- [x] 2.3 Completed walk appears in Past section with dog name, breed, completed_at, and owner name — 708d019
+- [x] 2.4 No completed walks → "No past walks yet." shown — 708d019
+- [x] 2.5 Walker B cannot see Walker A's completed walks — 708d019
+- [x] 2.6 Active walk still displays correctly above Past section — 708d019
