@@ -80,4 +80,28 @@ class WalksTest < ActionDispatch::IntegrationTest
     post walks_path, params: { dog_id: @dog.id }
     assert_redirected_to new_session_path
   end
+
+  test "cancelled walk appears in the walk index" do
+    walk = @dog.walks.create!(owner: @owner, city: @owner.city, postcode: @owner.postcode)
+    walk.cancel!(@owner)
+
+    sign_in_as "owner@example.com"
+    get walks_path
+    assert_response :success
+    assert_includes response.body, "Rex"
+    assert_includes response.body, "Cancelled"
+  end
+
+  test "completed walk appears in the walk index" do
+    walk = @dog.walks.create!(owner: @owner, city: @owner.city, postcode: @owner.postcode)
+    walk.accept!(@walker)
+    walk.start!(@walker)
+    walk.complete!(@walker)
+
+    sign_in_as "owner@example.com"
+    get walks_path
+    assert_response :success
+    assert_includes response.body, "Rex"
+    assert_includes response.body, "Completed"
+  end
 end

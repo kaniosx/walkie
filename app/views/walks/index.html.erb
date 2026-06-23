@@ -1,9 +1,10 @@
 <div class="form-container">
   <h1>My walk requests</h1>
 
-  <% if @walks.any? %>
+  <% all_walks = @active_walks + @past_walks %>
+  <% if all_walks.any? %>
     <ul>
-      <% @walks.each do |walk| %>
+      <% all_walks.each do |walk| %>
         <li>
           <strong><%= walk.dog.name %></strong> —
           <%= walk.state.humanize %>
