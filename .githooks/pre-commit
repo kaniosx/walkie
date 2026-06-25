@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+# pre-commit: RuboCop + related Minitest tests on staged Ruby files.
+# Skips gracefully when the Docker web container is not running.
+# Install once: make install-hooks
+set -euo pipefail
+
+step() { printf '\n\033[1;34m▶ %s\033[0m\n' "$1"; }
+ok()   { printf '\033[1;32m✔ %s\033[0m\n'   "$1"; }
+skip() { printf '\033[0;33m– %s\033[0m\n'   "$1"; }
+
+# ── Guard: container must be up ───────────────────────────────────────────────
+if ! docker compose exec -T web true 2>/dev/null; then
+  echo "⚠  Docker web container not running — skipping pre-commit checks (make start)"
+  exit 0
+fi
+
+# ── Staged Ruby files (Added / Copied / Modified) ────────────────────────────
+mapfile -t STAGED < <(
+  git diff --cached --name-only --diff-filter=ACM \
+    | grep -E '\.(rb|rake|gemspec|ru)$' || true
+)
+
+if [ ${#STAGED[@]} -eq 0 ]; then
+  skip "No staged Ruby files"
+  exit 0
+fi
+
+# ── RuboCop ───────────────────────────────────────────────────────────────────
+CONTAINER_FILES=()
+for f in "${STAGED[@]}"; do
+  CONTAINER_FILES+=("/rails/$f")
+done
+
+step "RuboCop (${#STAGED[@]} file(s))"
+docker compose exec -T web bundle exec rubocop --no-color "${CONTAINER_FILES[@]}"
+ok "RuboCop clean"
+
+# ── Related Minitest files ────────────────────────────────────────────────────
+TEST_FILES=()
+for file in "${STAGED[@]}"; do
+  if [[ "$file" =~ _test\.rb$ ]]; then
+    # Staged file is itself a test
+    TEST_FILES+=("/rails/$file")
+  elif [[ "$file" =~ ^app/ ]]; then
+    # Map app/x/foo.rb → test/x/foo_test.rb
+    candidate=$(echo "$file" | sed 's|^app/|test/|; s|\.rb$|_test.rb|')
+    [ -f "$candidate" ] && TEST_FILES+=("/rails/$candidate")
+  fi
+done
+
+if [ ${#TEST_FILES[@]} -eq 0 ]; then
+  skip "No related test files found"
+  exit 0
+fi
+
+step "Tests (${#TEST_FILES[@]} file(s))"
+docker compose exec -T web bin/rails test "${TEST_FILES[@]}"
+ok "All tests passed"

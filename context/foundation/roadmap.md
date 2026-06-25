@@ -46,6 +46,11 @@ PRD §Business Logic §Singleness states: *"the binding IS the confirmation"*. S
 | S-08  | owner-walk-history                 | Owner sees their own walk history                                 | S-04                      | FR-015                  | done     |
 | S-09  | walker-walk-history                | Walker sees their own walk history                                | S-05                      | FR-016                  | done     |
 | S-10  | owner-removes-dog                  | Owner removes their own dog                                       | S-03                      | FR-008                  | blocked  |
+| U-01  | tailwind-setup                     | (foundation) Tailwind CSS + design tokens wired into Propshaft    | S-01                      | §NFR (usability)        | proposed |
+| U-02  | ui-layout-and-nav                  | Responsive layout shell + role-aware navbar + flash messages      | U-01                      | FR-001..004 (UX)        | proposed |
+| U-03  | ui-auth-and-profile                | Sign-in, sign-up, profile edit screens styled                     | U-01, U-02                | FR-001..005             | proposed |
+| U-04  | ui-owner-dashboard                 | Dog cards, walk-request form, owner walk-history screen styled    | U-01, U-02                | FR-006..010, FR-015     | proposed |
+| U-05  | ui-walker-dashboard                | Open-requests list, accept/start/complete cards, history styled   | U-01, U-02                | FR-011..014, FR-016     | proposed |
 
 ## Streams
 
@@ -58,6 +63,7 @@ Navigation aid — groups items sharing a Prerequisites chain. Canonical orderin
 | C      | Marketplace binding (north star)   | `S-05` → `S-07` → `S-09`                                           | Joins Stream B at `S-04` (Walker needs something to accept). Validation milestone lands here.         |
 | D      | Verification scaffold              | `F-03`                                                             | Parallel with F-01/F-02. Unlocks the coverage gate (≥80%) on every slice.                             |
 | E      | Blocked by product decision        | `S-10`                                                             | Waiting on Open Q #4 (what happens to walk history when a dog is removed).                            |
+| F      | UI / UX polish                     | `U-01` → `U-02` → {`U-03`, `U-04`, `U-05`}                        | Adds Tailwind + styled flows for auth, Owner, and Walker journeys. U-03/04/05 run in parallel.        |
 
 ## Baseline
 
@@ -241,6 +247,67 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 - **Risk:** The chosen policy drives schema design in F-02 (foreign key constraint `RESTRICT` vs `NULLIFY` vs soft-delete column). F-02 leaves this decision open, but `/10x-plan owner-removes-dog` may have to touch F-02 retroactively. Recommended: resolve Open Q #4 **before** F-02 is finalized, or adopt soft-delete as the default since it doesn't close any of the options.
 - **Status:** blocked
 
+### U-01: Tailwind CSS setup + design tokens
+
+- **Outcome:** (foundation) `tailwindcss-rails` gem installed (standalone binary — no Node/npm required), Tailwind config wired into Propshaft + importmap pipeline, application layout includes the compiled stylesheet. A minimal design-token layer defined in `tailwind.config.js`: brand colour palette (2–3 colours), type scale, spacing scale. The existing views remain functional; no visual changes required in this slice.
+- **Change ID:** `tailwind-setup`
+- **PRD refs:** §NFR (usability, responsiveness implied by mobile-browser-only MVP)
+- **Prerequisites:** S-01 (views must exist before we can verify the pipeline works end-to-end)
+- **Parallel with:** —
+- **Blockers:** —
+- **Unknowns:**
+  - Which brand direction? A short colour palette decision is needed before tokens are written. — Owner: user. Block: no (a neutral palette is fine as a placeholder; can be updated when brand is decided).
+- **Risk:** `tailwindcss-rails` ships a standalone Tailwind CLI binary; this is the correct approach for a Rails 8 + Propshaft + importmap stack (no Webpack/esbuild). Misconfiguring content paths (`content: ["./app/views/**/*.html.erb", ...]`) is the most common failure mode — classes that aren't scanned are purged and silently absent in production.
+- **Status:** proposed
+
+### U-02: Global layout shell + role-aware navigation
+
+- **Outcome:** Every page uses a shared layout shell: responsive top navbar with app logo, role-aware navigation links (Owner sees "My dogs / Post a walk / History"; Walker sees "Open requests / History"), a sign-out button, and a flash message area. Mobile hamburger menu if viewport < md breakpoint.
+- **Change ID:** `ui-layout-and-nav`
+- **PRD refs:** FR-001 (sign-out), §Access Control (role-aware visibility)
+- **Prerequisites:** U-01
+- **Parallel with:** —
+- **Blockers:** —
+- **Unknowns:** —
+- **Risk:** Flash messages must survive Turbo Drive page transitions — `data-turbo-permanent` on the flash container or a Stimulus controller that auto-dismisses after a timeout. Plain `<div class="flash">` without Turbo awareness disappears on the first SPA navigation.
+- **Status:** proposed
+
+### U-03: Auth + profile screens
+
+- **Outcome:** Sign-in, sign-up (with role radio), and profile-edit pages are fully styled with Tailwind: centred card layout, labelled inputs, validation error messages highlighted in red, primary action button. The screens are usable on mobile without horizontal scroll.
+- **Change ID:** `ui-auth-and-profile`
+- **PRD refs:** FR-001, FR-002, FR-003, FR-004, FR-005
+- **Prerequisites:** U-01, U-02
+- **Parallel with:** U-04, U-05
+- **Blockers:** —
+- **Unknowns:** —
+- **Risk:** Sign-up already has a role radio (S-01); it must remain functional after styling. No behaviour changes in this slice — only CSS classes added to existing views.
+- **Status:** proposed
+
+### U-04: Owner dashboard screens
+
+- **Outcome:** Owner-facing screens styled: dog list as cards with edit/add actions, "Post a walk" form, and walk-history table. Empty states ("No dogs yet — add one") shown when lists are empty. Destructive actions (future S-10) visually distinct (red button / warning copy).
+- **Change ID:** `ui-owner-dashboard`
+- **PRD refs:** FR-006, FR-007, FR-009, FR-010, FR-015
+- **Prerequisites:** U-01, U-02
+- **Parallel with:** U-03, U-05
+- **Blockers:** —
+- **Unknowns:** —
+- **Risk:** Walk-history table can grow long; add `overflow-x: auto` wrapper on small screens so it does not break layout.
+- **Status:** proposed
+
+### U-05: Walker dashboard screens
+
+- **Outcome:** Walker-facing screens styled: open-requests list as cards (dog name, city, time posted), "Accept" CTA button prominent on each card, active-walk screen with "Start walk" / "End walk" states, walk-history list. Status badges (REQUESTED / ACCEPTED / IN_PROGRESS / COMPLETED) colour-coded.
+- **Change ID:** `ui-walker-dashboard`
+- **PRD refs:** FR-011, FR-012, FR-013, FR-014, FR-016
+- **Prerequisites:** U-01, U-02
+- **Parallel with:** U-03, U-04
+- **Blockers:** —
+- **Unknowns:** —
+- **Risk:** State badge colours must be consistent across Owner history (U-04) and Walker history (U-05). Define badge classes in `tailwind.config.js` as component aliases or use a shared partial, not duplicated inline colours.
+- **Status:** proposed
+
 ## Backlog Handoff
 
 | Roadmap ID | Change ID                          | Suggested issue title                                            | Ready for `/10x-plan` | Notes                                                                 |
@@ -258,6 +325,11 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 | S-08       | owner-walk-history                 | Owner sees their own walk history                                | done                  | Archived 2026-06-23 → `context/archive/2026-06-23-owner-walk-history/` |
 | S-09       | walker-walk-history                | Walker sees their own walk history                               | done                  | Archived 2026-06-23 → `context/archive/2026-06-23-walker-walk-history/` |
 | S-10       | owner-removes-dog                  | Owner removes own dog (with policy on past walks)                | no                    | **Blocked** by Open Q #4                                              |
+| U-01       | tailwind-setup                     | UI Foundation: Tailwind CSS + design tokens                      | yes                   | Requires colour palette decision (can use placeholder)                |
+| U-02       | ui-layout-and-nav                  | UI: Global layout shell + role-aware navbar                      | yes                   | After U-01                                                            |
+| U-03       | ui-auth-and-profile                | UI: Auth + profile screens                                       | yes                   | After U-02; parallel with U-04, U-05                                  |
+| U-04       | ui-owner-dashboard                 | UI: Owner dashboard (dogs, walk request, history)                | yes                   | After U-02; parallel with U-03, U-05                                  |
+| U-05       | ui-walker-dashboard                | UI: Walker dashboard (open requests, active walk, history)       | yes                   | After U-02; parallel with U-03, U-04                                  |
 
 ## Open Roadmap Questions
 
