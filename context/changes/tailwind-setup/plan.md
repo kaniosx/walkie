@@ -348,8 +348,8 @@ adds one Tailwind build (~1–3s) to the Docker image build time — acceptable.
 
 #### Manual
 
-- [ ] 1.5 Browser DevTools shows both `application.css` and `tailwind.css` loaded (HTTP 200)
-- [ ] 1.6 Existing nav and flash styling visually unchanged
+- [x] 1.5 Browser DevTools shows both `application.css` and `tailwind.css` loaded (HTTP 200) — 4b56861
+- [x] 1.6 Existing nav and flash styling visually unchanged — 4b56861
 
 ### Phase 2: Customise Config + Design Tokens
 
@@ -361,8 +361,8 @@ adds one Tailwind build (~1–3s) to the Docker image build time — acceptable.
 
 #### Manual
 
-- [x] 2.4 `bg-primary-100 text-primary-800` renders as green in browser
-- [x] 2.5 Test class removed and absent from compiled CSS after rebuild
+- [x] 2.4 `bg-primary-100 text-primary-800` renders as green in browser — 5c56305
+- [x] 2.5 Test class removed and absent from compiled CSS after rebuild — 5c56305
 
 ### Phase 3: Wire Dev Watcher in docker-compose
 
