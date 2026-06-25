@@ -113,6 +113,8 @@ class WalkerWalksTest < ActionDispatch::IntegrationTest
   end
 
   test "walker cannot see another walker's accepted walk in active section" do
+    # @walk is accepted (not completed) so Rex can only appear in the active
+    # section — page-global absence is sufficient to close the isolation gap.
     sign_in_as "walker2@example.com"
     get walker_walks_path
     assert_response :success
