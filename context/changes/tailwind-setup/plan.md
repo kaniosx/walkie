@@ -355,9 +355,9 @@ adds one Tailwind build (~1–3s) to the Docker image build time — acceptable.
 
 #### Automated
 
-- [x] 2.1 `tailwindcss:build` exits 0 after config update
-- [x] 2.2 `grep -c 'emerald' app/assets/builds/tailwind.css` > 0
-- [x] 2.3 Temporary `text-primary-600` class compiles; removed after check
+- [x] 2.1 `tailwindcss:build` exits 0 after config update — 5c56305
+- [x] 2.2 `grep -c 'emerald' app/assets/builds/tailwind.css` > 0 — 5c56305
+- [x] 2.3 Temporary `text-primary-600` class compiles; removed after check — 5c56305
 
 #### Manual
 
@@ -368,10 +368,10 @@ adds one Tailwind build (~1–3s) to the Docker image build time — acceptable.
 
 #### Automated
 
-- [ ] 3.1 `docker compose config` exits 0
+- [x] 3.1 `docker compose config` exits 0
 
 #### Manual
 
-- [ ] 3.2 `make start` boots; logs show watcher + Puma
-- [ ] 3.3 View edit → watcher recompiles → class visible in browser without manual rebuild
-- [ ] 3.4 `docker compose stop` terminates cleanly
+- [x] 3.2 `make start` boots; logs show watcher + Puma
+- [x] 3.3 View edit → watcher recompiles → class visible in browser without manual rebuild
+- [x] 3.4 `docker compose stop` terminates cleanly
