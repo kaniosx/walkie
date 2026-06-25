@@ -71,7 +71,7 @@ orchestrator updates Status as artifacts appear on disk.
 
 | # | Phase name | Goal (one line) | Risks covered | Test types | Status | Change folder |
 |---|---|---|---|---|---|---|
-| 1 | HTTP guardrails | Verify the Singleness HTTP contract, cross-account isolation, and the IDOR 404 contract at the integration layer | #1, #3, #4 | integration | change opened | context/changes/testing-http-guardrails/ |
+| 1 | HTTP guardrails | Verify the Singleness HTTP contract, cross-account isolation, and the IDOR 404 contract at the integration layer | #1, #3, #4 | integration | complete | context/changes/testing-http-guardrails/ |
 | 2 | State machine feedback | Verify the controller HTTP response for each false-return path in start, complete, and accept | #2 | integration + model | not started | — |
 | 3 | Coverage gate wiring | Activate COVERAGE_MIN=80 in CI; verify per-group SimpleCov breakdown; make gate a required CI step | #5 | CI configuration | not started | — |
 
@@ -134,7 +134,16 @@ the relevant rollout phase ships; before that, the sub-section reads
 
 ### 6.1 Adding an integration test (HTTP-layer contract)
 
-TBD — see §3 Phase 1 for the HTTP guardrails pattern (Singleness false-return path, cross-account isolation, IDOR 404 contract).
+**Class**: `ActionDispatch::IntegrationTest`; files under `test/integration/`.
+
+**Sign-in**: each test file defines a `sign_in_as(email)` helper that posts to `session_path` with a plaintext password — use inline `setup do` fixtures, not YAML; `has_secure_password` needs a real password, not a digest.
+
+**Three core assertion patterns**:
+- `assert_not_includes response.body, "name"` — absence proves cross-account isolation; always assert the wrong user's resource is absent, not just that the right user's resource is present
+- `assert_response :not_found` — proves HTTP 404 for IDOR contract tests (scoped `where(...).find(id)` raises `RecordNotFound` → `ApplicationController#not_found`)
+- `follow_redirect!` then `assert_includes response.body, "..."` — proves flash content is rendered after a redirect (inspect the body, not just the `flash` hash)
+
+**Reference tests**: cross-account isolation → `walker_walks_test.rb:105-113`, `walks_test.rb:33-43`; IDOR 404 → `walker_walks_test.rb:63-67`, `:76-81`; flash after redirect → `open_requests_test.rb:55-67`.
 
 ### 6.2 Adding a model test (state machine or constraint)
 
