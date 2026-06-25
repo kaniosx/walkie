@@ -23,7 +23,8 @@ services:
       bash -c "rm -f tmp/pids/server.pid &&
                bin/rails db:prepare &&
                RAILS_ENV=test bin/rails db:prepare &&
-               bin/rails tailwindcss:watch &
+               bin/rails tailwindcss:watch & TAILWIND_PID=$! &&
+               trap 'kill $$TAILWIND_PID 2>/dev/null' EXIT INT TERM &&
                bin/rails server -b 0.0.0.0 -p 3000"
     environment:
       RAILS_ENV: development
