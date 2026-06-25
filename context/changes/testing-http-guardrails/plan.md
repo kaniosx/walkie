@@ -208,20 +208,20 @@ existing test files first.
 
 #### Automated
 
-- [x] 1.1 `docker compose exec web bin/rails test test/integration/walker_walks_test.rb` passes (all tests including new case)
+- [x] 1.1 `docker compose exec web bin/rails test test/integration/walker_walks_test.rb` passes (all tests including new case) — b79a437
 
 #### Manual
 
-- [x] 1.2 New test uses only existing setup — no redundant fixture creation inside the test body
-- [x] 1.3 Assertion string `"Rex"` confirmed to match what the view renders for an active walk
+- [x] 1.2 New test uses only existing setup — no redundant fixture creation inside the test body — b79a437
+- [x] 1.3 Assertion string `"Rex"` confirmed to match what the view renders for an active walk — b79a437
 
 ### Phase 2: Update Cookbook and Close Phase 1
 
 #### Automated
 
-- [ ] 2.1 `grep -c 'ActionDispatch::IntegrationTest' context/foundation/test-plan.md` returns ≥ 1
-- [ ] 2.2 Phase 1 row in §3 shows `complete`
+- [x] 2.1 `grep -c 'ActionDispatch::IntegrationTest' context/foundation/test-plan.md` returns ≥ 1
+- [x] 2.2 Phase 1 row in §3 shows `complete`
 
 #### Manual
 
-- [ ] 2.3 §6.1 gives a future agent enough to write a new integration test without opening any source test file
+- [x] 2.3 §6.1 gives a future agent enough to write a new integration test without opening any source test file
