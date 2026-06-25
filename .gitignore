@@ -50,3 +50,6 @@ desktop.ini
 
 # Ignore generated SimpleCov coverage reports.
 /coverage
+
+/app/assets/builds/*
+!/app/assets/builds/.keep
