@@ -71,7 +71,7 @@ orchestrator updates Status as artifacts appear on disk.
 
 | # | Phase name | Goal (one line) | Risks covered | Test types | Status | Change folder |
 |---|---|---|---|---|---|---|
-| 1 | HTTP guardrails | Verify the Singleness HTTP contract, cross-account isolation, and the IDOR 404 contract at the integration layer | #1, #3, #4 | integration | not started | — |
+| 1 | HTTP guardrails | Verify the Singleness HTTP contract, cross-account isolation, and the IDOR 404 contract at the integration layer | #1, #3, #4 | integration | change opened | context/changes/testing-http-guardrails/ |
 | 2 | State machine feedback | Verify the controller HTTP response for each false-return path in start, complete, and accept | #2 | integration + model | not started | — |
 | 3 | Coverage gate wiring | Activate COVERAGE_MIN=80 in CI; verify per-group SimpleCov breakdown; make gate a required CI step | #5 | CI configuration | not started | — |
 
