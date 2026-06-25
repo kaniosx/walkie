@@ -368,10 +368,10 @@ adds one Tailwind build (~1–3s) to the Docker image build time — acceptable.
 
 #### Automated
 
-- [x] 3.1 `docker compose config` exits 0
+- [x] 3.1 `docker compose config` exits 0 — 024a0e9
 
 #### Manual
 
-- [x] 3.2 `make start` boots; logs show watcher + Puma
-- [x] 3.3 View edit → watcher recompiles → class visible in browser without manual rebuild
-- [x] 3.4 `docker compose stop` terminates cleanly
+- [x] 3.2 `make start` boots; logs show watcher + Puma — 024a0e9
+- [x] 3.3 View edit → watcher recompiles → class visible in browser without manual rebuild — 024a0e9
+- [x] 3.4 `docker compose stop` terminates cleanly — 024a0e9
