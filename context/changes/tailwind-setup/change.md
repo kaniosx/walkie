@@ -1,9 +1,10 @@
 ---
 change_id: tailwind-setup
 title: Tailwind CSS setup + design tokens (U-01)
-status: implementing
+status: implemented
 created: 2026-06-25
 updated: 2026-06-25
+
 archived_at: null
 ---
 
