@@ -1,7 +1,7 @@
 ---
 change_id: testing-http-guardrails
 title: HTTP contract guardrails — Singleness, cross-account isolation, and IDOR 404
-status: implementing
+status: implemented
 created: 2026-06-25
 updated: 2026-06-25
 archived_at: null
