@@ -1,22 +1,21 @@
-const defaultTheme = require('tailwindcss/defaultTheme')
+const colors = require('tailwindcss/colors')
 
 module.exports = {
   content: [
-    './public/*.html',
+    './app/views/**/*.html.erb',
     './app/helpers/**/*.rb',
     './app/javascript/**/*.js',
-    './app/views/**/*.{erb,haml,html,slim}'
   ],
   theme: {
     extend: {
+      colors: {
+        primary: colors.emerald,
+        neutral: colors.stone,
+      },
       fontFamily: {
-        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+        sans: ['system-ui', '-apple-system', 'sans-serif'],
       },
     },
   },
-  plugins: [
-    // require('@tailwindcss/forms'),
-    // require('@tailwindcss/typography'),
-    // require('@tailwindcss/container-queries'),
-  ]
+  plugins: [],
 }

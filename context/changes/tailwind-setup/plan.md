@@ -341,10 +341,10 @@ adds one Tailwind build (~1–3s) to the Docker image build time — acceptable.
 
 #### Automated
 
-- [x] 1.1 `rubocop Gemfile` exits 0
-- [x] 1.2 `tailwindcss:build` exits 0 and produces `app/assets/builds/tailwind.css`
-- [x] 1.3 `git diff --name-only` confirms layout updated
-- [x] 1.4 `.gitignore` contains `/app/assets/builds/`
+- [x] 1.1 `rubocop Gemfile` exits 0 — 4b56861
+- [x] 1.2 `tailwindcss:build` exits 0 and produces `app/assets/builds/tailwind.css` — 4b56861
+- [x] 1.3 `git diff --name-only` confirms layout updated — 4b56861
+- [x] 1.4 `.gitignore` contains `/app/assets/builds/` — 4b56861
 
 #### Manual
 
@@ -355,14 +355,14 @@ adds one Tailwind build (~1–3s) to the Docker image build time — acceptable.
 
 #### Automated
 
-- [ ] 2.1 `tailwindcss:build` exits 0 after config update
-- [ ] 2.2 `grep -c 'emerald' app/assets/builds/tailwind.css` > 0
-- [ ] 2.3 Temporary `text-primary-600` class compiles; removed after check
+- [x] 2.1 `tailwindcss:build` exits 0 after config update
+- [x] 2.2 `grep -c 'emerald' app/assets/builds/tailwind.css` > 0
+- [x] 2.3 Temporary `text-primary-600` class compiles; removed after check
 
 #### Manual
 
-- [ ] 2.4 `bg-primary-100 text-primary-800` renders as green in browser
-- [ ] 2.5 Test class removed and absent from compiled CSS after rebuild
+- [x] 2.4 `bg-primary-100 text-primary-800` renders as green in browser
+- [x] 2.5 Test class removed and absent from compiled CSS after rebuild
 
 ### Phase 3: Wire Dev Watcher in docker-compose
 
