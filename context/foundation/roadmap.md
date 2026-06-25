@@ -3,7 +3,7 @@ project: Walkie
 version: 1
 status: draft
 created: 2026-05-25
-updated: 2026-06-23
+updated: 2026-06-25
 prd_version: 1
 main_goal: market-feedback
 top_blocker: time
@@ -46,7 +46,7 @@ PRD §Business Logic §Singleness states: *"the binding IS the confirmation"*. S
 | S-08  | owner-walk-history                 | Owner sees their own walk history                                 | S-04                      | FR-015                  | done     |
 | S-09  | walker-walk-history                | Walker sees their own walk history                                | S-05                      | FR-016                  | done     |
 | S-10  | owner-removes-dog                  | Owner removes their own dog                                       | S-03                      | FR-008                  | blocked  |
-| U-01  | tailwind-setup                     | (foundation) Tailwind CSS + design tokens wired into Propshaft    | S-01                      | §NFR (usability)        | proposed |
+| U-01  | tailwind-setup                     | (foundation) Tailwind CSS + design tokens wired into Propshaft    | S-01                      | §NFR (usability)        | done     |
 | U-02  | ui-layout-and-nav                  | Responsive layout shell + role-aware navbar + flash messages      | U-01                      | FR-001..004 (UX)        | proposed |
 | U-03  | ui-auth-and-profile                | Sign-in, sign-up, profile edit screens styled                     | U-01, U-02                | FR-001..005             | proposed |
 | U-04  | ui-owner-dashboard                 | Dog cards, walk-request form, owner walk-history screen styled    | U-01, U-02                | FR-006..010, FR-015     | proposed |
@@ -258,7 +258,7 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 - **Unknowns:**
   - Which brand direction? A short colour palette decision is needed before tokens are written. — Owner: user. Block: no (a neutral palette is fine as a placeholder; can be updated when brand is decided).
 - **Risk:** `tailwindcss-rails` ships a standalone Tailwind CLI binary; this is the correct approach for a Rails 8 + Propshaft + importmap stack (no Webpack/esbuild). Misconfiguring content paths (`content: ["./app/views/**/*.html.erb", ...]`) is the most common failure mode — classes that aren't scanned are purged and silently absent in production.
-- **Status:** proposed
+- **Status:** done
 
 ### U-02: Global layout shell + role-aware navigation
 
@@ -377,3 +377,4 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 - **S-07: Walker starts (ACC→IP) + ends walk (IP→COMPLETED)** — Archived 2026-06-22 → `context/archive/2026-06-22-walker-starts-and-completes-walk/`. Lesson: —.
 - **S-08: Owner sees their own walk history** — Archived 2026-06-23 → `context/archive/2026-06-23-owner-walk-history/`. Lesson: —.
 - **S-09: Walker sees their own walk history** — Archived 2026-06-23 → `context/archive/2026-06-23-walker-walk-history/`. Lesson: —.
+- **U-01: (foundation) Tailwind CSS + design tokens wired into Propshaft** — Archived 2026-06-25 → `context/archive/2026-06-25-tailwind-setup/`. Lesson: —.
