@@ -219,9 +219,9 @@ existing test files first.
 
 #### Automated
 
-- [x] 2.1 `grep -c 'ActionDispatch::IntegrationTest' context/foundation/test-plan.md` returns ≥ 1
-- [x] 2.2 Phase 1 row in §3 shows `complete`
+- [x] 2.1 `grep -c 'ActionDispatch::IntegrationTest' context/foundation/test-plan.md` returns ≥ 1 — f961222
+- [x] 2.2 Phase 1 row in §3 shows `complete` — f961222
 
 #### Manual
 
-- [x] 2.3 §6.1 gives a future agent enough to write a new integration test without opening any source test file
+- [x] 2.3 §6.1 gives a future agent enough to write a new integration test without opening any source test file — f961222
