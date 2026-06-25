@@ -112,6 +112,13 @@ class WalkerWalksTest < ActionDispatch::IntegrationTest
     assert_not_includes response.body, "Rex"
   end
 
+  test "walker cannot see another walker's accepted walk in active section" do
+    sign_in_as "walker2@example.com"
+    get walker_walks_path
+    assert_response :success
+    assert_not_includes response.body, "Rex"
+  end
+
   test "unauthenticated access redirects to sign-in" do
     get walker_walks_path
     assert_redirected_to new_session_path
