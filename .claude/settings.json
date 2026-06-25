@@ -36,5 +36,20 @@
     "deny": [
       "Bash(rm -rf *)"
     ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=$(jq -r '.tool_input.file_path // empty'); echo \"$f\" | grep -qE '\\.(rb|rake|gemspec|ru)$' || exit 0; rel=\"${f#$PWD/}\"; output=$(docker compose exec -T web bundle exec rubocop --no-color \"/rails/$rel\" 2>&1); code=$?; [ $code -eq 0 ] && exit 0; [ $code -eq 1 ] && { printf '%s\\n' \"$output\"; exit 2; }; exit 0",
+            "timeout": 30,
+            "statusMessage": "Running RuboCop..."
+          }
+        ]
+      }
+    ]
   }
 }
