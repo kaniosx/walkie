@@ -240,8 +240,8 @@ None beyond standard Tailwind JIT purging — all class strings are static liter
 
 #### Automated
 
-- [x] 2.1 Tailwind pipeline compiles without error: `docker compose exec web bin/rails assets:precompile`
-- [x] 2.2 RuboCop passes: `docker compose exec web bundle exec rubocop app/views/dogs/index.html.erb`
+- [x] 2.1 Tailwind pipeline compiles without error: `docker compose exec web bin/rails assets:precompile` — 179ef93
+- [x] 2.2 RuboCop passes: `docker compose exec web bundle exec rubocop app/views/dogs/index.html.erb` — 179ef93
 
 #### Manual
 
@@ -255,8 +255,8 @@ None beyond standard Tailwind JIT purging — all class strings are static liter
 
 #### Automated
 
-- [ ] 3.1 Tailwind pipeline compiles without error: `docker compose exec web bin/rails assets:precompile`
-- [ ] 3.2 RuboCop passes: `docker compose exec web bundle exec rubocop app/views/walks/ app/helpers/application_helper.rb`
+- [x] 3.1 Tailwind pipeline compiles without error: `docker compose exec web bin/rails assets:precompile`
+- [x] 3.2 RuboCop passes: `docker compose exec web bundle exec rubocop app/views/walks/ app/helpers/application_helper.rb`
 
 #### Manual
 
