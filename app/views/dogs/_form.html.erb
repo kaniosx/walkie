@@ -30,5 +30,9 @@
           class: "block w-full rounded-md border border-stone-300 px-3 py-2 text-sm placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 resize-none" %>
   </div>
 
-  <%= form.submit class: "rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500" %>
+  <div class="mt-4 flex items-center">
+    <%= form.submit(@dog.persisted? ? "Save" : "Add dog"),
+          class: "rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500" %>
+    <%= link_to "Cancel", dogs_path, class: "ml-4 text-sm text-stone-500 hover:text-stone-700" %>
+  </div>
 <% end %>
