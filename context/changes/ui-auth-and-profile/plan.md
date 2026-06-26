@@ -227,12 +227,12 @@ No new tests required — this is a view-only styling change. Existing model and
 
 #### Automated
 
-- [x] 3.1 Rubocop passes
-- [x] 3.2 Brakeman clean
+- [x] 3.1 Rubocop passes — 4e6e9d9
+- [x] 3.2 Brakeman clean — 4e6e9d9
 
 #### Manual
 
-- [x] 3.3 Profile show card renders with clean definition list
-- [x] 3.4 Profile edit card renders; blank city shows red error banner
-- [x] 3.5 Valid profile save redirects with flash notice
-- [x] 3.6 All four pages no horizontal scroll at 375 px
+- [x] 3.3 Profile show card renders with clean definition list — 4e6e9d9
+- [x] 3.4 Profile edit card renders; blank city shows red error banner — 4e6e9d9
+- [x] 3.5 Valid profile save redirects with flash notice — 4e6e9d9
+- [x] 3.6 All four pages no horizontal scroll at 375 px — 4e6e9d9

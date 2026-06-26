@@ -1,7 +1,7 @@
 ---
 change_id: ui-auth-and-profile
 title: Ui auth and profile
-status: implementing
+status: implemented
 created: 2026-06-26
 updated: 2026-06-26
 archived_at: null
