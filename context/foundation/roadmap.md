@@ -328,14 +328,14 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 | U-01       | tailwind-setup                     | UI Foundation: Tailwind CSS + design tokens                      | done                  | Archived 2026-06-25 → `context/archive/2026-06-25-tailwind-setup/`   |
 | U-02       | ui-layout-and-nav                  | UI: Global layout shell + role-aware navbar                      | done                  | Archived 2026-06-26 → `context/archive/2026-06-26-ui-layout-and-nav/` |
 | U-03       | ui-auth-and-profile                | UI: Auth + profile screens                                       | done                  | Archived 2026-06-26 → `context/archive/2026-06-26-ui-auth-and-profile/` |
-| U-04       | ui-owner-dashboard                 | UI: Owner dashboard (dogs, walk request, history)                | yes                   | After U-02; parallel with U-03, U-05                                  |
+| U-04       | ui-owner-dashboard                 | UI: Owner dashboard (dogs, walk request, history)                | done                  | Archived 2026-06-26 → `context/archive/2026-06-26-ui-owner-dashboard/` |
 | U-05       | ui-walker-dashboard                | UI: Walker dashboard (open requests, active walk, history)       | yes                   | After U-02; parallel with U-03, U-04                                  |
 
 ## Open Roadmap Questions
 
 1. **Sharpen the Owner persona before v2 scope.** PRD §Open Q #1: v1 is deliberately broad ("anyone with a dog"). Risk: design tradeoffs resurfacing per feature. Owner: user. Block: **roadmap-wide** for v2; no v1 slice. Resolving it unblocks UI-heavy decisions in later slices (future, not v1).
 2. **Walker trust / verification.** PRD §Open Q #3. FR-002 leaves Walker self-sign-up open. Owner: user / downstream design. Block: **before any real (non-test) Owner uses Walkie**. This does NOT block implementation of v1 slices (the PRD knowingly leaves the gap), but it blocks any real launch beyond the two-test-user smoke. Resolving it promotes the entire roadmap from "MVP demonstrable" to "MVP launchable".
-3. **⚠️ URGENT — Postgres free tier expires 2026-06-24 (tomorrow).** Upgrade deadline (T-7) was 2026-06-17 and has passed. Decision: upgrade to Basic-256MB ($7) or Basic-1GB ($20 — recommended by `infrastructure.md` because of Solid Queue × connection pool). Owner: user. Block: **infra-wide** for measuring the 2s latency NFR; all NFR measurements over the free tier are irrevocably skewed by 60s cold start. **Action required today.**
+3. **⚠️ OVERDUE — Postgres free tier expired 2026-06-24.** Decision: upgrade to Basic-256MB ($7) or Basic-1GB ($20 — recommended by `infrastructure.md` because of Solid Queue × connection pool). Owner: user. Block: **infra-wide** for measuring the 2s latency NFR; all NFR measurements over the free tier are irrevocably skewed by 60s cold start. **Action required — 2 days past deadline.**
 
 ## Parked
 
