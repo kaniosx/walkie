@@ -1,21 +1,36 @@
-<div class="form-container">
-  <h1>My dogs</h1>
+<div class="max-w-2xl mx-auto px-4 py-8">
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-2xl font-semibold text-stone-900">My dogs</h1>
+    <%= link_to "Add a dog", new_dog_path,
+          class: "rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700" %>
+  </div>
 
   <% if @dogs.any? %>
-    <ul>
+    <div class="space-y-4">
       <% @dogs.each do |dog| %>
-        <li>
-          <strong><%= dog.name %></strong> — <%= dog.breed %>
-          <% if dog.weight.present? %>(<%= dog.weight %> kg)<% end %>
-          <% if dog.notes.present? %><br><em><%= dog.notes %></em><% end %>
-          <br><%= link_to "Edit", edit_dog_path(dog) %>
-          <%= button_to "Walk my dog", walks_path, params: { dog_id: dog.id } %>
-        </li>
+        <div class="bg-white rounded-xl shadow-sm ring-1 ring-stone-200 p-6">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-lg font-semibold text-stone-900"><%= dog.name %></span>
+            <%= link_to "Edit", edit_dog_path(dog),
+                  class: "text-sm text-primary-600 hover:text-primary-700 font-medium" %>
+          </div>
+          <p class="text-sm text-stone-600 mb-1"><%= dog.breed %></p>
+          <% if dog.weight.present? %>
+            <p class="text-sm text-stone-500"><%= dog.weight %> kg</p>
+          <% end %>
+          <% if dog.notes.present? %>
+            <p class="text-sm text-stone-500"><%= dog.notes %></p>
+          <% end %>
+          <%= button_to "Walk my dog", walks_path, params: { dog_id: dog.id },
+                class: "mt-4 w-full rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500" %>
+        </div>
       <% end %>
-    </ul>
+    </div>
   <% else %>
-    <p>You haven't added any dogs yet.</p>
+    <div class="bg-white rounded-xl shadow-sm ring-1 ring-stone-200 p-6 text-center">
+      <p class="text-stone-500 mb-4">You haven't added any dogs yet.</p>
+      <%= link_to "Add a dog", new_dog_path,
+            class: "rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700" %>
+    </div>
   <% end %>
-
-  <%= link_to "Add a dog", new_dog_path %>
 </div>
