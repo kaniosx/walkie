@@ -251,6 +251,8 @@ now replace. Do not touch flash, form, or body rules.
 
 **Implementation Note**: Pause after Phase 2 manual verification before proceeding to Phase 3.
 
+> **Addendum (implementation):** `public/icon.svg` updated to a paw print SVG (emerald on rounded square) at user request during this phase. Inline paw SVG also added to nav logo. Both changes are cosmetic — no behaviour, no routing.
+
 ---
 
 ## Phase 3: Flash Messages + Auto-Dismiss
@@ -310,6 +312,8 @@ the permanent element correctly (see Critical Implementation Details above).
 
 **Implementation Note**: Pause after Phase 3 manual verification. This is the full acceptance
 test for the slice.
+
+> **Addendum (implementation):** `data-turbo-permanent` was intentionally omitted from `#flash-container`. Adding it caused flash messages to never appear — Turbo preserved the empty permanent container from the previous page instead of rendering the server's version with the new flash. Removed; standard Turbo Drive body replacement handles flash correctly. The `id="flash-container"` remains for future use (e.g. Turbo Stream injection). Flash values are now wrapped in `sanitize()` to prevent XSS if any future caller marks a string `html_safe`.
 
 ---
 

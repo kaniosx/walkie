@@ -28,9 +28,9 @@
     <%= render "layouts/nav" %>
 
     <div id="flash-container">
-      <%= tag.div(flash[:alert], class: "flash-alert",
+      <%= tag.div(sanitize(flash[:alert]), class: "flash-alert",
             data: { controller: "flash" }) if flash[:alert] %>
-      <%= tag.div(flash[:notice], class: "flash-notice",
+      <%= tag.div(sanitize(flash[:notice]), class: "flash-notice",
             data: { controller: "flash" }) if flash[:notice] %>
     </div>
 
