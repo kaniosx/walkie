@@ -1,12 +1,11 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["menu"]
+  static targets = ["hamburger", "menu"]
 
   toggle() {
-    const button = this.element.querySelector("[data-nav-hamburger]")
-    const expanded = button.getAttribute("aria-expanded") === "true"
-    button.setAttribute("aria-expanded", String(!expanded))
+    const expanded = this.hamburgerTarget.getAttribute("aria-expanded") === "true"
+    this.hamburgerTarget.setAttribute("aria-expanded", String(!expanded))
     this.menuTarget.classList.toggle("hidden")
   }
 
@@ -17,8 +16,10 @@ export default class extends Controller {
   }
 
   close() {
-    const button = this.element.querySelector("[data-nav-hamburger]")
-    if (button) button.setAttribute("aria-expanded", "false")
+    if (this.hasHamburgerTarget) {
+      this.hamburgerTarget.setAttribute("aria-expanded", "false")
+      this.hamburgerTarget.focus()
+    }
     if (this.hasMenuTarget) this.menuTarget.classList.add("hidden")
   }
 }
