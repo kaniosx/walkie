@@ -1,7 +1,7 @@
 ---
 change_id: ui-owner-dashboard
 title: Ui owner dashboard
-status: implemented
+status: impl_reviewed
 created: 2026-06-26
 updated: 2026-06-26
 archived_at: null
