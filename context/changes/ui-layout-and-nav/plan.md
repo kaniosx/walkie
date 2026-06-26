@@ -354,27 +354,27 @@ tags — negligible overhead on server-rendered pages. The Stimulus app initiali
 
 #### Automated
 
-- [x] 1.1 `rubocop config/importmap.rb` exits 0
-- [x] 1.2 `assets:precompile` exits 0
+- [x] 1.1 `rubocop config/importmap.rb` exits 0 — 965750d
+- [x] 1.2 `assets:precompile` exits 0 — 965750d
 
 #### Manual
 
-- [x] 1.3 Browser console shows no JS errors; Stimulus loaded
-- [x] 1.4 DevTools Sources confirms application.js loaded
+- [x] 1.3 Browser console shows no JS errors; Stimulus loaded — 965750d
+- [x] 1.4 DevTools Sources confirms application.js loaded — 965750d
 
 ### Phase 2: Navigation Partial + Stimulus + Tailwind
 
 #### Automated
 
-- [ ] 2.1 `rubocop app/views/layouts/` exits 0
-- [ ] 2.2 `tailwindcss:build` exits 0
+- [x] 2.1 `rubocop app/views/layouts/` exits 0
+- [x] 2.2 `tailwindcss:build` exits 0
 
 #### Manual
 
-- [ ] 2.3 Desktop nav: logo + role links + sign out visible
-- [ ] 2.4 Mobile: hamburger opens/closes menu; aria-expanded toggles
-- [ ] 2.5 Unauthenticated: Sign in + Sign up in nav
-- [ ] 2.6 Sign out works (redirect to sign-in)
+- [x] 2.3 Desktop nav: logo + role links + sign out visible
+- [x] 2.4 Mobile: hamburger opens/closes menu; aria-expanded toggles
+- [x] 2.5 Unauthenticated: Sign in + Sign up in nav
+- [x] 2.6 Sign out works (redirect to sign-in)
 
 ### Phase 3: Flash Messages + Auto-Dismiss
 

@@ -25,20 +25,7 @@
   </head>
 
   <body>
-    <nav>
-      <%= link_to "Walkie", root_path %>
-      <% if authenticated? %>
-        <%= link_to "Profile", profile_path %>
-        <% if current_user.owner? %>
-          <%= link_to "My dogs", dogs_path %>
-          <%= link_to "My requests", walks_path %>
-        <% elsif current_user.walker? %>
-          <%= link_to "Open requests", open_requests_path %>
-          <%= link_to "My walk", walker_walks_path %>
-        <% end %>
-        <%= button_to "Sign out", session_path, method: :delete %>
-      <% end %>
-    </nav>
+    <%= render "layouts/nav" %>
 
     <%= tag.div(flash[:alert], class: "flash-alert") if flash[:alert] %>
     <%= tag.div(flash[:notice], class: "flash-notice") if flash[:notice] %>
