@@ -27,8 +27,12 @@
   <body>
     <%= render "layouts/nav" %>
 
-    <%= tag.div(flash[:alert], class: "flash-alert") if flash[:alert] %>
-    <%= tag.div(flash[:notice], class: "flash-notice") if flash[:notice] %>
+    <div id="flash-container">
+      <%= tag.div(flash[:alert], class: "flash-alert",
+            data: { controller: "flash" }) if flash[:alert] %>
+      <%= tag.div(flash[:notice], class: "flash-notice",
+            data: { controller: "flash" }) if flash[:notice] %>
+    </div>
 
     <%= yield %>
   </body>
