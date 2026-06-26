@@ -327,7 +327,7 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 | S-10       | owner-removes-dog                  | Owner removes own dog (with policy on past walks)                | no                    | **Blocked** by Open Q #4                                              |
 | U-01       | tailwind-setup                     | UI Foundation: Tailwind CSS + design tokens                      | done                  | Archived 2026-06-25 → `context/archive/2026-06-25-tailwind-setup/`   |
 | U-02       | ui-layout-and-nav                  | UI: Global layout shell + role-aware navbar                      | done                  | Archived 2026-06-26 → `context/archive/2026-06-26-ui-layout-and-nav/` |
-| U-03       | ui-auth-and-profile                | UI: Auth + profile screens                                       | yes                   | After U-02; parallel with U-04, U-05                                  |
+| U-03       | ui-auth-and-profile                | UI: Auth + profile screens                                       | done                  | Archived 2026-06-26 → `context/archive/2026-06-26-ui-auth-and-profile/` |
 | U-04       | ui-owner-dashboard                 | UI: Owner dashboard (dogs, walk request, history)                | yes                   | After U-02; parallel with U-03, U-05                                  |
 | U-05       | ui-walker-dashboard                | UI: Walker dashboard (open requests, active walk, history)       | yes                   | After U-02; parallel with U-03, U-04                                  |
 
