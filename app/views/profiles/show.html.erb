@@ -12,7 +12,7 @@
     </div>
     <div>
       <dt class="text-xs font-medium uppercase tracking-wide text-stone-500">Role</dt>
-      <dd class="mt-0.5 text-sm text-stone-900"><%= @user.role.capitalize %></dd>
+      <dd class="mt-0.5 text-sm text-stone-900"><%= @user.role&.capitalize || "—" %></dd>
     </div>
     <div>
       <dt class="text-xs font-medium uppercase tracking-wide text-stone-500">City</dt>
