@@ -201,27 +201,27 @@ No new tests required — this is a view-only styling change. Existing model and
 
 #### Automated
 
-- [x] 1.1 `application.css` contains no `form-container` or `form-errors` strings
-- [x] 1.2 Tailwind pipeline compiles without error
+- [x] 1.1 `application.css` contains no `form-container` or `form-errors` strings — bdf5b3d
+- [x] 1.2 Tailwind pipeline compiles without error — bdf5b3d
 
 #### Manual
 
-- [x] 1.3 Application loads and layout remains intact after CSS removal
+- [x] 1.3 Application loads and layout remains intact after CSS removal — bdf5b3d
 
 ### Phase 2: Style Auth Views
 
 #### Automated
 
-- [ ] 2.1 Rubocop passes
-- [ ] 2.2 Brakeman clean
+- [x] 2.1 Rubocop passes
+- [x] 2.2 Brakeman clean
 
 #### Manual
 
-- [ ] 2.3 Sign-in card renders on desktop and 375 px mobile (no horizontal scroll)
-- [ ] 2.4 Sign-up card renders with visible role fieldset
-- [ ] 2.5 Sign-up error banner appears in red on blank submit
-- [ ] 2.6 Role radio selection produces the correct role after sign-up
-- [ ] 2.7 Focus ring visible on all inputs (tab navigation)
+- [x] 2.3 Sign-in card renders on desktop and 375 px mobile (no horizontal scroll)
+- [x] 2.4 Sign-up card renders with visible role fieldset
+- [x] 2.5 Sign-up error banner appears in red on blank submit
+- [x] 2.6 Role radio selection produces the correct role after sign-up
+- [x] 2.7 Focus ring visible on all inputs (tab navigation)
 
 ### Phase 3: Style Profile Views
 

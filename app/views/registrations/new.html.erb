@@ -1,9 +1,9 @@
-<div class="form-container">
-  <h1>Sign up</h1>
+<div class="max-w-sm mx-auto mt-10 px-8 py-10 bg-white rounded-xl shadow-sm ring-1 ring-stone-200">
+  <h1 class="text-2xl font-semibold text-stone-900 mb-6">Sign up</h1>
 
   <% if @user.errors.any? %>
-    <div class="form-errors">
-      <ul>
+    <div class="mb-4 rounded-md border border-red-300 bg-red-50 p-4 text-sm text-red-700">
+      <ul class="list-disc list-inside space-y-1">
         <% @user.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
@@ -12,32 +12,45 @@
   <% end %>
 
   <%= form_with url: registration_path do |form| %>
-    <%= form.label :email_address, "Email address" %><br>
-    <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address] %><br>
-    <%= form.label :password, "Password" %><br>
-    <%= form.password_field :password, required: true, autocomplete: "new-password", placeholder: "Enter a password", maxlength: 72 %><br>
-    <%= form.label :password_confirmation, "Confirm password" %><br>
-    <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", placeholder: "Confirm your password", maxlength: 72 %><br>
+    <div class="mb-4">
+      <%= form.label :email_address, "Email address", class: "block text-sm font-medium text-stone-700 mb-1" %>
+      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address], class: "block w-full rounded-md border border-stone-300 px-3 py-2 text-sm placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500" %>
+    </div>
+    <div class="mb-4">
+      <%= form.label :password, "Password", class: "block text-sm font-medium text-stone-700 mb-1" %>
+      <%= form.password_field :password, required: true, autocomplete: "new-password", placeholder: "Enter a password", maxlength: 72, class: "block w-full rounded-md border border-stone-300 px-3 py-2 text-sm placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500" %>
+    </div>
+    <div class="mb-4">
+      <%= form.label :password_confirmation, "Confirm password", class: "block text-sm font-medium text-stone-700 mb-1" %>
+      <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", placeholder: "Confirm your password", maxlength: 72, class: "block w-full rounded-md border border-stone-300 px-3 py-2 text-sm placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500" %>
+    </div>
+    <div class="mb-4">
+      <%= form.label :city, "City", class: "block text-sm font-medium text-stone-700 mb-1" %>
+      <%= form.text_field :city, required: true, placeholder: "Your city", maxlength: 100, value: params[:city], class: "block w-full rounded-md border border-stone-300 px-3 py-2 text-sm placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500" %>
+    </div>
+    <div class="mb-4">
+      <%= form.label :postcode, "Postcode", class: "block text-sm font-medium text-stone-700 mb-1" %>
+      <%= form.text_field :postcode, required: true, placeholder: "Your postcode", maxlength: 100, value: params[:postcode], class: "block w-full rounded-md border border-stone-300 px-3 py-2 text-sm placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500" %>
+    </div>
 
-    <%= form.label :city, "City" %><br>
-    <%= form.text_field :city, required: true, placeholder: "Your city", maxlength: 100, value: params[:city] %><br>
-    <%= form.label :postcode, "Postcode" %><br>
-    <%= form.text_field :postcode, required: true, placeholder: "Your postcode", maxlength: 100, value: params[:postcode] %><br>
-
-    <fieldset>
-      <legend>Choose your role</legend>
-      <label>
-        <%= form.radio_button :role, "owner", checked: params[:role] == "owner" %>
-        I'm a Dog Owner
-      </label>
-      <label>
-        <%= form.radio_button :role, "walker", checked: params[:role] == "walker" %>
-        I'm a Dog Walker
-      </label>
+    <fieldset class="mt-2 rounded-md border border-stone-200 p-4">
+      <legend class="text-sm font-medium text-stone-700 px-1">Choose your role</legend>
+      <div class="mt-2 space-y-2">
+        <label class="flex items-center gap-2 text-sm text-stone-700 cursor-pointer">
+          <%= form.radio_button :role, "owner", checked: params[:role] == "owner" %>
+          I'm a Dog Owner
+        </label>
+        <label class="flex items-center gap-2 text-sm text-stone-700 cursor-pointer">
+          <%= form.radio_button :role, "walker", checked: params[:role] == "walker" %>
+          I'm a Dog Walker
+        </label>
+      </div>
     </fieldset>
 
-    <%= form.submit "Sign up" %>
+    <%= form.submit "Sign up", class: "mt-4 w-full rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500" %>
   <% end %>
-  <br>
-  <%= link_to "Already have an account? Sign in", new_session_path %>
+
+  <div class="mt-4 space-y-2">
+    <%= link_to "Already have an account? Sign in", new_session_path, class: "block text-sm text-primary-600 hover:text-primary-700" %>
+  </div>
 </div>
