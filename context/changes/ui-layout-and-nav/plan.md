@@ -380,10 +380,10 @@ tags — negligible overhead on server-rendered pages. The Stimulus app initiali
 
 #### Automated
 
-- [x] 3.1 `rubocop app/views/layouts/application.html.erb` exits 0
+- [x] 3.1 `rubocop app/views/layouts/application.html.erb` exits 0 — 5d4f294
 
 #### Manual
 
-- [x] 3.2 Flash appears after form action; auto-dismisses in ~4s
-- [x] 3.3 Turbo navigation: new flash on destination page appears correctly
-- [x] 3.4 Flash container `id="flash-container"` present in DOM even without messages
+- [x] 3.2 Flash appears after form action; auto-dismisses in ~4s — 5d4f294
+- [x] 3.3 Turbo navigation: new flash on destination page appears correctly — 5d4f294
+- [x] 3.4 Flash container `id="flash-container"` present in DOM even without messages — 5d4f294

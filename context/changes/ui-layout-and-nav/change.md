@@ -1,7 +1,7 @@
 ---
 change_id: ui-layout-and-nav
 title: UI layout shell with role-aware navigation
-status: implementing
+status: implemented
 created: 2026-06-26
 updated: 2026-06-26
 
