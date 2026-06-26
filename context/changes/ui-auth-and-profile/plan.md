@@ -212,27 +212,27 @@ No new tests required — this is a view-only styling change. Existing model and
 
 #### Automated
 
-- [x] 2.1 Rubocop passes
-- [x] 2.2 Brakeman clean
+- [x] 2.1 Rubocop passes — 709bf1a
+- [x] 2.2 Brakeman clean — 709bf1a
 
 #### Manual
 
-- [x] 2.3 Sign-in card renders on desktop and 375 px mobile (no horizontal scroll)
-- [x] 2.4 Sign-up card renders with visible role fieldset
-- [x] 2.5 Sign-up error banner appears in red on blank submit
-- [x] 2.6 Role radio selection produces the correct role after sign-up
-- [x] 2.7 Focus ring visible on all inputs (tab navigation)
+- [x] 2.3 Sign-in card renders on desktop and 375 px mobile (no horizontal scroll) — 709bf1a
+- [x] 2.4 Sign-up card renders with visible role fieldset — 709bf1a
+- [x] 2.5 Sign-up error banner appears in red on blank submit — 709bf1a
+- [x] 2.6 Role radio selection produces the correct role after sign-up — 709bf1a
+- [x] 2.7 Focus ring visible on all inputs (tab navigation) — 709bf1a
 
 ### Phase 3: Style Profile Views
 
 #### Automated
 
-- [ ] 3.1 Rubocop passes
-- [ ] 3.2 Brakeman clean
+- [x] 3.1 Rubocop passes
+- [x] 3.2 Brakeman clean
 
 #### Manual
 
-- [ ] 3.3 Profile show card renders with clean definition list
-- [ ] 3.4 Profile edit card renders; blank city shows red error banner
-- [ ] 3.5 Valid profile save redirects with flash notice
-- [ ] 3.6 All four pages no horizontal scroll at 375 px
+- [x] 3.3 Profile show card renders with clean definition list
+- [x] 3.4 Profile edit card renders; blank city shows red error banner
+- [x] 3.5 Valid profile save redirects with flash notice
+- [x] 3.6 All four pages no horizontal scroll at 375 px
