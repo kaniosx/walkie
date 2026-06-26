@@ -231,10 +231,10 @@ None beyond standard Tailwind JIT purging — all class strings are static liter
 
 #### Manual
 
-- [ ] 1.3 "Add a dog" form renders as a centred white card on mobile (375 px) and desktop; no horizontal scroll
-- [ ] 1.4 "Edit dog" form renders identically to "Add a dog"
-- [ ] 1.5 Submitting with missing required fields shows the red error banner above the form
-- [ ] 1.6 `form.submit` button renders in primary-600 green
+- [x] 1.3 "Add a dog" form renders as a centred white card on mobile (375 px) and desktop; no horizontal scroll
+- [x] 1.4 "Edit dog" form renders identically to "Add a dog"
+- [x] 1.5 Submitting with missing required fields shows the red error banner above the form
+- [x] 1.6 `form.submit` button renders in primary-600 green
 
 ### Phase 2: Dog Index (Dog Cards)
 
@@ -245,23 +245,23 @@ None beyond standard Tailwind JIT purging — all class strings are static liter
 
 #### Manual
 
-- [ ] 2.3 Dog cards render correctly on desktop and at 375 px; name + breed prominent; optional weight/notes appear only when populated
-- [ ] 2.4 "Walk my dog" full-width primary CTA is visually dominant on each card
-- [ ] 2.5 "Edit" sits in the card header as a small secondary link
-- [ ] 2.6 Empty state shows the "You haven't added any dogs yet." message with an "Add a dog" CTA
-- [ ] 2.7 "Add a dog" button in the page header navigates to the add dog form
+- [x] 2.3 Dog cards render correctly on desktop and at 375 px; name + breed prominent; optional weight/notes appear only when populated
+- [x] 2.4 "Walk my dog" full-width primary CTA is visually dominant on each card
+- [x] 2.5 "Edit" sits in the card header as a small secondary link
+- [x] 2.6 Empty state shows the "You haven't added any dogs yet." message with an "Add a dog" CTA
+- [x] 2.7 "Add a dog" button in the page header navigates to the add dog form
 
 ### Phase 3: Walk History + Status Badges
 
 #### Automated
 
-- [x] 3.1 Tailwind pipeline compiles without error: `docker compose exec web bin/rails assets:precompile`
-- [x] 3.2 RuboCop passes: `docker compose exec web bundle exec rubocop app/views/walks/ app/helpers/application_helper.rb`
+- [x] 3.1 Tailwind pipeline compiles without error: `docker compose exec web bin/rails assets:precompile` — bd204b8
+- [x] 3.2 RuboCop passes: `docker compose exec web bundle exec rubocop app/views/walks/ app/helpers/application_helper.rb` — bd204b8
 
 #### Manual
 
-- [ ] 3.3 Walk history page renders the active and past sections as tables on desktop
-- [ ] 3.4 At 375 px the tables scroll horizontally without breaking the page layout
-- [ ] 3.5 Status badges render with correct traffic-light colours for each state
-- [ ] 3.6 "Cancel" button on REQUESTED walks renders in red; the turbo-confirm dialog fires on click
-- [ ] 3.7 Empty state rows appear when active or past lists are empty
+- [x] 3.3 Walk history page renders the active and past sections as tables on desktop
+- [x] 3.4 At 375 px the tables scroll horizontally without breaking the page layout
+- [x] 3.5 Status badges render with correct traffic-light colours for each state
+- [x] 3.6 "Cancel" button on REQUESTED walks renders in red; the turbo-confirm dialog fires on click
+- [x] 3.7 Empty state rows appear when active or past lists are empty
