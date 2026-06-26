@@ -366,24 +366,24 @@ tags — negligible overhead on server-rendered pages. The Stimulus app initiali
 
 #### Automated
 
-- [x] 2.1 `rubocop app/views/layouts/` exits 0
-- [x] 2.2 `tailwindcss:build` exits 0
+- [x] 2.1 `rubocop app/views/layouts/` exits 0 — 71fd168
+- [x] 2.2 `tailwindcss:build` exits 0 — 71fd168
 
 #### Manual
 
-- [x] 2.3 Desktop nav: logo + role links + sign out visible
-- [x] 2.4 Mobile: hamburger opens/closes menu; aria-expanded toggles
-- [x] 2.5 Unauthenticated: Sign in + Sign up in nav
-- [x] 2.6 Sign out works (redirect to sign-in)
+- [x] 2.3 Desktop nav: logo + role links + sign out visible — 71fd168
+- [x] 2.4 Mobile: hamburger opens/closes menu; aria-expanded toggles — 71fd168
+- [x] 2.5 Unauthenticated: Sign in + Sign up in nav — 71fd168
+- [x] 2.6 Sign out works (redirect to sign-in) — 71fd168
 
 ### Phase 3: Flash Messages + Auto-Dismiss
 
 #### Automated
 
-- [ ] 3.1 `rubocop app/views/layouts/application.html.erb` exits 0
+- [x] 3.1 `rubocop app/views/layouts/application.html.erb` exits 0
 
 #### Manual
 
-- [ ] 3.2 Flash appears after form action; auto-dismisses in ~4s
-- [ ] 3.3 Turbo navigation: new flash on destination page appears correctly
-- [ ] 3.4 Flash container `id="flash-container"` present in DOM even without messages
+- [x] 3.2 Flash appears after form action; auto-dismisses in ~4s
+- [x] 3.3 Turbo navigation: new flash on destination page appears correctly
+- [x] 3.4 Flash container `id="flash-container"` present in DOM even without messages
