@@ -48,7 +48,7 @@ PRD §Business Logic §Singleness states: *"the binding IS the confirmation"*. S
 | S-10  | owner-removes-dog                  | Owner removes their own dog                                       | S-03                      | FR-008                  | blocked  |
 | U-01  | tailwind-setup                     | (foundation) Tailwind CSS + design tokens wired into Propshaft    | S-01                      | §NFR (usability)        | done     |
 | U-02  | ui-layout-and-nav                  | Responsive layout shell + role-aware navbar + flash messages      | U-01                      | FR-001..004 (UX)        | done     |
-| U-03  | ui-auth-and-profile                | Sign-in, sign-up, profile edit screens styled                     | U-01, U-02                | FR-001..005             | proposed |
+| U-03  | ui-auth-and-profile                | Sign-in, sign-up, profile edit screens styled                     | U-01, U-02                | FR-001..005             | done     |
 | U-04  | ui-owner-dashboard                 | Dog cards, walk-request form, owner walk-history screen styled    | U-01, U-02                | FR-006..010, FR-015     | proposed |
 | U-05  | ui-walker-dashboard                | Open-requests list, accept/start/complete cards, history styled   | U-01, U-02                | FR-011..014, FR-016     | proposed |
 
@@ -282,7 +282,7 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Sign-up already has a role radio (S-01); it must remain functional after styling. No behaviour changes in this slice — only CSS classes added to existing views.
-- **Status:** proposed
+- **Status:** done
 
 ### U-04: Owner dashboard screens
 
@@ -379,3 +379,4 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 - **S-09: Walker sees their own walk history** — Archived 2026-06-23 → `context/archive/2026-06-23-walker-walk-history/`. Lesson: —.
 - **U-01: (foundation) Tailwind CSS + design tokens wired into Propshaft** — Archived 2026-06-25 → `context/archive/2026-06-25-tailwind-setup/`. Lesson: —.
 - **U-02: Responsive layout shell + role-aware navbar + flash messages** — Archived 2026-06-26 → `context/archive/2026-06-26-ui-layout-and-nav/`. Lesson: —.
+- **U-03: Sign-in, sign-up (with role radio), and profile-edit pages are fully styled with Tailwind** — Archived 2026-06-26 → `context/archive/2026-06-26-ui-auth-and-profile/`. Lesson: —.
