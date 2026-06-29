@@ -198,29 +198,29 @@ None beyond standard Tailwind JIT purging — all class strings are static liter
 
 #### Automated
 
-- [x] 2.1 Tailwind pipeline compiles without error: `docker compose exec web bin/rails assets:precompile`
-- [x] 2.2 RuboCop passes: `docker compose exec web bundle exec rubocop app/views/walker_walks/`
+- [x] 2.1 Tailwind pipeline compiles without error: `docker compose exec web bin/rails assets:precompile` — 0483cfb
+- [x] 2.2 RuboCop passes: `docker compose exec web bundle exec rubocop app/views/walker_walks/` — 0483cfb
 
 #### Manual
 
-- [x] 2.3 Active walk card renders with a visible primary-tinted background, distinct from the white history section below
-- [x] 2.4 State badge renders with correct traffic-light colour (yellow for ACCEPTED, orange for IN_PROGRESS)
-- [x] 2.5 "Start walk" button renders in primary green when walk is ACCEPTED
-- [x] 2.6 "End walk" button renders in primary green when walk is IN_PROGRESS; turbo_confirm dialog fires on click
-- [x] 2.7 Empty state card renders with a link to open requests when no active walk exists
+- [x] 2.3 Active walk card renders with a visible primary-tinted background, distinct from the white history section below — 0483cfb
+- [x] 2.4 State badge renders with correct traffic-light colour (yellow for ACCEPTED, orange for IN_PROGRESS) — 0483cfb
+- [x] 2.5 "Start walk" button renders in primary green when walk is ACCEPTED — 0483cfb
+- [x] 2.6 "End walk" button renders in primary green when walk is IN_PROGRESS; turbo_confirm dialog fires on click — 0483cfb
+- [x] 2.7 Empty state card renders with a link to open requests when no active walk exists — 0483cfb
 
 ### Phase 3: Walk History Table
 
 #### Automated
 
-- [ ] 3.1 Tailwind pipeline compiles without error: `docker compose exec web bin/rails assets:precompile`
-- [ ] 3.2 RuboCop passes: `docker compose exec web bundle exec rubocop app/views/walker_walks/`
+- [x] 3.1 Tailwind pipeline compiles without error: `docker compose exec web bin/rails assets:precompile`
+- [x] 3.2 RuboCop passes: `docker compose exec web bundle exec rubocop app/views/walker_walks/`
 
 #### Manual
 
-- [ ] 3.3 Walk history table renders with Dog / State / Date / Owner columns at desktop
-- [ ] 3.4 At 375 px the table scrolls horizontally without page overflow
-- [ ] 3.5 State badges render with correct traffic-light colours
-- [ ] 3.6 Owner name column shows the owner's `display_label`
-- [ ] 3.7 Empty state row appears when `@past_walks` is empty
-- [ ] 3.8 Page heading is "My walk" (consistent with the nav link label)
+- [x] 3.3 Walk history table renders with Dog / State / Date / Owner columns at desktop
+- [x] 3.4 At 375 px the table scrolls horizontally without page overflow
+- [x] 3.5 State badges render with correct traffic-light colours
+- [x] 3.6 Owner name column shows the owner's `display_label`
+- [x] 3.7 Empty state row appears when `@past_walks` is empty
+- [x] 3.8 Page heading is "My walk" (consistent with the nav link label)
