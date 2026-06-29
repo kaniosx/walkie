@@ -50,7 +50,7 @@ PRD §Business Logic §Singleness states: *"the binding IS the confirmation"*. S
 | U-02  | ui-layout-and-nav                  | Responsive layout shell + role-aware navbar + flash messages      | U-01                      | FR-001..004 (UX)        | done     |
 | U-03  | ui-auth-and-profile                | Sign-in, sign-up, profile edit screens styled                     | U-01, U-02                | FR-001..005             | done     |
 | U-04  | ui-owner-dashboard                 | Dog cards, walk-request form, owner walk-history screen styled    | U-01, U-02                | FR-006..010, FR-015     | done     |
-| U-05  | ui-walker-dashboard                | Open-requests list, accept/start/complete cards, history styled   | U-01, U-02                | FR-011..014, FR-016     | proposed |
+| U-05  | ui-walker-dashboard                | Open-requests list, accept/start/complete cards, history styled   | U-01, U-02                | FR-011..014, FR-016     | done     |
 | O-01  | sentry-integration                 | (infra) Sentry SDK wired; exceptions + performance traces sent to Sentry project | —            | §NFR (observability)    | proposed |
 
 ## Streams
@@ -308,7 +308,7 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** State badge colours must be consistent across Owner history (U-04) and Walker history (U-05). Define badge classes in `tailwind.config.js` as component aliases or use a shared partial, not duplicated inline colours.
-- **Status:** proposed
+- **Status:** done
 
 ## Observability
 
@@ -400,3 +400,4 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 - **U-02: Responsive layout shell + role-aware navbar + flash messages** — Archived 2026-06-26 → `context/archive/2026-06-26-ui-layout-and-nav/`. Lesson: —.
 - **U-03: Sign-in, sign-up (with role radio), and profile-edit pages are fully styled with Tailwind** — Archived 2026-06-26 → `context/archive/2026-06-26-ui-auth-and-profile/`. Lesson: —.
 - **U-04: Dog cards, walk-request form, owner walk-history screen styled** — Archived 2026-06-26 → `context/archive/2026-06-26-ui-owner-dashboard/`. Lesson: —.
+- **U-05: Walker-facing screens styled: open-requests list as cards (dog name, city, time posted), "Accept" CTA button prominent on each card, active-walk screen with "Start walk" / "End walk" states, walk-history list. Status badges (REQUESTED / ACCEPTED / IN_PROGRESS / COMPLETED) colour-coded.** — Archived 2026-06-29 → `context/archive/2026-06-29-ui-walker-dashboard/`. Lesson: —.
