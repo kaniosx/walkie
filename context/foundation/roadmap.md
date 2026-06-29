@@ -3,7 +3,7 @@ project: Walkie
 version: 1
 status: draft
 created: 2026-05-25
-updated: 2026-06-26
+updated: 2026-06-29
 prd_version: 1
 main_goal: market-feedback
 top_blocker: time
@@ -51,6 +51,7 @@ PRD §Business Logic §Singleness states: *"the binding IS the confirmation"*. S
 | U-03  | ui-auth-and-profile                | Sign-in, sign-up, profile edit screens styled                     | U-01, U-02                | FR-001..005             | done     |
 | U-04  | ui-owner-dashboard                 | Dog cards, walk-request form, owner walk-history screen styled    | U-01, U-02                | FR-006..010, FR-015     | done     |
 | U-05  | ui-walker-dashboard                | Open-requests list, accept/start/complete cards, history styled   | U-01, U-02                | FR-011..014, FR-016     | proposed |
+| O-01  | sentry-integration                 | (infra) Sentry SDK wired; exceptions + performance traces sent to Sentry project | —            | §NFR (observability)    | proposed |
 
 ## Streams
 
@@ -64,6 +65,7 @@ Navigation aid — groups items sharing a Prerequisites chain. Canonical orderin
 | D      | Verification scaffold              | `F-03`                                                             | Parallel with F-01/F-02. Unlocks the coverage gate (≥80%) on every slice.                             |
 | E      | Blocked by product decision        | `S-10`                                                             | Waiting on Open Q #4 (what happens to walk history when a dog is removed).                            |
 | F      | UI / UX polish                     | `U-01` → `U-02` → {`U-03`, `U-04`, `U-05`}                        | Adds Tailwind + styled flows for auth, Owner, and Walker journeys. U-03/04/05 run in parallel.        |
+| G      | Observability                      | `O-01`                                                             | Independent of all feature slices — can run in parallel with any other stream.                        |
 
 ## Baseline
 
@@ -308,6 +310,22 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 - **Risk:** State badge colours must be consistent across Owner history (U-04) and Walker history (U-05). Define badge classes in `tailwind.config.js` as component aliases or use a shared partial, not duplicated inline colours.
 - **Status:** proposed
 
+## Observability
+
+### O-01: Sentry integration
+
+- **Outcome:** (infra) `sentry-ruby` + `sentry-rails` (+ `stackprof` for profiling) gems added and configured. An initializer at `config/initializers/sentry.rb` reads `SENTRY_DSN` from the environment and enables breadcrumb loggers, PII collection, performance tracing, and profiling. Unhandled exceptions in the Rails app are automatically captured; manual `Sentry.capture_exception` and `Sentry.capture_message` calls work from anywhere. A smoke-test snippet (`1/0` inside a `begin/rescue`) is run in the Rails console on Render to confirm the first event lands in the Sentry project.
+- **Change ID:** `sentry-integration`
+- **PRD refs:** §NFR (observability — "No structured logging, error tracking, or metrics dashboard" is the current baseline gap)
+- **Prerequisites:** — (independent of all feature slices; the DSN and Sentry project are already provisioned)
+- **Parallel with:** any active stream
+- **Blockers:** —
+- **Unknowns:**
+  - `traces_sample_rate = 1.0` and `profiles_sample_rate = 1.0` are correct for early-MVP signal-gathering, but should be tuned down before high-traffic production use. No blocker for v1.
+  - `send_default_pii = true` captures request headers and IPs — acceptable for an internal MVP; revisit before GDPR-sensitive public launch.
+- **Risk:** DSN **must** come from an environment variable (`SENTRY_DSN`), never hard-coded in the initializer committed to git. Configure the secret in Render's environment settings. A hard-coded DSN is a secret leak — rotatable on Sentry but noisy.
+- **Status:** proposed
+
 ## Backlog Handoff
 
 | Roadmap ID | Change ID                          | Suggested issue title                                            | Ready for `/10x-plan` | Notes                                                                 |
@@ -330,6 +348,7 @@ What's already in the codebase as of 2026-05-25 (auto-researched + user-confirme
 | U-03       | ui-auth-and-profile                | UI: Auth + profile screens                                       | done                  | Archived 2026-06-26 → `context/archive/2026-06-26-ui-auth-and-profile/` |
 | U-04       | ui-owner-dashboard                 | UI: Owner dashboard (dogs, walk request, history)                | done                  | Archived 2026-06-26 → `context/archive/2026-06-26-ui-owner-dashboard/` |
 | U-05       | ui-walker-dashboard                | UI: Walker dashboard (open requests, active walk, history)       | yes                   | After U-02; parallel with U-03, U-04                                  |
+| O-01       | sentry-integration                 | Infra: Sentry error tracking + performance tracing               | yes                   | Independent; DSN from `SENTRY_DSN` env var — do not hard-code         |
 
 ## Open Roadmap Questions
 
