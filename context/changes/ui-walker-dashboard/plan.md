@@ -213,14 +213,14 @@ None beyond standard Tailwind JIT purging — all class strings are static liter
 
 #### Automated
 
-- [x] 3.1 Tailwind pipeline compiles without error: `docker compose exec web bin/rails assets:precompile`
-- [x] 3.2 RuboCop passes: `docker compose exec web bundle exec rubocop app/views/walker_walks/`
+- [x] 3.1 Tailwind pipeline compiles without error: `docker compose exec web bin/rails assets:precompile` — e181474
+- [x] 3.2 RuboCop passes: `docker compose exec web bundle exec rubocop app/views/walker_walks/` — e181474
 
 #### Manual
 
-- [x] 3.3 Walk history table renders with Dog / State / Date / Owner columns at desktop
-- [x] 3.4 At 375 px the table scrolls horizontally without page overflow
-- [x] 3.5 State badges render with correct traffic-light colours
-- [x] 3.6 Owner name column shows the owner's `display_label`
-- [x] 3.7 Empty state row appears when `@past_walks` is empty
-- [x] 3.8 Page heading is "My walk" (consistent with the nav link label)
+- [x] 3.3 Walk history table renders with Dog / State / Date / Owner columns at desktop — e181474
+- [x] 3.4 At 375 px the table scrolls horizontally without page overflow — e181474
+- [x] 3.5 State badges render with correct traffic-light colours — e181474
+- [x] 3.6 Owner name column shows the owner's `display_label` — e181474
+- [x] 3.7 Empty state row appears when `@past_walks` is empty — e181474
+- [x] 3.8 Page heading is "My walk" (consistent with the nav link label) — e181474
