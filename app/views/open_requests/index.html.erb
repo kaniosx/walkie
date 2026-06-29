@@ -5,8 +5,8 @@
     <div class="space-y-4">
       <% @walks.each do |walk| %>
         <div class="bg-white rounded-xl shadow-sm ring-1 ring-stone-200 p-6">
-          <p class="text-lg font-semibold text-stone-900"><%= walk.dog.name %></p>
-          <p class="text-sm text-stone-600 mt-0.5"><%= walk.dog.breed %></p>
+          <p class="text-lg font-semibold text-stone-900"><%= walk.dog&.name %></p>
+          <p class="text-sm text-stone-600 mt-0.5"><%= walk.dog&.breed %></p>
           <p class="text-sm text-stone-500 mt-2">
             <%= walk.city %> &middot; <%= time_ago_in_words(walk.created_at) %> ago
           </p>
