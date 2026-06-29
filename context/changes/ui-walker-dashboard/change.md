@@ -1,7 +1,7 @@
 ---
 change_id: ui-walker-dashboard
 title: Ui walker dashboard
-status: new
+status: implementing
 created: 2026-06-29
 updated: 2026-06-29
 archived_at: null
