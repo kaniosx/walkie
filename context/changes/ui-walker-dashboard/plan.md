@@ -184,30 +184,30 @@ None beyond standard Tailwind JIT purging — all class strings are static liter
 
 #### Automated
 
-- [x] 1.1 Tailwind pipeline compiles without error: `docker compose exec web bin/rails assets:precompile`
-- [x] 1.2 RuboCop passes: `docker compose exec web bundle exec rubocop app/views/open_requests/`
+- [x] 1.1 Tailwind pipeline compiles without error: `docker compose exec web bin/rails assets:precompile` — 0b1db5c
+- [x] 1.2 RuboCop passes: `docker compose exec web bundle exec rubocop app/views/open_requests/` — 0b1db5c
 
 #### Manual
 
-- [x] 1.3 Open requests page renders one card per request at desktop and 375 px; no horizontal scroll
-- [x] 1.4 Each card shows dog name (prominent) + breed (subdued), city, and relative time ("5 minutes ago")
-- [x] 1.5 "Accept" button is full-width, primary green, visually dominant at the bottom of each card
-- [x] 1.6 Empty state shows the city-aware message in a white card
+- [x] 1.3 Open requests page renders one card per request at desktop and 375 px; no horizontal scroll — 0b1db5c
+- [x] 1.4 Each card shows dog name (prominent) + breed (subdued), city, and relative time ("5 minutes ago") — 0b1db5c
+- [x] 1.5 "Accept" button is full-width, primary green, visually dominant at the bottom of each card — 0b1db5c
+- [x] 1.6 Empty state shows the city-aware message in a white card — 0b1db5c
 
 ### Phase 2: Active Walk Card
 
 #### Automated
 
-- [ ] 2.1 Tailwind pipeline compiles without error: `docker compose exec web bin/rails assets:precompile`
-- [ ] 2.2 RuboCop passes: `docker compose exec web bundle exec rubocop app/views/walker_walks/`
+- [x] 2.1 Tailwind pipeline compiles without error: `docker compose exec web bin/rails assets:precompile`
+- [x] 2.2 RuboCop passes: `docker compose exec web bundle exec rubocop app/views/walker_walks/`
 
 #### Manual
 
-- [ ] 2.3 Active walk card renders with a visible primary-tinted background, distinct from the white history section below
-- [ ] 2.4 State badge renders with correct traffic-light colour (yellow for ACCEPTED, orange for IN_PROGRESS)
-- [ ] 2.5 "Start walk" button renders in primary green when walk is ACCEPTED
-- [ ] 2.6 "End walk" button renders in primary green when walk is IN_PROGRESS; turbo_confirm dialog fires on click
-- [ ] 2.7 Empty state card renders with a link to open requests when no active walk exists
+- [x] 2.3 Active walk card renders with a visible primary-tinted background, distinct from the white history section below
+- [x] 2.4 State badge renders with correct traffic-light colour (yellow for ACCEPTED, orange for IN_PROGRESS)
+- [x] 2.5 "Start walk" button renders in primary green when walk is ACCEPTED
+- [x] 2.6 "End walk" button renders in primary green when walk is IN_PROGRESS; turbo_confirm dialog fires on click
+- [x] 2.7 Empty state card renders with a link to open requests when no active walk exists
 
 ### Phase 3: Walk History Table
 
