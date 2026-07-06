@@ -47,7 +47,7 @@ PRD §Business Logic §Singleness states: *"the binding IS the confirmation"*. S
 | S-07  | walker-starts-and-completes-walk   | Walker starts (ACC→IP) + ends walk (IP→COMPLETED)                 | S-05                      | FR-013, 014, US-03      | done     |
 | S-08  | owner-walk-history                 | Owner sees their own walk history                                 | S-04                      | FR-015                  | done     |
 | S-09  | walker-walk-history                | Walker sees their own walk history                                | S-05                      | FR-016                  | done     |
-| S-10  | owner-removes-dog                  | Owner removes their own dog (soft-delete; history preserved)      | S-03                      | FR-008                  | ready    |
+| S-10  | owner-removes-dog                  | Owner removes their own dog (soft-delete; history preserved)      | S-03                      | FR-008                  | done     |
 | U-01  | tailwind-setup                     | (foundation) Tailwind CSS + design tokens wired into Propshaft    | S-01                      | §NFR (usability)        | done     |
 | U-02  | ui-layout-and-nav                  | Responsive layout shell + role-aware navbar + flash messages      | U-01                      | FR-001..004 (UX)        | done     |
 | U-03  | ui-auth-and-profile                | Sign-in, sign-up, profile edit screens styled                     | U-01, U-02                | FR-001..005             | done     |
@@ -247,7 +247,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** F-02 schema used a `RESTRICT` or hard FK on `walks.dog_id` — `/10x-plan owner-removes-dog` must check the migration and add `deleted_at :datetime` to dogs + a default scope that filters deleted records. The soft-delete must NOT cascade to walks; history is load-bearing.
-- **Status:** ready
+- **Status:** done
 
 ### U-01: Tailwind CSS setup + design tokens
 
@@ -342,7 +342,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 | S-07       | walker-starts-and-completes-walk   | Walker start + end walk (US-03)                                  | done                  | Archived 2026-06-22 → `context/archive/2026-06-22-walker-starts-and-completes-walk/` |
 | S-08       | owner-walk-history                 | Owner sees their own walk history                                | done                  | Archived 2026-06-23 → `context/archive/2026-06-23-owner-walk-history/`     |
 | S-09       | walker-walk-history                | Walker sees their own walk history                               | done                  | Archived 2026-06-23 → `context/archive/2026-06-23-walker-walk-history/`    |
-| S-10       | owner-removes-dog                  | Owner removes own dog (soft-delete; walk history preserved)      | yes                   | Run `/10x-plan owner-removes-dog`                                           |
+| S-10       | owner-removes-dog                  | Owner removes own dog (soft-delete; walk history preserved)      | done                  | Archived 2026-07-06 → `context/archive/2026-07-06-owner-removes-dog/`      |
 | U-01       | tailwind-setup                     | UI Foundation: Tailwind CSS + design tokens                      | done                  | Archived 2026-06-25 → `context/archive/2026-06-25-tailwind-setup/`         |
 | U-02       | ui-layout-and-nav                  | UI: Global layout shell + role-aware navbar                      | done                  | Archived 2026-06-26 → `context/archive/2026-06-26-ui-layout-and-nav/`      |
 | U-03       | ui-auth-and-profile                | UI: Auth + profile screens                                       | done                  | Archived 2026-06-26 → `context/archive/2026-06-26-ui-auth-and-profile/`    |
@@ -400,3 +400,4 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **U-03: Sign-in, sign-up (with role radio), and profile-edit pages fully styled with Tailwind** — Archived 2026-06-26 → `context/archive/2026-06-26-ui-auth-and-profile/`. Lesson: —.
 - **U-04: Dog cards, walk-request form, owner walk-history screen styled** — Archived 2026-06-26 → `context/archive/2026-06-26-ui-owner-dashboard/`. Lesson: —.
 - **U-05: Walker-facing screens styled — open-requests list, "Accept" CTA, active-walk screen ("Start walk" / "End walk"), walk-history list, colour-coded status badges** — Archived 2026-06-29 → `context/archive/2026-06-29-ui-walker-dashboard/`. Lesson: —.
+- **S-10: Owner removes their own dog (soft-delete; history preserved)** — Archived 2026-07-06 → `context/archive/2026-07-06-owner-removes-dog/`. Lesson: —.
