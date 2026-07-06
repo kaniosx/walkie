@@ -96,4 +96,43 @@ class DogsTest < ActionDispatch::IntegrationTest
     get dogs_path
     assert_redirected_to new_session_path
   end
+
+  test "owner can deactivate dog with no active walks" do
+    sign_in_as "owner@example.com"
+    dog = @owner.dogs.create!(name: "Buddy", breed: "Labrador")
+
+    assert_difference -> { Dog.active.count }, -1 do
+      delete dog_path(dog)
+    end
+    assert_redirected_to dogs_path
+    assert_match "Buddy", flash[:notice]
+    assert_not dog.reload.active?
+  end
+
+  test "owner cannot deactivate dog with active walk" do
+    sign_in_as "owner@example.com"
+    dog = @owner.dogs.create!(name: "Buddy", breed: "Labrador")
+    Walk.create!(dog: dog, owner: @owner, state: "requested", city: "Kraków", postcode: "30-001")
+
+    delete dog_path(dog)
+    assert_redirected_to dogs_path
+    assert_match "Buddy", flash[:alert]
+    assert dog.reload.active?
+  end
+
+  test "owner cannot deactivate another owner's dog" do
+    theirs = @other_owner.dogs.create!(name: "Fido", breed: "Beagle")
+    sign_in_as "owner@example.com"
+    delete dog_path(theirs)
+    assert_response :not_found
+    assert theirs.reload.active?
+  end
+
+  test "walker cannot deactivate a dog" do
+    dog = @owner.dogs.create!(name: "Buddy", breed: "Labrador")
+    sign_in_as "walker@example.com"
+    delete dog_path(dog)
+    assert_redirected_to root_path
+    assert dog.reload.active?
+  end
 end

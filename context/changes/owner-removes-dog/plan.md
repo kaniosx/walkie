@@ -306,22 +306,22 @@ No migration required. `deactivated_at` column was added in `20260603072326_crea
 
 #### Automated
 
-- [x] 2.1 Rubocop clean on `dogs/index.html.erb`
+- [x] 2.1 Rubocop clean on `dogs/index.html.erb` — 0f7d598
 
 #### Manual
 
-- [x] 2.2 "Remove" button visible on each dog card in `/dogs`
-- [x] 2.3 Turbo confirm dialog appears on click with expected text
-- [x] 2.4 Happy path: dog disappears + flash notice, walk history preserved
-- [x] 2.5 Guard path: flash alert when dog has active walk, dog stays in list
+- [x] 2.2 "Remove" button visible on each dog card in `/dogs` — 0f7d598
+- [x] 2.3 Turbo confirm dialog appears on click with expected text — 0f7d598
+- [x] 2.4 Happy path: dog disappears + flash notice, walk history preserved — 0f7d598
+- [x] 2.5 Guard path: flash alert when dog has active walk, dog stays in list — 0f7d598
 
 ### Phase 3: Integration Tests
 
 #### Automated
 
-- [ ] 3.1 `bin/rails test test/integration/dogs_test.rb` — all 4 new tests pass
-- [ ] 3.2 Full suite green (`bin/rails test`)
-- [ ] 3.3 SimpleCov covers `DogsController#destroy` happy path + guard branch
+- [x] 3.1 `bin/rails test test/integration/dogs_test.rb` — all 4 new tests pass
+- [x] 3.2 Full suite green (`bin/rails test`)
+- [x] 3.3 SimpleCov covers `DogsController#destroy` happy path + guard branch
 
 #### Manual
 
