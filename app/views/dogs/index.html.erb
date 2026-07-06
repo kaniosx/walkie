@@ -11,8 +11,13 @@
         <div class="bg-white rounded-xl shadow-sm ring-1 ring-stone-200 p-6">
           <div class="flex items-center justify-between mb-2">
             <span class="text-lg font-semibold text-stone-900"><%= dog.name %></span>
-            <%= link_to "Edit", edit_dog_path(dog),
-                  class: "text-sm text-primary-600 hover:text-primary-700 font-medium" %>
+            <div class="flex items-center gap-3">
+              <%= link_to "Edit", edit_dog_path(dog),
+                    class: "text-sm text-primary-600 hover:text-primary-700 font-medium" %>
+              <%= button_to "Remove", dog_path(dog), method: :delete,
+                    data: { turbo_confirm: "Remove #{dog.name}? Your walk history will be kept." },
+                    class: "text-sm font-medium text-red-600 hover:text-red-700 bg-transparent border-0 p-0 cursor-pointer" %>
+            </div>
           </div>
           <p class="text-sm text-stone-600 mb-1"><%= dog.breed %></p>
           <% if dog.weight.present? %>
