@@ -294,26 +294,26 @@ No migration required. `deactivated_at` column was added in `20260603072326_crea
 
 #### Automated
 
-- [x] 1.1 Dog model tests pass — no regression (`bin/rails test test/models/dog_test.rb`)
-- [x] 1.2 Rubocop clean on controller + routes
+- [x] 1.1 Dog model tests pass — no regression (`bin/rails test test/models/dog_test.rb`) — 980f121
+- [x] 1.2 Rubocop clean on controller + routes — 980f121
 
 #### Manual
 
-- [x] 1.3 `bin/rails routes` shows `destroy dogs DELETE /dogs/:id`
-- [x] 1.4 Rails console: `dog.deactivate!` stamps `deactivated_at`; `Dog.active` excludes it
+- [x] 1.3 `bin/rails routes` shows `destroy dogs DELETE /dogs/:id` — 980f121
+- [x] 1.4 Rails console: `dog.deactivate!` stamps `deactivated_at`; `Dog.active` excludes it — 980f121
 
 ### Phase 2: View — Remove Button
 
 #### Automated
 
-- [ ] 2.1 Rubocop clean on `dogs/index.html.erb`
+- [x] 2.1 Rubocop clean on `dogs/index.html.erb`
 
 #### Manual
 
-- [ ] 2.2 "Remove" button visible on each dog card in `/dogs`
-- [ ] 2.3 Turbo confirm dialog appears on click with expected text
-- [ ] 2.4 Happy path: dog disappears + flash notice, walk history preserved
-- [ ] 2.5 Guard path: flash alert when dog has active walk, dog stays in list
+- [x] 2.2 "Remove" button visible on each dog card in `/dogs`
+- [x] 2.3 Turbo confirm dialog appears on click with expected text
+- [x] 2.4 Happy path: dog disappears + flash notice, walk history preserved
+- [x] 2.5 Guard path: flash alert when dog has active walk, dog stays in list
 
 ### Phase 3: Integration Tests
 
