@@ -38,5 +38,10 @@ module BootstrapScaffold
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    # Generate <button> tags instead of <input type="submit"> from button_to.
+    # Without this, browsers on Linux (GTK/Qt) use native widget styling that
+    # ignores CSS color, making text appear black regardless of Tailwind classes.
+    config.action_view.button_to_generates_button_tag = true
   end
 end

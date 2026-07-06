@@ -31,7 +31,7 @@
   </div>
 
   <div class="mt-4 flex items-center">
-    <%= form.submit(@dog.persisted? ? "Save" : "Add dog"),
+    <%= form.submit @dog.persisted? ? "Save" : "Add dog",
           class: "rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500" %>
     <%= link_to "Cancel", dogs_path, class: "ml-4 text-sm text-stone-500 hover:text-stone-700" %>
   </div>
