@@ -319,10 +319,10 @@ No migration required. `deactivated_at` column was added in `20260603072326_crea
 
 #### Automated
 
-- [x] 3.1 `bin/rails test test/integration/dogs_test.rb` — all 4 new tests pass
-- [x] 3.2 Full suite green (`bin/rails test`)
-- [x] 3.3 SimpleCov covers `DogsController#destroy` happy path + guard branch
+- [x] 3.1 `bin/rails test test/integration/dogs_test.rb` — all 4 new tests pass — 2170b68
+- [x] 3.2 Full suite green (`bin/rails test`) — 2170b68
+- [x] 3.3 SimpleCov covers `DogsController#destroy` happy path + guard branch — 2170b68
 
 #### Manual
 
-- [ ] 3.4 Coverage report confirms both destroy branches covered
+- [x] 3.4 Coverage report confirms both destroy branches covered — 2170b68
