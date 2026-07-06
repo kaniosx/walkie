@@ -1,7 +1,8 @@
 class DogsController < ApplicationController
   include OwnerOnly
 
-  before_action :set_dog, only: %i[edit update destroy]
+  before_action :set_dog, only: %i[edit update]
+  before_action :set_active_dog, only: %i[destroy]
 
   def index
     @dogs = current_user.dogs.active
@@ -32,20 +33,30 @@ class DogsController < ApplicationController
   end
 
   def destroy
-    if @dog.walks.active.exists?
+    result = Dog.transaction do
+      @dog.lock!
+      if @dog.walks.active.exists?
+        :blocked
+      else
+        @dog.deactivate!
+        :ok
+      end
+    end
+    if result == :blocked
       redirect_to dogs_path,
         alert: "#{@dog.name} has an active walk — cancel or wait for it to complete before removing."
-      return
+    else
+      redirect_to dogs_path, notice: "#{@dog.name} was removed."
     end
-    @dog.deactivate!
-    redirect_to dogs_path, notice: "#{@dog.name} was removed."
   end
 
   private
-    # Always scope through current_user.dogs so a foreign or absent id raises
-    # RecordNotFound (404) — structurally no cross-owner access.
     def set_dog
       @dog = current_user.dogs.find(params[:id])
+    end
+
+    def set_active_dog
+      @dog = current_user.dogs.active.find(params[:id])
     end
 
     # Remove (deactivated_at) and ownership (user_id) are never mass-assignable.

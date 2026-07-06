@@ -1,7 +1,7 @@
 ---
 id: owner-removes-dog
 title: "Owner removes their own dog (soft-delete)"
-status: implemented
+status: impl_reviewed
 created: 2026-07-06
 updated: 2026-07-06
 roadmap_id: S-10
