@@ -107,6 +107,8 @@ class DogsTest < ActionDispatch::IntegrationTest
     assert_redirected_to dogs_path
     assert_match "Buddy", flash[:notice]
     assert_not dog.reload.active?
+    get dogs_path
+    assert_no_match edit_dog_path(dog), response.body
   end
 
   test "owner cannot deactivate dog with active walk" do
@@ -133,6 +135,13 @@ class DogsTest < ActionDispatch::IntegrationTest
     sign_in_as "walker@example.com"
     delete dog_path(dog)
     assert_redirected_to root_path
+    assert dog.reload.active?
+  end
+
+  test "unauthenticated cannot deactivate a dog" do
+    dog = @owner.dogs.create!(name: "Buddy", breed: "Labrador")
+    delete dog_path(dog)
+    assert_redirected_to new_session_path
     assert dog.reload.active?
   end
 end
