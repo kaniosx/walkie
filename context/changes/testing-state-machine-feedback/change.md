@@ -1,7 +1,7 @@
 ---
 change_id: testing-state-machine-feedback
 title: Phase 2 rollout — state machine HTTP feedback for illegal transitions
-status: implementing
+status: implemented
 created: 2026-06-25
 updated: 2026-07-08
 archived_at: null
