@@ -80,6 +80,21 @@ class WalkerWalksTest < ActionDispatch::IntegrationTest
     assert_response :not_found
   end
 
+  test "walker cannot complete their own walk before starting it: responds 404" do
+    # @walk is accepted (not started) per the outer setup — completing it now
+    # would skip the in_progress state.
+    sign_in_as "walker@example.com"
+    post complete_walker_walk_path(@walk)
+    assert_response :not_found
+  end
+
+  test "walker cannot start their own walk that is already in progress: responds 404" do
+    @walk.start!(@walker)
+    sign_in_as "walker@example.com"
+    post start_walker_walk_path(@walk)
+    assert_response :not_found
+  end
+
   test "completed walk appears in walker's past walk history" do
     @walk.start!(@walker)
     @walk.complete!(@walker)
