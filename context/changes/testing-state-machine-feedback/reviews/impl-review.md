@@ -35,7 +35,7 @@
 - **Location**: config/database.yml:20
 - **Detail**: `max_connections:` isn't a real ActiveRecord connection-pool key (it's `pool:`), so the effective pool size silently falls back to the AR default instead of being sized for the 10-thread concurrency tests. Pre-existing — equally affects the existing `accept!` race test, not introduced or worsened by this change.
 - **Fix**: Rename `max_connections:` to `pool:` in config/database.yml if/when someone touches that file next — not part of this change's scope.
-- **Decision**: PENDING
+- **Decision**: FIXED — commit ac1dd9c
 
 ### F2 — "call" vs. "walker" naming in new race test titles
 
@@ -45,4 +45,4 @@
 - **Location**: test/models/walk_concurrency_test.rb:61,90
 - **Detail**: New tests say "exactly one call wins..." vs. the existing "exactly one walker wins...". Intentional, not drift — the new tests race one walker against their own concurrent requests, not N walkers against each other, so "call" is the more accurate noun. Justified by the tests' own comments and by test-plan.md §6.4.
 - **Fix**: No action needed — naming is intentional and accurate.
-- **Decision**: PENDING
+- **Decision**: SKIPPED
