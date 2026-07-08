@@ -273,12 +273,12 @@ Not applicable — no schema or data changes.
 
 #### Automated
 
-- [x] 2.1 Full test file passes: `docker compose exec web bin/rails test test/models/walk_concurrency_test.rb`
-- [x] 2.2 Full suite passes: `docker compose exec web bin/rails test`
-- [x] 2.3 Lint passes: `docker compose exec web bundle exec rubocop`
-- [x] 2.4 Security scan passes: `docker compose exec web bundle exec brakeman --no-pager`
+- [x] 2.1 Full test file passes: `docker compose exec web bin/rails test test/models/walk_concurrency_test.rb` — 992a7eb
+- [x] 2.2 Full suite passes: `docker compose exec web bin/rails test` — 992a7eb
+- [x] 2.3 Lint passes: `docker compose exec web bundle exec rubocop` — 992a7eb
+- [x] 2.4 Security scan passes: `docker compose exec web bundle exec brakeman --no-pager` — 992a7eb
 
 #### Manual
 
-- [x] 2.5 Run the concurrency test file 5x to confirm no flakiness
-- [x] 2.6 Re-read updated test-plan.md §6.2/§6.4 for accuracy
+- [x] 2.5 Run the concurrency test file 5x to confirm no flakiness — 992a7eb
+- [x] 2.6 Re-read updated test-plan.md §6.2/§6.4 for accuracy — 992a7eb
