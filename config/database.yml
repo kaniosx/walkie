@@ -17,7 +17,7 @@ default: &default
   encoding: unicode
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
-  max_connections: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   # Connect by host/credentials (not a blanket DATABASE_URL) so each environment
   # keeps its own database — dev → _development, test → _test. Production still
   # overrides with `url: DATABASE_URL` below. Defaults match the local Docker db service.
