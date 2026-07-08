@@ -147,7 +147,14 @@ the relevant rollout phase ships; before that, the sub-section reads
 
 ### 6.2 Adding a model test (state machine or constraint)
 
-TBD — see §3 Phase 2 for the state machine false-return pattern (illegal transition → model method returns false → controller path to test).
+**Two distinct failure modes need two distinct test layers — do not conflate them:**
+
+- **Same-actor, wrong-state, sequential** (e.g. a Walker completes their own walk before starting it) → this is an **integration test** against the controller's scoped `find` (see §6.1), not a model test. `WalkerWalksController#start`/`#complete` scope their lookup by both owner and required state in one query; a sequential wrong-state call never reaches the model at all — it 404s before `start!`/`complete!` is ever invoked. A model-level test here would call `.start!`/`.complete!` directly on the AR object, bypassing the controller, and would prove nothing about the HTTP response the user actually sees.
+- **Same-actor, concurrent race** (e.g. two overlapping requests both calling `start!` for the same walker) → this IS a model-level test, because the atomicity guarantee lives in `Walk#swap_state`'s single `UPDATE ... WHERE state = ? AND <guard>` (`app/models/walk.rb:77-84`), not in the controller.
+
+**Concurrency test pattern** (`test/models/walk_concurrency_test.rb`): a dedicated `ActiveSupport::TestCase` subclass with `self.use_transactional_tests = false` — Minitest's default transactional wrapping serializes thread writes and would hide the race. Spin up `Concurrent::CyclicBarrier.new(N)` so all threads release together, each thread reloading the record and acquiring its own connection via `ActiveRecord::Base.connection_pool.with_connection` (threads contend on the DB row, not a shared connection), then assert exactly one `true` among the collected results (`Concurrent::Array`). Hand-roll teardown (`purge_fixtures`) since transactional rollback is disabled.
+
+**One walker racing themselves vs. many walkers racing each other**: the `accept!` race (`walk_concurrency_test.rb:33-59`) has N *distinct* walkers all contending for one open slot — only one can ever win because the walk can only bind to one walker. The `start!`/`complete!` races are structurally different: the walk is already bound to a single walker, and the race is that *same* walker's own concurrent requests (e.g. a double-tap or client retry) contending on `swap_state`. Every thread in a `start!`/`complete!` race test must use the *same* walker object — don't spread the concurrent calls across distinct walkers, or the test stops proving what it claims to.
 
 ### 6.3 Enabling and verifying the coverage gate
 
@@ -155,7 +162,7 @@ TBD — see §3 Phase 3 for the COVERAGE_MIN=80 activation pattern and per-group
 
 ### 6.4 Per-rollout-phase notes
 
-(Fills in after each phase ships — anything surprising the rollout taught about test setup, fixture patterns, or edge cases worth knowing before adding similar tests.)
+- **Phase 2** (`testing-state-machine-feedback`): the `start!`/`complete!` concurrency race tests were a planning-time scope extension beyond Risk #2 as sourced in §2 — added for symmetry with the pre-existing `accept!` race test, not because a new risk was scored or a new failure was observed. If a future `--refresh` revisits the risk map, consider whether this race deserves its own sourced risk row, or whether "symmetric coverage of an already-tested mechanism" is sufficient justification on its own.
 
 ---
 

@@ -261,24 +261,24 @@ Not applicable — no schema or data changes.
 
 #### Automated
 
-- [x] 1.1 Full test file passes: `docker compose exec web bin/rails test test/integration/walker_walks_test.rb`
-- [x] 1.2 Full suite passes: `docker compose exec web bin/rails test`
-- [x] 1.3 Lint passes: `docker compose exec web bundle exec rubocop`
+- [x] 1.1 Full test file passes: `docker compose exec web bin/rails test test/integration/walker_walks_test.rb` — a982068
+- [x] 1.2 Full suite passes: `docker compose exec web bin/rails test` — a982068
+- [x] 1.3 Lint passes: `docker compose exec web bundle exec rubocop` — a982068
 
 #### Manual
 
-- [x] 1.4 Weaken the state-scoped find, confirm both new tests fail, then revert
+- [x] 1.4 Weaken the state-scoped find, confirm both new tests fail, then revert — a982068
 
 ### Phase 2: Model-level concurrency tests — start!/complete! races
 
 #### Automated
 
-- [ ] 2.1 Full test file passes: `docker compose exec web bin/rails test test/models/walk_concurrency_test.rb`
-- [ ] 2.2 Full suite passes: `docker compose exec web bin/rails test`
-- [ ] 2.3 Lint passes: `docker compose exec web bundle exec rubocop`
-- [ ] 2.4 Security scan passes: `docker compose exec web bundle exec brakeman --no-pager`
+- [x] 2.1 Full test file passes: `docker compose exec web bin/rails test test/models/walk_concurrency_test.rb`
+- [x] 2.2 Full suite passes: `docker compose exec web bin/rails test`
+- [x] 2.3 Lint passes: `docker compose exec web bundle exec rubocop`
+- [x] 2.4 Security scan passes: `docker compose exec web bundle exec brakeman --no-pager`
 
 #### Manual
 
-- [ ] 2.5 Run the concurrency test file 5x to confirm no flakiness
-- [ ] 2.6 Re-read updated test-plan.md §6.2/§6.4 for accuracy
+- [x] 2.5 Run the concurrency test file 5x to confirm no flakiness
+- [x] 2.6 Re-read updated test-plan.md §6.2/§6.4 for accuracy

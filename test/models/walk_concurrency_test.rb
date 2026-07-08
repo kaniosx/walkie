@@ -58,6 +58,62 @@ class WalkConcurrencyTest < ActiveSupport::TestCase
     assert_includes @walkers.map(&:id), @walk.accepted_by_walker_id
   end
 
+  test "exactly one call wins a simultaneous start! race" do
+    # Unlike the accept! race above, this is ONE bound walker racing against
+    # their own concurrent requests (e.g. a double-tap), not N walkers racing
+    # for one slot — so every thread uses the same walker.
+    walker = @walkers.first
+    @walk.accept!(walker) # sequential setup, not part of the race
+
+    barrier = Concurrent::CyclicBarrier.new(WALKER_COUNT)
+    results = Concurrent::Array.new
+
+    threads = WALKER_COUNT.times.map do
+      Thread.new do
+        barrier.wait
+        ActiveRecord::Base.connection_pool.with_connection do
+          walk = Walk.find(@walk.id)
+          results << walk.start!(walker)
+        end
+      end
+    end
+    threads.each(&:join)
+
+    winners = results.count { |won| won }
+    assert_equal 1, winners, "expected exactly one winning start!, got #{winners}"
+
+    @walk.reload
+    assert @walk.in_progress?, "walk should end in the in_progress state"
+    assert_not_nil @walk.started_at
+  end
+
+  test "exactly one call wins a simultaneous complete! race" do
+    walker = @walkers.first
+    @walk.accept!(walker) # sequential setup, not part of the race
+    @walk.start!(walker)  # sequential setup, not part of the race
+
+    barrier = Concurrent::CyclicBarrier.new(WALKER_COUNT)
+    results = Concurrent::Array.new
+
+    threads = WALKER_COUNT.times.map do
+      Thread.new do
+        barrier.wait
+        ActiveRecord::Base.connection_pool.with_connection do
+          walk = Walk.find(@walk.id)
+          results << walk.complete!(walker)
+        end
+      end
+    end
+    threads.each(&:join)
+
+    winners = results.count { |won| won }
+    assert_equal 1, winners, "expected exactly one winning complete!, got #{winners}"
+
+    @walk.reload
+    assert @walk.completed?, "walk should end in the completed state"
+    assert_not_nil @walk.completed_at
+  end
+
   private
     # Delete every row tied to this class's users, by email domain rather than
     # by the @ivars — so it cleans up regardless of how far setup got. Order
