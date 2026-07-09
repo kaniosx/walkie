@@ -299,17 +299,17 @@ Not applicable — no schema or data changes.
 
 #### Manual
 
-- [ ] 1.8 Confirm the CI test job's new system-test step passes after pushing
+- [x] 1.8 Confirm the CI test job's new system-test step passes after pushing — 8368e0d
 
 ### Phase 2: Owner-creates-walk-request system test
 
 #### Automated
 
-- [x] 2.1 New system test passes: `docker compose exec web bin/rails test:system`
-- [x] 2.2 Full suite still passes: `docker compose exec web bin/rails test`
-- [x] 2.3 Lint passes: `docker compose exec web bundle exec rubocop`
-- [x] 2.4 Security scan passes: `docker compose exec web bundle exec brakeman --no-pager`
+- [x] 2.1 New system test passes: `docker compose exec web bin/rails test:system` — 86d6f54
+- [x] 2.2 Full suite still passes: `docker compose exec web bin/rails test` — 86d6f54
+- [x] 2.3 Lint passes: `docker compose exec web bundle exec rubocop` — 86d6f54
+- [x] 2.4 Security scan passes: `docker compose exec web bundle exec brakeman --no-pager` — 86d6f54
 
 #### Manual
 
-- [ ] 2.5 Deliberate-break check: invert the create action's outcome, confirm the test fails, then revert
+- [x] 2.5 Deliberate-break check: invert the create action's outcome, confirm the test fails, then revert — 86d6f54
