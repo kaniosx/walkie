@@ -3,7 +3,7 @@ project: Walkie
 version: 2
 status: active
 created: 2026-05-25
-updated: 2026-07-06
+updated: 2026-07-08
 decisions:
   q4_remove_dog_policy: soft-delete  # deleted_at on Dog; walks preserved
 prd_version: 1
@@ -54,6 +54,7 @@ PRD §Business Logic §Singleness states: *"the binding IS the confirmation"*. S
 | U-04  | ui-owner-dashboard                 | Dog cards, walk-request form, owner walk-history screen styled    | U-01, U-02                | FR-006..010, FR-015     | done     |
 | U-05  | ui-walker-dashboard                | Open-requests list, accept/start/complete cards, history styled   | U-01, U-02                | FR-011..014, FR-016     | done     |
 | O-01  | sentry-integration                 | (infra) Sentry SDK wired; exceptions + performance traces to Sentry | —                        | §NFR (observability)    | proposed |
+| T-01  | e2e-system-tests                   | (infra) Rails System Tests (Capybara + Selenium) wired into Docker + CI; first browser-level e2e test | — | (user-requested; not PRD-derived) | planned |
 
 ## Streams
 
@@ -66,6 +67,7 @@ Navigation aid — groups items sharing a Prerequisites chain. Canonical orderin
 | C      | Marketplace binding (north star)   | `S-05` → `S-07` → `S-09`                                                            | Joins Stream B at `S-04` (Walker needs something to accept). Validation milestone delivered at S-05.        |
 | D      | UI/UX layer                        | `U-01` → `U-02` → `U-03` / `U-04` / `U-05`                                         | Tailwind + styled flows for auth, Owner, and Walker journeys. U-03/04/05 ran in parallel.                   |
 | E      | Observability                      | `O-01`                                                                              | Independent of all feature slices — ready to run in parallel with any other work.                           |
+| F      | Testing infrastructure             | `T-01`                                                                              | Independent of all feature slices — ready to run in parallel with any other work.                           |
 
 ## Baseline
 
@@ -326,6 +328,20 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Risk:** DSN **must** come from an environment variable (`SENTRY_DSN`), never hard-coded in the initializer committed to git. A hard-coded DSN is a secret leak — rotatable on Sentry but noisy.
 - **Status:** proposed
 
+## Testing Infrastructure
+
+### T-01: E2E system tests (Capybara + Selenium)
+
+- **Outcome:** (infra) `capybara` + `selenium-webdriver` gems wired (test group); headless Chromium installed in `Dockerfile.dev`; `test/application_system_test_case.rb` configured for root-in-Docker (`--no-sandbox`, `--disable-dev-shm-usage`); `bin/rails test:system` runs locally and as a step in CI's `test` job. One smoke test plus one real browser-level test ("Owner creates a walk request": sign in via the real form, click through to create a request) prove the pipeline end-to-end.
+- **Change ID:** `e2e-system-tests`
+- **PRD refs:** — (user-requested directly, not derived from a PRD line; adjacent to §Guardrails' test-coverage intent but this is a browser-level layer the PRD does not call for)
+- **Prerequisites:** — (independent of all feature slices)
+- **Parallel with:** any active stream
+- **Blockers:** —
+- **Unknowns:** — (fully scoped in `context/changes/e2e-system-tests/plan.md`)
+- **Risk:** Explicitly outside `context/foundation/test-plan.md`'s phased rollout, which deferred e2e for v1 (integration tests already cover the four core flows). Kept to exactly two system tests by design — e2e is the slowest, most flake-prone layer, and this establishes the pattern rather than sweeping the app. Debian's `chromium`/`chromium-driver` apt packages can lag Google's stable Chrome release by a few weeks; low-risk for a test-only browser.
+- **Status:** planned
+
 ## Backlog Handoff
 
 | Roadmap ID | Change ID                          | Suggested issue title                                            | Ready for `/10x-plan` | Notes                                                                       |
@@ -349,6 +365,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 | U-04       | ui-owner-dashboard                 | UI: Owner dashboard (dogs, walk request, history)                | done                  | Archived 2026-06-26 → `context/archive/2026-06-26-ui-owner-dashboard/`     |
 | U-05       | ui-walker-dashboard                | UI: Walker dashboard (open requests, active walk, history)       | done                  | Archived 2026-06-29 → `context/archive/2026-06-29-ui-walker-dashboard/`    |
 | O-01       | sentry-integration                 | Infra: Sentry error tracking + performance tracing               | yes                   | Independent; DSN from `SENTRY_DSN` env var — do not hard-code              |
+| T-01       | e2e-system-tests                   | Infra: Rails System Tests (Capybara + Selenium) + first e2e test | planned               | Plan at `context/changes/e2e-system-tests/plan.md`; Phase 1 not yet started |
 
 ## Open Roadmap Questions
 
