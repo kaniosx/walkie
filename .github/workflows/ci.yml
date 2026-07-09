@@ -113,6 +113,10 @@ jobs:
       - name: Run tests
         run: bin/rails test
 
+      # No explicit browser install here (unlike Dockerfile.dev's chromium
+      # package): ubuntu-latest ships Google Chrome pre-installed, and
+      # selenium-webdriver's Selenium Manager auto-detects it and fetches a
+      # matching chromedriver at runtime.
       - name: Run system tests
         run: bin/rails test:system
 
