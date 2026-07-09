@@ -289,13 +289,13 @@ Not applicable — no schema or data changes.
 
 #### Automated
 
-- [x] 1.1 Bundle installs cleanly: `docker compose exec web bundle install`
-- [x] 1.2 Docker image rebuilds with the new browser: `docker compose build web`
-- [x] 1.3 Smoke test passes: `docker compose exec web bin/rails test:system`
-- [x] 1.4 Full suite still passes: `docker compose exec web bin/rails test`
-- [x] 1.5 Lint passes: `docker compose exec web bundle exec rubocop`
-- [x] 1.6 Security scan passes: `docker compose exec web bundle exec brakeman --no-pager`
-- [x] 1.7 CI workflow YAML is syntactically valid
+- [x] 1.1 Bundle installs cleanly: `docker compose exec web bundle install` — fdfd0cb
+- [x] 1.2 Docker image rebuilds with the new browser: `docker compose build web` — fdfd0cb
+- [x] 1.3 Smoke test passes: `docker compose exec web bin/rails test:system` — fdfd0cb
+- [x] 1.4 Full suite still passes: `docker compose exec web bin/rails test` — fdfd0cb
+- [x] 1.5 Lint passes: `docker compose exec web bundle exec rubocop` — fdfd0cb
+- [x] 1.6 Security scan passes: `docker compose exec web bundle exec brakeman --no-pager` — fdfd0cb
+- [x] 1.7 CI workflow YAML is syntactically valid — fdfd0cb
 
 #### Manual
 
@@ -305,10 +305,10 @@ Not applicable — no schema or data changes.
 
 #### Automated
 
-- [ ] 2.1 New system test passes: `docker compose exec web bin/rails test:system`
-- [ ] 2.2 Full suite still passes: `docker compose exec web bin/rails test`
-- [ ] 2.3 Lint passes: `docker compose exec web bundle exec rubocop`
-- [ ] 2.4 Security scan passes: `docker compose exec web bundle exec brakeman --no-pager`
+- [x] 2.1 New system test passes: `docker compose exec web bin/rails test:system`
+- [x] 2.2 Full suite still passes: `docker compose exec web bin/rails test`
+- [x] 2.3 Lint passes: `docker compose exec web bundle exec rubocop`
+- [x] 2.4 Security scan passes: `docker compose exec web bundle exec brakeman --no-pager`
 
 #### Manual
 
