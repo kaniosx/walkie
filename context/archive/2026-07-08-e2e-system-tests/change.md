@@ -1,10 +1,10 @@
 ---
 change_id: e2e-system-tests
 title: Add Rails System Tests (Capybara + Selenium) and a first browser-level e2e test
-status: impl_reviewed
+status: archived
 created: 2026-07-08
 updated: 2026-07-09
-archived_at: null
+archived_at: 2026-07-09T15:29:47Z
 ---
 
 ## Notes
