@@ -1,10 +1,10 @@
 ---
 change_id: e2e-full-walk-lifecycle
 title: E2e full walk lifecycle
-status: impl_reviewed
+status: archived
 created: 2026-07-13
 updated: 2026-07-13
-archived_at: null
+archived_at: 2026-07-13T09:58:33Z
 ---
 
 ## Notes
