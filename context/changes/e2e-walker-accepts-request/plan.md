@@ -160,22 +160,22 @@ None — no schema or data changes.
 
 #### Automated
 
-- [x] 1.1 `docker compose exec web bin/rails test:system` passes (both existing system tests green)
-- [x] 1.2 `docker compose exec web bundle exec rubocop` passes on the new and changed files
+- [x] 1.1 `docker compose exec web bin/rails test:system` passes (both existing system tests green) — 8394e36
+- [x] 1.2 `docker compose exec web bundle exec rubocop` passes on the new and changed files — 8394e36
 
 #### Manual
 
-- [x] 1.3 Confirm the extraction is behavior-preserving (misspell-and-revert check on the helper's default password)
+- [x] 1.3 Confirm the extraction is behavior-preserving (misspell-and-revert check on the helper's default password) — 8394e36
 
 ### Phase 2: Add the walker-accepts-request system test
 
 #### Automated
 
-- [ ] 2.1 `docker compose exec web bin/rails test:system` passes, including the new test
-- [ ] 2.2 `docker compose exec web bundle exec rubocop` passes on the new file
-- [ ] 2.3 New test passes when run in isolation
+- [x] 2.1 `docker compose exec web bin/rails test:system` passes, including the new test
+- [x] 2.2 `docker compose exec web bundle exec rubocop` passes on the new file
+- [x] 2.3 New test passes when run in isolation
 
 #### Manual
 
-- [ ] 2.4 Deliberate-break check on `OpenRequestsController#accept`'s success branch
-- [ ] 2.5 Re-run 2-3 times locally to rule out flakiness
+- [x] 2.4 Deliberate-break check on `OpenRequestsController#accept`'s success branch
+- [x] 2.5 Re-run 2-3 times locally to rule out flakiness
