@@ -171,11 +171,11 @@ None — no schema or data changes.
 
 #### Automated
 
-- [x] 2.1 `docker compose exec web bin/rails test:system` passes, including the new test
-- [x] 2.2 `docker compose exec web bundle exec rubocop` passes on the new file
-- [x] 2.3 New test passes when run in isolation
+- [x] 2.1 `docker compose exec web bin/rails test:system` passes, including the new test — 9036774
+- [x] 2.2 `docker compose exec web bundle exec rubocop` passes on the new file — 9036774
+- [x] 2.3 New test passes when run in isolation — 9036774
 
 #### Manual
 
-- [x] 2.4 Deliberate-break check on `OpenRequestsController#accept`'s success branch
-- [x] 2.5 Re-run 2-3 times locally to rule out flakiness
+- [x] 2.4 Deliberate-break check on `OpenRequestsController#accept`'s success branch — 9036774
+- [x] 2.5 Re-run 2-3 times locally to rule out flakiness — 9036774
