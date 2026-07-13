@@ -55,7 +55,7 @@ PRD §Business Logic §Singleness states: *"the binding IS the confirmation"*. S
 | U-05  | ui-walker-dashboard                | Open-requests list, accept/start/complete cards, history styled   | U-01, U-02                | FR-011..014, FR-016     | done     |
 | O-01  | sentry-integration                 | (infra) Sentry SDK wired; exceptions + performance traces to Sentry | —                        | §NFR (observability)    | proposed |
 | T-01  | e2e-system-tests                   | (infra) Rails System Tests (Capybara + Selenium) wired into Docker + CI; first browser-level e2e test | — | (user-requested; not PRD-derived) | done |
-| T-02  | e2e-walker-accepts-request         | (infra) E2E test: Walker signs in, sees open request, accepts it (REQ→ACCEPTED) via real browser clicks | T-01, S-05 | FR-011, 012 | proposed |
+| T-02  | e2e-walker-accepts-request         | (infra) E2E test: Walker signs in, sees open request, accepts it (REQ→ACCEPTED) via real browser clicks | T-01, S-05 | FR-011, 012 | done |
 | T-03  | e2e-owner-cancels-request          | (infra) E2E test: Owner creates a request, cancels it while still REQUESTED, sees it reflected in history | T-01, S-06 | FR-010 | proposed |
 | T-04  | e2e-full-walk-lifecycle            | (infra) E2E test: full lifecycle through the browser — Owner creates → Walker accepts → starts → completes | T-01, S-07 | FR-009, 011..014 | proposed |
 | T-05  | e2e-walk-history                   | (infra) E2E test: Owner and Walker each see their own walk history rendered correctly after sign-in | T-01, S-08, S-09 | FR-015, 016 | proposed |
@@ -356,7 +356,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Low — the HTTP contract and the concurrency race for this flow are already proven at the integration/model layer (`test-plan.md` §2 Risk #1). This test's value is proving the click-path (list rendering, CTA visibility, post-accept UI) works, not re-proving the state machine.
-- **Status:** proposed
+- **Status:** done
 
 ### T-03: E2E test — Owner cancels a requested walk
 
@@ -475,3 +475,4 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **U-05: Walker-facing screens styled — open-requests list, "Accept" CTA, active-walk screen ("Start walk" / "End walk"), walk-history list, colour-coded status badges** — Archived 2026-06-29 → `context/archive/2026-06-29-ui-walker-dashboard/`. Lesson: —.
 - **S-10: Owner removes their own dog (soft-delete; history preserved)** — Archived 2026-07-06 → `context/archive/2026-07-06-owner-removes-dog/`. Lesson: —.
 - **T-01: (infra) `capybara` + `selenium-webdriver` gems wired (test group); headless Chromium installed in `Dockerfile.dev`; `test/application_system_test_case.rb` configured for root-in-Docker (`--no-sandbox`, `--disable-dev-shm-usage`); `bin/rails test:system` runs locally and as a step in CI's `test` job. One smoke test plus one real browser-level test ("Owner creates a walk request": sign in via the real form, click through to create a request) prove the pipeline end-to-end.** — Archived 2026-07-09 → `context/archive/2026-07-08-e2e-system-tests/`. Lesson: —.
+- **T-02: (infra) A browser-level system test signs in as a Walker, navigates to the open-requests list, clicks "Accept" on a request created by a separate Owner fixture, and asserts the walk moves to ACCEPTED and disappears from the open list.** — Archived 2026-07-13 → `context/archive/2026-07-13-e2e-walker-accepts-request/`. Lesson: —.
