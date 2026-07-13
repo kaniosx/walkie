@@ -1,7 +1,7 @@
 ---
 change_id: e2e-walker-accepts-request
 title: E2e walker accepts request
-status: implementing
+status: implemented
 created: 2026-07-13
 updated: 2026-07-13
 archived_at: null
