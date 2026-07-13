@@ -1,10 +1,10 @@
 ---
 change_id: e2e-walk-history
 title: E2e walk history
-status: impl_reviewed
+status: archived
 created: 2026-07-13
 updated: 2026-07-13
-archived_at: null
+archived_at: 2026-07-13T10:22:02Z
 ---
 
 ## Notes
