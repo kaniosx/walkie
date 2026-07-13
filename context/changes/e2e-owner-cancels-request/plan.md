@@ -108,11 +108,11 @@ None — no schema or data changes.
 
 #### Automated
 
-- [x] 1.1 `docker compose exec web bin/rails test:system` passes, including the new test
-- [x] 1.2 `docker compose exec web bundle exec rubocop` passes on the new file
-- [x] 1.3 New test passes when run in isolation
+- [x] 1.1 `docker compose exec web bin/rails test:system` passes, including the new test — 25d7e14
+- [x] 1.2 `docker compose exec web bundle exec rubocop` passes on the new file — 25d7e14
+- [x] 1.3 New test passes when run in isolation — 25d7e14
 
 #### Manual
 
-- [x] 1.4 Deliberate-break check on `Walk#cancel!`
-- [x] 1.5 Re-run 2-3 times locally to rule out flakiness
+- [x] 1.4 Deliberate-break check on `Walk#cancel!` — 25d7e14
+- [x] 1.5 Re-run 2-3 times locally to rule out flakiness — 25d7e14
