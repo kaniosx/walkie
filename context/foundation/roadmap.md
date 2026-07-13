@@ -58,7 +58,7 @@ PRD §Business Logic §Singleness states: *"the binding IS the confirmation"*. S
 | T-02  | e2e-walker-accepts-request         | (infra) E2E test: Walker signs in, sees open request, accepts it (REQ→ACCEPTED) via real browser clicks | T-01, S-05 | FR-011, 012 | done |
 | T-03  | e2e-owner-cancels-request          | (infra) E2E test: Owner creates a request, cancels it while still REQUESTED, sees it reflected in history | T-01, S-06 | FR-010 | done |
 | T-04  | e2e-full-walk-lifecycle            | (infra) E2E test: full lifecycle through the browser — Owner creates → Walker accepts → starts → completes | T-01, S-07 | FR-009, 011..014 | done |
-| T-05  | e2e-walk-history                   | (infra) E2E test: Owner and Walker each see their own walk history rendered correctly after sign-in | T-01, S-08, S-09 | FR-015, 016 | proposed |
+| T-05  | e2e-walk-history                   | (infra) E2E test: Owner and Walker each see their own walk history rendered correctly after sign-in | T-01, S-08, S-09 | FR-015, 016 | done |
 
 ## Streams
 
@@ -392,7 +392,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Low. Cross-account isolation is already proven at the integration layer (`test-plan.md` §2 Risk #3); this e2e test only needs to prove the view renders correctly, not re-prove isolation.
-- **Status:** proposed
+- **Status:** done
 
 ## Backlog Handoff
 
@@ -478,3 +478,4 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **T-02: (infra) A browser-level system test signs in as a Walker, navigates to the open-requests list, clicks "Accept" on a request created by a separate Owner fixture, and asserts the walk moves to ACCEPTED and disappears from the open list.** — Archived 2026-07-13 → `context/archive/2026-07-13-e2e-walker-accepts-request/`. Lesson: —.
 - **T-03: (infra) A browser-level system test signs in as an Owner, creates a walk request, clicks "Cancel" while it is still REQUESTED, and asserts the request no longer offers cancellation / shows the cancelled state in history.** — Archived 2026-07-13 → `context/archive/2026-07-13-e2e-owner-cancels-request/`. Lesson: —.
 - **T-04: (infra) One browser-level system test drives the entire lifecycle across two signed-in personas in sequence: Owner creates a request, Walker accepts it, Walker starts it, Walker completes it — asserting the visible state badge after each transition.** — Archived 2026-07-13 → `context/archive/2026-07-13-e2e-full-walk-lifecycle/`. Lesson: —.
+- **T-05: (infra) A browser-level system test signs in as an Owner and asserts their walk-history view renders their own past walks; a second pass signs in as a Walker and asserts the same for the Walker's history view.** — Archived 2026-07-13 → `context/archive/2026-07-13-e2e-walk-history/`. Lesson: —.
