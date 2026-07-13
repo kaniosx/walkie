@@ -421,7 +421,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 | T-02       | e2e-walker-accepts-request         | Infra: E2E test — Walker accepts a request                       | done                  | Archived 2026-07-13 → `context/archive/2026-07-13-e2e-walker-accepts-request/` |
 | T-03       | e2e-owner-cancels-request          | Infra: E2E test — Owner cancels a requested walk                 | done                  | Archived 2026-07-13 → `context/archive/2026-07-13-e2e-owner-cancels-request/` |
 | T-04       | e2e-full-walk-lifecycle            | Infra: E2E test — full lifecycle (request→accept→start→complete) | done                  | Archived 2026-07-13 → `context/archive/2026-07-13-e2e-full-walk-lifecycle/` |
-| T-05       | e2e-walk-history                   | Infra: E2E test — Owner + Walker walk history                    | yes                   | Independent of T-02/T-03/T-04; needs T-01 infra + S-08/S-09 (already done) |
+| T-05       | e2e-walk-history                   | Infra: E2E test — Owner + Walker walk history                    | done                  | Archived 2026-07-13 → `context/archive/2026-07-13-e2e-walk-history/`       |
 
 ## Open Roadmap Questions
 
