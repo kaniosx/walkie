@@ -1,10 +1,10 @@
 ---
 change_id: e2e-owner-cancels-request
 title: E2e owner cancels request
-status: impl_reviewed
+status: archived
 created: 2026-07-13
 updated: 2026-07-13
-archived_at: null
+archived_at: 2026-07-13T09:16:32Z
 ---
 
 ## Notes
