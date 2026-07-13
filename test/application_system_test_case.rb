@@ -1,6 +1,9 @@
 require "test_helper"
+require "support/system_sign_in_helper"
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
+  include SystemSignInHelper
+
   # --no-sandbox and --disable-dev-shm-usage are required, not optional
   # hardening: the web container runs as root (no USER directive in
   # Dockerfile.dev) and Chrome refuses its sandbox as root, while Docker's

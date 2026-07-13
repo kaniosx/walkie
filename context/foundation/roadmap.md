@@ -3,7 +3,7 @@ project: Walkie
 version: 2
 status: active
 created: 2026-05-25
-updated: 2026-07-09
+updated: 2026-07-13
 decisions:
   q4_remove_dog_policy: soft-delete  # deleted_at on Dog; walks preserved
 prd_version: 1
@@ -55,6 +55,10 @@ PRD §Business Logic §Singleness states: *"the binding IS the confirmation"*. S
 | U-05  | ui-walker-dashboard                | Open-requests list, accept/start/complete cards, history styled   | U-01, U-02                | FR-011..014, FR-016     | done     |
 | O-01  | sentry-integration                 | (infra) Sentry SDK wired; exceptions + performance traces to Sentry | —                        | §NFR (observability)    | proposed |
 | T-01  | e2e-system-tests                   | (infra) Rails System Tests (Capybara + Selenium) wired into Docker + CI; first browser-level e2e test | — | (user-requested; not PRD-derived) | done |
+| T-02  | e2e-walker-accepts-request         | (infra) E2E test: Walker signs in, sees open request, accepts it (REQ→ACCEPTED) via real browser clicks | T-01, S-05 | FR-011, 012 | proposed |
+| T-03  | e2e-owner-cancels-request          | (infra) E2E test: Owner creates a request, cancels it while still REQUESTED, sees it reflected in history | T-01, S-06 | FR-010 | proposed |
+| T-04  | e2e-full-walk-lifecycle            | (infra) E2E test: full lifecycle through the browser — Owner creates → Walker accepts → starts → completes | T-01, S-07 | FR-009, 011..014 | proposed |
+| T-05  | e2e-walk-history                   | (infra) E2E test: Owner and Walker each see their own walk history rendered correctly after sign-in | T-01, S-08, S-09 | FR-015, 016 | proposed |
 
 ## Streams
 
@@ -67,7 +71,7 @@ Navigation aid — groups items sharing a Prerequisites chain. Canonical orderin
 | C      | Marketplace binding (north star)   | `S-05` → `S-07` → `S-09`                                                            | Joins Stream B at `S-04` (Walker needs something to accept). Validation milestone delivered at S-05.        |
 | D      | UI/UX layer                        | `U-01` → `U-02` → `U-03` / `U-04` / `U-05`                                         | Tailwind + styled flows for auth, Owner, and Walker journeys. U-03/04/05 ran in parallel.                   |
 | E      | Observability                      | `O-01`                                                                              | Independent of all feature slices — ready to run in parallel with any other work.                           |
-| F      | Testing infrastructure             | `T-01`                                                                              | Independent of all feature slices — ready to run in parallel with any other work.                           |
+| F      | Testing infrastructure             | `T-01` → `T-02` / `T-03` / `T-04` / `T-05`                                          | T-01 established the pattern (2 tests). T-02..T-05 extend browser coverage across the core flows; each is independent of the others once T-01 lands, and each also needs its underlying feature slice done (already true for all four). |
 
 ## Baseline
 
@@ -342,6 +346,54 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Risk:** Explicitly outside `context/foundation/test-plan.md`'s phased rollout, which deferred e2e for v1 (integration tests already cover the four core flows). Kept to exactly two system tests by design — e2e is the slowest, most flake-prone layer, and this establishes the pattern rather than sweeping the app. Debian's `chromium`/`chromium-driver` apt packages can lag Google's stable Chrome release by a few weeks; low-risk for a test-only browser.
 - **Status:** done
 
+### T-02: E2E test — Walker accepts a request
+
+- **Outcome:** (infra) A browser-level system test signs in as a Walker, navigates to the open-requests list, clicks "Accept" on a request created by a separate Owner fixture, and asserts the walk moves to ACCEPTED and disappears from the open list.
+- **Change ID:** `e2e-walker-accepts-request`
+- **PRD refs:** FR-011, FR-012, US-02
+- **Prerequisites:** T-01 (system-test infra), S-05 (feature already implemented)
+- **Parallel with:** T-03, T-04, T-05
+- **Blockers:** —
+- **Unknowns:** —
+- **Risk:** Low — the HTTP contract and the concurrency race for this flow are already proven at the integration/model layer (`test-plan.md` §2 Risk #1). This test's value is proving the click-path (list rendering, CTA visibility, post-accept UI) works, not re-proving the state machine.
+- **Status:** proposed
+
+### T-03: E2E test — Owner cancels a requested walk
+
+- **Outcome:** (infra) A browser-level system test signs in as an Owner, creates a walk request, clicks "Cancel" while it is still REQUESTED, and asserts the request no longer offers cancellation / shows the cancelled state in history.
+- **Change ID:** `e2e-owner-cancels-request`
+- **PRD refs:** FR-010
+- **Prerequisites:** T-01, S-06
+- **Parallel with:** T-02, T-04, T-05
+- **Blockers:** —
+- **Unknowns:** —
+- **Risk:** Low. Single-actor, single-persona flow — no concurrency angle at the browser layer (that race, if any, belongs at the model/integration layer per `test-plan.md` §6.2).
+- **Status:** proposed
+
+### T-04: E2E test — Full walk lifecycle (request → accept → start → complete)
+
+- **Outcome:** (infra) One browser-level system test drives the entire lifecycle across two signed-in personas in sequence: Owner creates a request, Walker accepts it, Walker starts it, Walker completes it — asserting the visible state badge after each transition.
+- **Change ID:** `e2e-full-walk-lifecycle`
+- **PRD refs:** FR-009, FR-011, FR-012, FR-013, FR-014
+- **Prerequisites:** T-01, S-07 (last slice in the lifecycle chain)
+- **Parallel with:** T-02, T-03, T-05
+- **Blockers:** —
+- **Unknowns:** —
+- **Risk:** The longest-running and most flake-prone test in this batch — it chains four state transitions and two persona sign-ins in one test. Keep it as a single scenario, not a template for further multi-step e2e tests; per T-01's original design intent, e2e stays a thin top layer over an already integration-tested state machine.
+- **Status:** proposed
+
+### T-05: E2E test — Owner and Walker walk history
+
+- **Outcome:** (infra) A browser-level system test signs in as an Owner and asserts their walk-history view renders their own past walks; a second pass signs in as a Walker and asserts the same for the Walker's history view.
+- **Change ID:** `e2e-walk-history`
+- **PRD refs:** FR-015, FR-016
+- **Prerequisites:** T-01, S-08, S-09
+- **Parallel with:** T-02, T-03, T-04
+- **Blockers:** —
+- **Unknowns:** —
+- **Risk:** Low. Cross-account isolation is already proven at the integration layer (`test-plan.md` §2 Risk #3); this e2e test only needs to prove the view renders correctly, not re-prove isolation.
+- **Status:** proposed
+
 ## Backlog Handoff
 
 | Roadmap ID | Change ID                          | Suggested issue title                                            | Ready for `/10x-plan` | Notes                                                                       |
@@ -366,6 +418,10 @@ Foundations below assume these are present and do NOT re-scaffold them.
 | U-05       | ui-walker-dashboard                | UI: Walker dashboard (open requests, active walk, history)       | done                  | Archived 2026-06-29 → `context/archive/2026-06-29-ui-walker-dashboard/`    |
 | O-01       | sentry-integration                 | Infra: Sentry error tracking + performance tracing               | yes                   | Independent; DSN from `SENTRY_DSN` env var — do not hard-code              |
 | T-01       | e2e-system-tests                   | Infra: Rails System Tests (Capybara + Selenium) + first e2e test | done                  | Archived 2026-07-09 → `context/archive/2026-07-08-e2e-system-tests/`       |
+| T-02       | e2e-walker-accepts-request         | Infra: E2E test — Walker accepts a request                       | yes                   | Independent of T-03/T-04/T-05; needs T-01 infra + S-05 (already done)      |
+| T-03       | e2e-owner-cancels-request          | Infra: E2E test — Owner cancels a requested walk                 | yes                   | Independent of T-02/T-04/T-05; needs T-01 infra + S-06 (already done)      |
+| T-04       | e2e-full-walk-lifecycle            | Infra: E2E test — full lifecycle (request→accept→start→complete) | yes                   | Independent of T-02/T-03/T-05; longest/most flake-prone; needs T-01 + S-07 |
+| T-05       | e2e-walk-history                   | Infra: E2E test — Owner + Walker walk history                    | yes                   | Independent of T-02/T-03/T-04; needs T-01 infra + S-08/S-09 (already done) |
 
 ## Open Roadmap Questions
 
