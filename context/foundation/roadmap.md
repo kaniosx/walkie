@@ -418,10 +418,10 @@ Foundations below assume these are present and do NOT re-scaffold them.
 | U-05       | ui-walker-dashboard                | UI: Walker dashboard (open requests, active walk, history)       | done                  | Archived 2026-06-29 → `context/archive/2026-06-29-ui-walker-dashboard/`    |
 | O-01       | sentry-integration                 | Infra: Sentry error tracking + performance tracing               | yes                   | Independent; DSN from `SENTRY_DSN` env var — do not hard-code              |
 | T-01       | e2e-system-tests                   | Infra: Rails System Tests (Capybara + Selenium) + first e2e test | done                  | Archived 2026-07-09 → `context/archive/2026-07-08-e2e-system-tests/`       |
-| T-02       | e2e-walker-accepts-request         | Infra: E2E test — Walker accepts a request                       | done                  | Archived 2026-07-13 → `context/archive/2026-07-13-e2e-walker-accepts-request/` |
-| T-03       | e2e-owner-cancels-request          | Infra: E2E test — Owner cancels a requested walk                 | done                  | Archived 2026-07-13 → `context/archive/2026-07-13-e2e-owner-cancels-request/` |
-| T-04       | e2e-full-walk-lifecycle            | Infra: E2E test — full lifecycle (request→accept→start→complete) | done                  | Archived 2026-07-13 → `context/archive/2026-07-13-e2e-full-walk-lifecycle/` |
-| T-05       | e2e-walk-history                   | Infra: E2E test — Owner + Walker walk history                    | done                  | Archived 2026-07-13 → `context/archive/2026-07-13-e2e-walk-history/`       |
+| T-02       | e2e-walker-accepts-request         | Test: E2E test — Walker accepts a request                        | done                  | Archived 2026-07-13 → `context/archive/2026-07-13-e2e-walker-accepts-request/` |
+| T-03       | e2e-owner-cancels-request          | Test: E2E test — Owner cancels a requested walk                  | done                  | Archived 2026-07-13 → `context/archive/2026-07-13-e2e-owner-cancels-request/` |
+| T-04       | e2e-full-walk-lifecycle            | Test: E2E test — full lifecycle (request→accept→start→complete)  | done                  | Archived 2026-07-13 → `context/archive/2026-07-13-e2e-full-walk-lifecycle/` |
+| T-05       | e2e-walk-history                   | Test: E2E test — Owner + Walker walk history                     | done                  | Archived 2026-07-13 → `context/archive/2026-07-13-e2e-walk-history/`       |
 
 ## Open Roadmap Questions
 
