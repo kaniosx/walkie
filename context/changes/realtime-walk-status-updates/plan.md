@@ -330,21 +330,21 @@ No data migration. `db/cable_schema.rb` is a new schema file for a previously-un
 
 #### Automated
 
-- [x] 1.1 `bin/rails routes` shows the mounted `/cable` engine
-- [x] 1.2 Full test suite still passes
+- [x] 1.1 `bin/rails routes` shows the mounted `/cable` engine — 9fea8b8
+- [x] 1.2 Full test suite still passes — 9fea8b8
 
 #### Manual
 
-- [x] 1.3 Browser dev tools show a live WebSocket connection to `/cable` after sign-in
+- [x] 1.3 Browser dev tools show a live WebSocket connection to `/cable` after sign-in — 9fea8b8
 
 ### Phase 2: Model-level broadcasting
 
 #### Automated
 
-- [ ] 2.1 `test/models/walk_broadcast_test.rb` passes for every transition × stream combination
-- [ ] 2.2 `test/models/walk_concurrency_test.rb` passes unmodified
-- [ ] 2.3 `test/models/walk_test.rb` and `test/models/walk_constraints_test.rb` pass
-- [ ] 2.4 `bundle exec rubocop app/models/walk.rb` passes
+- [x] 2.1 `test/models/walk_broadcast_test.rb` passes for every transition × stream combination
+- [x] 2.2 `test/models/walk_concurrency_test.rb` passes unmodified
+- [x] 2.3 `test/models/walk_test.rb` and `test/models/walk_constraints_test.rb` pass
+- [x] 2.4 `bundle exec rubocop app/models/walk.rb` passes
 
 ### Phase 3: Walker-facing live views
 

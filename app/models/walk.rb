@@ -34,6 +34,9 @@ class Walk < ApplicationRecord
   # DB-side on accept), so a model guard is proportionate — no DB constraint.
   validate :no_active_walk_for_dog, on: :create
 
+  # Regular save (not swap_state's update_all), so callbacks fire normally.
+  after_create_commit :broadcast_creation
+
   # --- Transitions ---------------------------------------------------------
   # Each transition is a single atomic compare-and-swap UPDATE: the expected
   # state (and, where relevant, the authorizing walker/owner) live in the
@@ -80,7 +83,54 @@ class Walk < ApplicationRecord
       return false unless affected == 1
 
       reload
+      broadcast_transition(from: from)
       true
+    end
+
+    # --- Broadcasting --------------------------------------------------------
+    # update_all (above) skips callbacks, so transition broadcasts are called
+    # explicitly here rather than via after_update_commit. Every broadcast
+    # replaces a whole, always-present container — see plan §Implementation
+    # Approach. Broadcasts run synchronously (not the _later/ActiveJob variant):
+    # deterministic for tests, negligible cost at this scale.
+
+    def broadcast_creation
+      broadcast_open_requests_locality
+      broadcast_owner_active_walks
+    end
+
+    def broadcast_transition(from:)
+      broadcast_owner_active_walks
+      broadcast_open_requests_locality if from == "requested"
+      broadcast_walker_current_walk if accepted_by_walker_id.present?
+    end
+
+    def broadcast_open_requests_locality
+      walks = self.class.open_in_locality(city, postcode).includes(:dog).order(created_at: :asc)
+      broadcast_replace_to([ "open_requests", city, postcode ],
+                            target: "open_requests_list", partial: "open_requests/list",
+                            locals: { walks: walks, city: city })
+      broadcast_replace_to([ "open_requests", city, postcode ],
+                            target: "open_requests_count", partial: "home/open_requests_count",
+                            locals: { count: walks.size, city: city })
+    end
+
+    def broadcast_walker_current_walk
+      walk = self.class.where(accepted_by_walker_id: accepted_by_walker_id, state: %w[accepted in_progress])
+                 .includes(:dog, :owner).first
+      broadcast_replace_to([ accepted_by_walker, :current_walk ],
+                            target: "walker_current_walk", partial: "walker_walks/current_walk",
+                            locals: { walk: walk })
+    end
+
+    def broadcast_owner_active_walks
+      walks = owner.owned_walks.active.includes(:dog).order(created_at: :desc)
+      broadcast_replace_to([ owner, :active_walks ],
+                            target: "owner_active_walks_home", partial: "home/owner_active_walks",
+                            locals: { walks: walks })
+      broadcast_replace_to([ owner, :active_walks ],
+                            target: "owner_active_walks_table", partial: "walks/active_table",
+                            locals: { walks: walks })
     end
 
     # A dog can only be walked once at a time: reject a new request when the
