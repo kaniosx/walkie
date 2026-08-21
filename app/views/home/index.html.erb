@@ -3,20 +3,9 @@
   <p class="text-sm text-stone-500 mb-6"><%= current_user.role.capitalize %> &middot; <%= current_user.city %></p>
 
   <% if current_user.owner? %>
-    <% if @active_walks.any? %>
-      <h2 class="text-lg font-medium text-stone-900 mb-3">Active requests</h2>
-      <div class="space-y-4 mb-8">
-        <% @active_walks.each do |walk| %>
-          <div class="bg-primary-50 rounded-xl shadow-sm ring-2 ring-primary-300 p-6 flex items-center justify-between">
-            <div>
-              <p class="text-lg font-semibold text-stone-900"><%= walk.dog.name %></p>
-              <p class="text-sm text-stone-600"><%= walk.dog.breed %></p>
-            </div>
-            <span class="<%= walk_state_badge_classes(walk.state) %>"><%= walk.state.humanize %></span>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
+    <%= turbo_stream_from [ current_user, :active_walks ] %>
+
+    <%= render "home/owner_active_walks", walks: @active_walks %>
 
     <h2 class="text-lg font-medium text-stone-900 mb-3">Walk my dog</h2>
     <% if @dogs.any? %>

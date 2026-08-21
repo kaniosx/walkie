@@ -350,28 +350,28 @@ No data migration. `db/cable_schema.rb` is a new schema file for a previously-un
 
 #### Automated
 
-- [x] 3.1 `test/integration/open_requests_test.rb` and `test/integration/walker_walks_test.rb` pass
-- [x] 3.2 `test/system/walker_accepts_request_test.rb` passes unmodified
-- [x] 3.3 New `test/system/realtime_open_requests_test.rb` passes (dual-session live removal)
-- [x] 3.4 `bundle exec rubocop app/views` passes
+- [x] 3.1 `test/integration/open_requests_test.rb` and `test/integration/walker_walks_test.rb` pass — 56087b1
+- [x] 3.2 `test/system/walker_accepts_request_test.rb` passes unmodified — 56087b1
+- [x] 3.3 New `test/system/realtime_open_requests_test.rb` passes (dual-session live removal) — 56087b1
+- [x] 3.4 `bundle exec rubocop app/views` passes — 56087b1
 
 #### Manual
 
-- [x] 3.5 Two-window Walker demo: create/accept/cancel reflected live in list + count
+- [x] 3.5 Two-window Walker demo: create/accept/cancel reflected live in list + count — 56087b1
 
 ### Phase 4: Owner-facing live views
 
 #### Automated
 
-- [ ] 4.1 `test/integration/walks_test.rb` and `test/integration/walks_cancel_test.rb` pass
-- [ ] 4.2 `test/system/owner_creates_walk_request_test.rb`, `owner_cancels_request_test.rb`, `full_walk_lifecycle_test.rb` pass unmodified
-- [ ] 4.3 New `test/system/realtime_active_walk_test.rb` passes (Owner watches Walker live)
-- [ ] 4.4 New `test/controllers/home_controller_test.rb` passes
-- [ ] 4.5 `bundle exec brakeman --no-pager` reports no new warnings
+- [x] 4.1 `test/integration/walks_test.rb` and `test/integration/walks_cancel_test.rb` pass
+- [x] 4.2 `test/system/owner_creates_walk_request_test.rb`, `owner_cancels_request_test.rb`, `full_walk_lifecycle_test.rb` pass unmodified
+- [x] 4.3 New `test/system/realtime_active_walk_test.rb` passes (Owner watches Walker live)
+- [x] 4.4 New `test/controllers/home_controller_test.rb` passes
+- [x] 4.5 `bundle exec brakeman --no-pager` reports no new warnings
 
 #### Manual
 
-- [ ] 4.6 Two-window Owner+Walker demo: full ACCEPTED→IN_PROGRESS→COMPLETED reflected live
+- [x] 4.6 Two-window Owner+Walker demo: full ACCEPTED→IN_PROGRESS→COMPLETED reflected live
 
 ### Phase 5: Production readiness
 
