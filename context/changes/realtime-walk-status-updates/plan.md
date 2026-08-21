@@ -377,8 +377,8 @@ No data migration. `db/cable_schema.rb` is a new schema file for a previously-un
 
 #### Automated
 
-- [x] 5.1 `bin/rails db:prepare` completes cleanly with `db/cable_schema.rb` present
-- [x] 5.2 `git diff config/cable.yml` shows no unintended changes after restore
+- [x] 5.1 `bin/rails db:prepare` completes cleanly with `db/cable_schema.rb` present — 175ef65
+- [x] 5.2 `git diff config/cable.yml` shows no unintended changes after restore — 175ef65
 
 #### Manual
 
