@@ -3,7 +3,7 @@ project: Walkie
 version: 2
 status: active
 created: 2026-05-25
-updated: 2026-07-13
+updated: 2026-08-21
 decisions:
   q4_remove_dog_policy: soft-delete  # deleted_at on Dog; walks preserved
 prd_version: 1
@@ -53,6 +53,7 @@ PRD §Business Logic §Singleness states: *"the binding IS the confirmation"*. S
 | U-03  | ui-auth-and-profile                | Sign-in, sign-up, profile edit screens styled                     | U-01, U-02                | FR-001..005             | done     |
 | U-04  | ui-owner-dashboard                 | Dog cards, walk-request form, owner walk-history screen styled    | U-01, U-02                | FR-006..010, FR-015     | done     |
 | U-05  | ui-walker-dashboard                | Open-requests list, accept/start/complete cards, history styled   | U-01, U-02                | FR-011..014, FR-016     | done     |
+| U-06  | ui-home-and-password-polish        | Home dashboard styled + role-aware; password-reset screens styled & copy fixed | U-02..U-05    | FR-001..016 (UX)        | done     |
 | O-01  | sentry-integration                 | (infra) Sentry SDK wired; exceptions + performance traces to Sentry | —                        | §NFR (observability)    | proposed |
 | T-01  | e2e-system-tests                   | (infra) Rails System Tests (Capybara + Selenium) wired into Docker + CI; first browser-level e2e test | — | (user-requested; not PRD-derived) | done |
 | T-02  | e2e-walker-accepts-request         | (infra) E2E test: Walker signs in, sees open request, accepts it (REQ→ACCEPTED) via real browser clicks | T-01, S-05 | FR-011, 012 | done |
@@ -69,7 +70,7 @@ Navigation aid — groups items sharing a Prerequisites chain. Canonical orderin
 | A      | Account lifecycle & foundations    | `F-01` / `F-03` → `S-01` → `S-02`                                                  | F-01 and F-03 are parallel. The fixed base for every other slice — without identity+role nothing makes sense. |
 | B      | Owner journey                      | `F-02` → `S-03` → `S-04` → `S-06` / `S-08`; `S-10` (branches from `S-03`)          | Domain schema + Owner's path from adding a dog to posting and managing requests. S-10 ready (soft-delete decided 2026-07-06). |
 | C      | Marketplace binding (north star)   | `S-05` → `S-07` → `S-09`                                                            | Joins Stream B at `S-04` (Walker needs something to accept). Validation milestone delivered at S-05.        |
-| D      | UI/UX layer                        | `U-01` → `U-02` → `U-03` / `U-04` / `U-05`                                         | Tailwind + styled flows for auth, Owner, and Walker journeys. U-03/04/05 ran in parallel.                   |
+| D      | UI/UX layer                        | `U-01` → `U-02` → `U-03` / `U-04` / `U-05` → `U-06`                                | Tailwind + styled flows for auth, Owner, and Walker journeys. U-03/04/05 ran in parallel. U-06 closed the gap U-02..U-05 left on `home#index` and the password-reset screens. |
 | E      | Observability                      | `O-01`                                                                              | Independent of all feature slices — ready to run in parallel with any other work.                           |
 | F      | Testing infrastructure             | `T-01` → `T-02` / `T-03` / `T-04` / `T-05`                                          | T-01 established the pattern (2 tests). T-02..T-05 extend browser coverage across the core flows; each is independent of the others once T-01 lands, and each also needs its underlying feature slice done (already true for all four). |
 
@@ -316,6 +317,19 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Risk:** State badge colours must be consistent across Owner history (U-04) and Walker history (U-05). Define badge classes in `tailwind.config.js` as component aliases or use a shared partial, not duplicated inline colours.
 - **Status:** done
 
+### U-06: Home dashboard + password-reset screens (gap-fill)
+
+- **Outcome:** The two views U-02..U-05 left unstyled are now Tailwind-styled and consistent with the rest of the app. `home#index` (the post-login root) became a real role-aware dashboard instead of bare `<h1>`/`<p>`/`<ul>` text: Owner sees an active-request status card (badge-coded) plus per-dog "Walk my dog" cards (disabled copy when a dog already has an active request) and an empty state when they have no dogs; Walker sees their current accepted/in-progress walk with inline Start/End actions, or an open-requests-nearby count + CTA when idle. `passwords/new` and `passwords/edit` (forgot/reset password) were restyled to match the auth card layout used by `sessions/new` and `registrations/new`; the stale copy claiming "password reset by email is not available in this version" was corrected (the feature — `PasswordsMailer` + token flow — is fully implemented). Removed the now-dead `.notice-v1` CSS class and a duplicate manual flash render on the reset-password page (the layout already renders `flash[:alert]` globally).
+- **Change ID:** `ui-home-and-password-polish`
+- **PRD refs:** FR-001..FR-005 (auth UX), FR-006..FR-016 (dashboard actions), §NFR (usability)
+- **Prerequisites:** U-02, U-03, U-04, U-05
+- **Parallel with:** —
+- **Blockers:** —
+- **Unknowns:** —
+- **Risk:** Low — styling-only plus two new read-only queries in `HomeController#index` (Owner's active walks/dogs, Walker's current walk + open-request count), mirroring existing patterns already used in `WalksController`/`WalkerWalksController`. No state-machine or authorization changes.
+- **Status:** done
+- **Note:** Ad hoc fix from a conversational UI-review session, not run through `/10x-plan` — no `context/changes/`/archive folder exists for it. Verified manually (not via an automated test) by driving `ActionDispatch::Integration::Session` through both roles' home-page variants and the full forgot/reset-password flow in the dev container.
+
 ## Observability
 
 ### O-01: Sentry integration
@@ -416,6 +430,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 | U-03       | ui-auth-and-profile                | UI: Auth + profile screens                                       | done                  | Archived 2026-06-26 → `context/archive/2026-06-26-ui-auth-and-profile/`    |
 | U-04       | ui-owner-dashboard                 | UI: Owner dashboard (dogs, walk request, history)                | done                  | Archived 2026-06-26 → `context/archive/2026-06-26-ui-owner-dashboard/`     |
 | U-05       | ui-walker-dashboard                | UI: Walker dashboard (open requests, active walk, history)       | done                  | Archived 2026-06-29 → `context/archive/2026-06-29-ui-walker-dashboard/`    |
+| U-06       | ui-home-and-password-polish        | UI: Home dashboard + password-reset screens polish               | done                  | Ad hoc fix, no `/10x-plan` — no `context/changes/` or archive folder       |
 | O-01       | sentry-integration                 | Infra: Sentry error tracking + performance tracing               | yes                   | Independent; DSN from `SENTRY_DSN` env var — do not hard-code              |
 | T-01       | e2e-system-tests                   | Infra: Rails System Tests (Capybara + Selenium) + first e2e test | done                  | Archived 2026-07-09 → `context/archive/2026-07-08-e2e-system-tests/`       |
 | T-02       | e2e-walker-accepts-request         | Test: E2E test — Walker accepts a request                        | done                  | Archived 2026-07-13 → `context/archive/2026-07-13-e2e-walker-accepts-request/` |
@@ -473,6 +488,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **U-03: Sign-in, sign-up (with role radio), and profile-edit pages fully styled with Tailwind** — Archived 2026-06-26 → `context/archive/2026-06-26-ui-auth-and-profile/`. Lesson: —.
 - **U-04: Dog cards, walk-request form, owner walk-history screen styled** — Archived 2026-06-26 → `context/archive/2026-06-26-ui-owner-dashboard/`. Lesson: —.
 - **U-05: Walker-facing screens styled — open-requests list, "Accept" CTA, active-walk screen ("Start walk" / "End walk"), walk-history list, colour-coded status badges** — Archived 2026-06-29 → `context/archive/2026-06-29-ui-walker-dashboard/`. Lesson: —.
+- **U-06: Home dashboard (role-aware, status + quick actions) and password-reset screens styled; stale "reset unavailable" copy corrected** — Ad hoc fix, 2026-08-21 — no archive folder (not run through `/10x-plan`). Lesson: when scoping a UI slice, explicitly enumerate every controller/view touched by the routes in play (root, auth) — U-02..U-05 covered the nav shell and the four feature dashboards but missed `home#index` and the password-reset screens entirely.
 - **S-10: Owner removes their own dog (soft-delete; history preserved)** — Archived 2026-07-06 → `context/archive/2026-07-06-owner-removes-dog/`. Lesson: —.
 - **T-01: (infra) `capybara` + `selenium-webdriver` gems wired (test group); headless Chromium installed in `Dockerfile.dev`; `test/application_system_test_case.rb` configured for root-in-Docker (`--no-sandbox`, `--disable-dev-shm-usage`); `bin/rails test:system` runs locally and as a step in CI's `test` job. One smoke test plus one real browser-level test ("Owner creates a walk request": sign in via the real form, click through to create a request) prove the pipeline end-to-end.** — Archived 2026-07-09 → `context/archive/2026-07-08-e2e-system-tests/`. Lesson: —.
 - **T-02: (infra) A browser-level system test signs in as a Walker, navigates to the open-requests list, clicks "Accept" on a request created by a separate Owner fixture, and asserts the walk moves to ACCEPTED and disappears from the open list.** — Archived 2026-07-13 → `context/archive/2026-07-13-e2e-walker-accepts-request/`. Lesson: —.
