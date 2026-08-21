@@ -1,7 +1,7 @@
 ---
 change_id: realtime-walk-status-updates
 title: Real-time walk status updates via Turbo Streams
-status: implementing
+status: implemented
 created: 2026-08-21
 updated: 2026-08-21
 archived_at: null
