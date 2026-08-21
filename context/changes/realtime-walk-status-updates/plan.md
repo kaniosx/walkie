@@ -341,23 +341,23 @@ No data migration. `db/cable_schema.rb` is a new schema file for a previously-un
 
 #### Automated
 
-- [x] 2.1 `test/models/walk_broadcast_test.rb` passes for every transition × stream combination
-- [x] 2.2 `test/models/walk_concurrency_test.rb` passes unmodified
-- [x] 2.3 `test/models/walk_test.rb` and `test/models/walk_constraints_test.rb` pass
-- [x] 2.4 `bundle exec rubocop app/models/walk.rb` passes
+- [x] 2.1 `test/models/walk_broadcast_test.rb` passes for every transition × stream combination — 91a8869
+- [x] 2.2 `test/models/walk_concurrency_test.rb` passes unmodified — 91a8869
+- [x] 2.3 `test/models/walk_test.rb` and `test/models/walk_constraints_test.rb` pass — 91a8869
+- [x] 2.4 `bundle exec rubocop app/models/walk.rb` passes — 91a8869
 
 ### Phase 3: Walker-facing live views
 
 #### Automated
 
-- [ ] 3.1 `test/integration/open_requests_test.rb` and `test/integration/walker_walks_test.rb` pass
-- [ ] 3.2 `test/system/walker_accepts_request_test.rb` passes unmodified
-- [ ] 3.3 New `test/system/realtime_open_requests_test.rb` passes (dual-session live removal)
-- [ ] 3.4 `bundle exec rubocop app/views` passes
+- [x] 3.1 `test/integration/open_requests_test.rb` and `test/integration/walker_walks_test.rb` pass
+- [x] 3.2 `test/system/walker_accepts_request_test.rb` passes unmodified
+- [x] 3.3 New `test/system/realtime_open_requests_test.rb` passes (dual-session live removal)
+- [x] 3.4 `bundle exec rubocop app/views` passes
 
 #### Manual
 
-- [ ] 3.5 Two-window Walker demo: create/accept/cancel reflected live in list + count
+- [x] 3.5 Two-window Walker demo: create/accept/cancel reflected live in list + count
 
 ### Phase 4: Owner-facing live views
 
