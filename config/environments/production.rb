@@ -91,6 +91,9 @@ Rails.application.configure do
   # Skip DNS rebinding protection for the default health check endpoint.
   config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 
+  # Restrict Action Cable WebSocket connections to the same origins as config.hosts.
+  config.action_cable.allowed_request_origins = [ /.*\.onrender\.com\z/ ]
+
   # tailwindcss-rails ships inter-font.css but we use system font stack — exclude from manifest.
   config.assets.precompile -= %w[inter-font.css]
 end
