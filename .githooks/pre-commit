@@ -32,7 +32,12 @@ for f in "${STAGED[@]}"; do
 done
 
 step "RuboCop (${#STAGED[@]} file(s))"
-docker compose exec -T web bundle exec rubocop --no-color "${CONTAINER_FILES[@]}"
+# --force-exclusion: RuboCop ignores AllCops/Exclude patterns for files passed
+# explicitly on the command line unless told otherwise — without this flag,
+# staging a generated file matching an Exclude (e.g. db/*schema.rb, excluded
+# by rubocop-rails by default) fails the hook even though a bare `rubocop`
+# run would skip it.
+docker compose exec -T web bundle exec rubocop --no-color --force-exclusion "${CONTAINER_FILES[@]}"
 ok "RuboCop clean"
 
 # ── Related Minitest files ────────────────────────────────────────────────────
