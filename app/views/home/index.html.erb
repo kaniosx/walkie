@@ -1,24 +1,86 @@
-<h1>Walkie</h1>
+<div class="max-w-2xl mx-auto px-4 py-8">
+  <h1 class="text-2xl font-semibold text-stone-900 mb-1">Welcome back, <%= current_user.display_label %></h1>
+  <p class="text-sm text-stone-500 mb-6"><%= current_user.role.capitalize %> &middot; <%= current_user.city %></p>
 
-<p>Signed in as <%= current_user.display_label %> (<%= current_user.role %>).</p>
+  <% if current_user.owner? %>
+    <% if @active_walks.any? %>
+      <h2 class="text-lg font-medium text-stone-900 mb-3">Active requests</h2>
+      <div class="space-y-4 mb-8">
+        <% @active_walks.each do |walk| %>
+          <div class="bg-primary-50 rounded-xl shadow-sm ring-2 ring-primary-300 p-6 flex items-center justify-between">
+            <div>
+              <p class="text-lg font-semibold text-stone-900"><%= walk.dog.name %></p>
+              <p class="text-sm text-stone-600"><%= walk.dog.breed %></p>
+            </div>
+            <span class="<%= walk_state_badge_classes(walk.state) %>"><%= walk.state.humanize %></span>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
 
-<% if current_user.owner? %>
-  <% dogs = current_user.dogs.active %>
-  <% if dogs.any? %>
-    <h2>Walk my dog</h2>
-    <ul>
-      <% dogs.each do |dog| %>
-        <li>
-          <strong><%= dog.name %></strong> (<%= dog.breed %>)
-          <%= button_to "Walk my dog", walks_path, params: { dog_id: dog.id } %>
-        </li>
-      <% end %>
-    </ul>
-  <% else %>
-    <p>As a Dog Owner, add a dog to start requesting walks.</p>
+    <h2 class="text-lg font-medium text-stone-900 mb-3">Walk my dog</h2>
+    <% if @dogs.any? %>
+      <div class="space-y-4">
+        <% @dogs.each do |dog| %>
+          <div class="bg-white rounded-xl shadow-sm ring-1 ring-stone-200 p-6">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-lg font-semibold text-stone-900"><%= dog.name %></span>
+              <span class="text-sm text-stone-500"><%= dog.breed %></span>
+            </div>
+            <% if @active_dog_ids.include?(dog.id) %>
+              <p class="text-sm text-stone-500 italic">Already has an active walk request.</p>
+            <% else %>
+              <%= button_to "Walk my dog", walks_path, params: { dog_id: dog.id },
+                    aria: { label: "Walk my dog — #{dog.name}" },
+                    class: "w-full rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500" %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="bg-white rounded-xl shadow-sm ring-1 ring-stone-200 p-6 text-center">
+        <p class="text-stone-500 mb-4">Add a dog to start requesting walks.</p>
+        <%= link_to "Add a dog", new_dog_path,
+              class: "rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700" %>
+      </div>
+    <% end %>
+
+    <p class="mt-6 text-sm">
+      <%= link_to "Manage your dogs", dogs_path, class: "text-primary-600 hover:text-primary-700 font-medium" %>
+      <span class="text-stone-300 mx-2">&middot;</span>
+      <%= link_to "My walk requests", walks_path, class: "text-primary-600 hover:text-primary-700 font-medium" %>
+    </p>
+
+  <% elsif current_user.walker? %>
+    <% if @walk %>
+      <div class="bg-primary-50 rounded-xl shadow-sm ring-2 ring-primary-300 p-6 mb-6">
+        <p class="text-xl font-semibold text-stone-900"><%= @walk.dog.name %></p>
+        <p class="text-sm text-stone-600 mt-0.5"><%= @walk.dog.breed %> &middot; owned by <%= @walk.owner.display_label %></p>
+        <span class="<%= walk_state_badge_classes(@walk.state) %> mt-3 inline-block"><%= @walk.state.humanize %></span>
+
+        <% if @walk.accepted? %>
+          <%= button_to "Start walk", start_walker_walk_path(@walk), method: :post,
+                form_class: "mt-4",
+                class: "rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500" %>
+        <% elsif @walk.in_progress? %>
+          <%= button_to "End walk", complete_walker_walk_path(@walk), method: :post,
+                form_class: "mt-4",
+                class: "rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500",
+                data: { turbo_confirm: "End walk? This cannot be undone." } %>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="bg-white rounded-xl shadow-sm ring-1 ring-stone-200 p-6 text-center mb-6">
+        <% if @open_requests_count.positive? %>
+          <p class="text-stone-700 mb-4"><%= pluralize(@open_requests_count, "open walk request") %> near you right now.</p>
+        <% else %>
+          <p class="text-stone-500 mb-4">No open walk requests in <%= current_user.city %> right now.</p>
+        <% end %>
+        <%= link_to "See open walk requests", open_requests_path,
+              class: "rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 inline-block" %>
+      </div>
+    <% end %>
+
+    <p class="text-sm"><%= link_to "My walk history", walker_walks_path, class: "text-primary-600 hover:text-primary-700 font-medium" %></p>
   <% end %>
-  <p><%= link_to "Manage your dogs", dogs_path %> · <%= link_to "My walk requests", walks_path %></p>
-<% elsif current_user.walker? %>
-  <p>As a Dog Walker, see and accept walk requests in your area.</p>
-  <p><%= link_to "See open walk requests", open_requests_path %></p>
-<% end %>
+</div>
