@@ -726,27 +726,27 @@ columns start nullable with no historical data requiring geocoding (see
 
 #### Automated
 
-- [ ] 2.1 Migrations apply cleanly
-- [ ] 2.2 Walk model tests pass
-- [ ] 2.3 Full test suite passes
-- [ ] 2.4 Linting passes
+- [x] 2.1 Migrations apply cleanly — 50bdad9
+- [x] 2.2 Walk model tests pass — 50bdad9
+- [x] 2.3 Full test suite passes — 50bdad9
+- [x] 2.4 Linting passes — 50bdad9
 
 #### Manual
 
-- [ ] 2.5 Console check: `open_nearby` includes near rows, excludes far row
+- [x] 2.5 Console check: `open_nearby` includes near rows, excludes far row — 50bdad9
 
 ### Phase 3: Owner-side location capture
 
 #### Automated
 
-- [ ] 3.1 Controller/integration test: create with coordinates succeeds
-- [ ] 3.2 Controller/integration test: create without coordinates fails validation
-- [ ] 3.3 Full test suite passes
+- [x] 3.1 Controller/integration test: create with coordinates succeeds
+- [x] 3.2 Controller/integration test: create without coordinates fails validation
+- [x] 3.3 Full test suite passes
 
 #### Manual
 
-- [ ] 3.4 Browser: grant location, submit succeeds, coordinates persisted
-- [ ] 3.5 Browser: deny location, submit stays blocked with clear message
+- [x] 3.4 Browser: grant location, submit succeeds, coordinates persisted
+- [x] 3.5 Browser: deny location, submit stays blocked with clear message
 
 ### Phase 4: Walker-side radius-aware list
 
