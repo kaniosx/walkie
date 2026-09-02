@@ -43,6 +43,14 @@ class OpenRequestsTest < ActionDispatch::IntegrationTest
     assert_not_includes response.body, "Rex"
   end
 
+  test "malformed coordinates: shows the getting-your-location placeholder instead of erroring" do
+    sign_in_as "walker@example.com"
+    get open_requests_path, params: { lat: "abc", lng: "19.9450" }
+    assert_response :success
+    assert_includes response.body, "Getting your location"
+    assert_not_includes response.body, "Rex"
+  end
+
   test "accepting binds the walk to the walker and removes it from the list" do
     sign_in_as "walker@example.com"
 
