@@ -61,6 +61,7 @@ PRD §Business Logic §Singleness states: *"the binding IS the confirmation"*. S
 | T-04  | e2e-full-walk-lifecycle            | (infra) E2E test: full lifecycle through the browser — Owner creates → Walker accepts → starts → completes | T-01, S-07 | FR-009, 011..014 | done |
 | T-05  | e2e-walk-history                   | (infra) E2E test: Owner and Walker each see their own walk history rendered correctly after sign-in | T-01, S-08, S-09 | FR-015, 016 | done |
 | R-01  | realtime-walk-status-updates       | Owner and Walker see walk-state changes live (no refresh) on open-requests list, active-walk screens, and home dashboard | S-05, S-07, U-06 | reverses §Non-Goals "No real-time UI updates" | done |
+| L-01  | geolocation-matching                | Walker sees only REQUESTED walks within 10km (browser-captured lat/lng) instead of exact city+postcode match; postcode removed; per-Walker live broadcast | S-05, S-07, R-01 | reverses §Non-Goals/§Open Q #6 "no radius…no proximity ranking" (filtering only, no sort) | done |
 
 ## Streams
 
@@ -75,6 +76,7 @@ Navigation aid — groups items sharing a Prerequisites chain. Canonical orderin
 | E      | Observability                      | `O-01`                                                                              | Independent of all feature slices — ready to run in parallel with any other work.                           |
 | F      | Testing infrastructure             | `T-01` → `T-02` / `T-03` / `T-04` / `T-05`                                          | T-01 established the pattern (2 tests). T-02..T-05 extend browser coverage across the core flows; each is independent of the others once T-01 lands, and each also needs its underlying feature slice done (already true for all four). |
 | G      | Realtime live-updates              | `R-01`                                                                              | Independent of all other active streams — needs the views it makes live (S-05, S-07, U-06) already built. Reverses the PRD's v1 "no real-time UI updates" non-goal. |
+| H      | Locality matching precision        | `L-01`                                                                              | Overrides Open Q #6 / §Non-Goals via `/10x-frame` (2026-09-02) — the frame brief came back weak/proceed-anyway, but the user chose to proceed. Needed S-05, S-07, R-01 already built; independent otherwise. |
 
 ## Baseline
 
@@ -424,6 +426,20 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Risk:** Broadcasting runs synchronously and re-queries the DB per broadcast call (up to 5 small queries per transition); negligible at the PRD's stated `target_scale`. Production readiness (Solid Cable's `cable` database) is provisioned and verified via `db:prepare`; the post-deploy console smoke-test and two-browser live demo against the real deployed app are still pending the next actual deploy (tracked in the archived plan's Progress, items 5.3/5.4).
 - **Status:** done
 
+## Locality Matching
+
+### L-01: Geolocation-radius Walker↔Owner matching
+
+- **Outcome:** `Walk.open_in_locality`'s exact city+postcode match replaced by a radius-based match (`Walk::MATCH_RADIUS_KM`, 10km, filtering only — no distance sort) using live browser-captured Owner/Walker coordinates; city retained as a coarse pre-filter, `postcode` removed entirely from `users` and `walks`. R-01's shared city-keyed realtime channel re-targeted to a per-Walker channel so live broadcasts respect the radius too. Opened via `/10x-frame`: the frame brief found the framing case weak (no observed friction yet, no real-launch audience, no precedent transfer from R-01, no existing geo infra) — user reviewed it and chose to proceed anyway.
+- **Change ID:** `geolocation-matching`
+- **PRD refs:** reverses §Non-Goals / §Open Q #6 ("no radius, no map, no proximity ranking" — ranking/sort stays out of scope, filtering only)
+- **Prerequisites:** S-05, S-07, R-01 (the list/broadcast being made radius-aware must already exist)
+- **Parallel with:** any active stream
+- **Blockers:** —
+- **Unknowns:** —
+- **Risk:** No configurable per-Walker radius (one fixed 10km constant for all); no map UI or visual radius indicator (filter/list only, per PRD non-goal). Lat/lng params hardened and migration reversibility fixed in impl review (`1ab4895`).
+- **Status:** done
+
 ## Backlog Handoff
 
 | Roadmap ID | Change ID                          | Suggested issue title                                            | Ready for `/10x-plan` | Notes                                                                       |
@@ -454,6 +470,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 | T-04       | e2e-full-walk-lifecycle            | Test: E2E test — full lifecycle (request→accept→start→complete)  | done                  | Archived 2026-07-13 → `context/archive/2026-07-13-e2e-full-walk-lifecycle/` |
 | T-05       | e2e-walk-history                   | Test: E2E test — Owner + Walker walk history                     | done                  | Archived 2026-07-13 → `context/archive/2026-07-13-e2e-walk-history/`       |
 | R-01       | realtime-walk-status-updates        | Realtime: Turbo Streams live walk-status updates                 | done                  | Archived 2026-08-21 → `context/archive/2026-08-21-realtime-walk-status-updates/` |
+| L-01       | geolocation-matching                | Locality: geolocation-radius Walker↔Owner matching                | done                  | Archived 2026-09-02 → `context/archive/2026-09-02-geolocation-matching/`; opened via `/10x-frame` (weak framing case — user proceeded anyway) |
 
 ## Open Roadmap Questions
 
@@ -470,7 +487,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Payments / money flow** — Why parked: PRD §Non-Goals. Trust + compliance + dispute machinery is a project in its own right.
 - **Identity verification, ratings / reviews, insurance, trust & safety machinery** — Why parked: PRD §Non-Goals. A real trust system is a separate project; v1 explicitly accepts the gap (see Open Roadmap Q #2 above).
 - **Real-time UI layer (live GPS, live map, live status push, in-app chat, push notifications)** — Why parked: PRD §Non-Goals. The "no out-of-app coordination" insight is proven through status transitions seen on refresh, not via live telemetry.
-- **Advanced geolocation matching** — Why parked: PRD §Non-Goals and §Open Q #6. v1 filters strictly by city/postcode; no radius, no map, no proximity ranking.
+- ~~**Advanced geolocation matching**~~ — **Reversed 2026-09-02** via `L-01` (`geolocation-matching`, see `## Locality Matching`): radius filtering only (no map, no proximity ranking/sort — that half of the non-goal stays parked). No longer parked for the filtering part.
 - **AI / ML algorithms anywhere in the product** — Why parked: PRD §Non-Goals. The domain rule is deterministic (first-Walker-claims-it).
 - **Advanced Walker-availability scheduling** — Why parked: PRD §Non-Goals. A Walker is "available" iff they sign in and act; load-bearing for the "available right now" insight.
 
@@ -483,7 +500,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 
 - **Walker-side insight beyond the "available right now" signal** (local-first matching, no-advance-commitment) — Why parked: PRD §Open Q #2 explicit post-v1.
 - **Post-accept cancellation (FR-010 extension)** — Why parked: PRD §Open Q #5 explicit post-v1.
-- **Coarse city/postcode filtering improvement** — Why parked: PRD §Open Q #6 explicit "deferred to a later release".
+- ~~**Coarse city/postcode filtering improvement**~~ — **Resolved 2026-09-02** via `L-01`: replaced by 10km radius filtering (`Walk::MATCH_RADIUS_KM`); proximity ranking/sort remains out of scope.
 - **Owner confirmation of walk completion (FR-014 extension)** — Why parked: PRD §Open Q #7 explicit post-v1, linked to broader trust/verification work.
 
 ## Done
