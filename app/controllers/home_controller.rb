@@ -12,6 +12,7 @@ class HomeController < ApplicationController
                   .includes(:dog, :owner)
                   .first
       if params[:lat].present? && params[:lng].present?
+        WalkerLocationCache.write(current_user, latitude: params[:lat], longitude: params[:lng])
         @open_requests_count = Walk.open_nearby(city: current_user.city, latitude: params[:lat], longitude: params[:lng]).count
       end
     end

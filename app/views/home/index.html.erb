@@ -48,7 +48,7 @@
 
   <% elsif current_user.walker? %>
     <%= turbo_stream_from [ current_user, :current_walk ] %>
-    <%= turbo_stream_from [ "open_requests", current_user.city ] %>
+    <%= turbo_stream_from [ current_user, :nearby_open_requests ] %>
 
     <%= render "walker_walks/current_walk", walk: @walk %>
 

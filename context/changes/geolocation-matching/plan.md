@@ -752,25 +752,25 @@ columns start nullable with no historical data requiring geocoding (see
 
 #### Automated
 
-- [x] 4.1 Integration test: coordinates present → filtered results
-- [x] 4.2 Integration test: coordinates absent → placeholder state
-- [x] 4.3 System test: in-radius Walker sees request, out-of-radius does not
-- [x] 4.4 Full test suite passes
+- [x] 4.1 Integration test: coordinates present → filtered results — dce4628
+- [x] 4.2 Integration test: coordinates absent → placeholder state — dce4628
+- [x] 4.3 System test: in-radius Walker sees request, out-of-radius does not — dce4628
+- [x] 4.4 Full test suite passes — dce4628
 
 #### Manual
 
-- [x] 4.5 Browser: open-requests page resolves from placeholder to list
-- [x] 4.6 Browser: denial shows "location required", no list, no crash
-- [x] 4.7 Browser: home dashboard count badge matches same behavior
+- [x] 4.5 Browser: open-requests page resolves from placeholder to list — dce4628
+- [x] 4.6 Browser: denial shows "location required", no list, no crash — dce4628
+- [x] 4.7 Browser: home dashboard count badge matches same behavior — dce4628
 
 ### Phase 5: Live per-Walker broadcast
 
 #### Automated
 
-- [ ] 5.1 Model broadcast test: in-radius Walker's channel receives broadcast, out-of-radius does not
-- [ ] 5.2 System test: two-session live update reaches only in-radius Walker's open tab
-- [ ] 5.3 Full test suite passes
+- [x] 5.1 Model broadcast test: in-radius Walker's channel receives broadcast, out-of-radius does not
+- [x] 5.2 System test: two-session live update reaches only in-radius Walker's open tab
+- [x] 5.3 Full test suite passes
 
 #### Manual
 
-- [ ] 5.4 Two-browser demo: new request appears live only for in-radius Walker
+- [x] 5.4 Two-browser demo: new request appears live only for in-radius Walker
