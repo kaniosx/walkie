@@ -13,12 +13,14 @@ class RealtimeOpenRequestsTest < ApplicationSystemTestCase
 
     using_session("walker_a") do
       sign_in_via_form(walker_a)
+      set_geolocation(latitude: 50.0647, longitude: 19.9450)
       visit open_requests_path
       assert_text dog.name
     end
 
     using_session("walker_b") do
       sign_in_via_form(walker_b)
+      set_geolocation(latitude: 50.0647, longitude: 19.9450)
       visit open_requests_path
       assert_text dog.name
       click_button "Accept"

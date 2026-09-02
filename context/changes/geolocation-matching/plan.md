@@ -739,29 +739,29 @@ columns start nullable with no historical data requiring geocoding (see
 
 #### Automated
 
-- [x] 3.1 Controller/integration test: create with coordinates succeeds
-- [x] 3.2 Controller/integration test: create without coordinates fails validation
-- [x] 3.3 Full test suite passes
+- [x] 3.1 Controller/integration test: create with coordinates succeeds — 6f5810b
+- [x] 3.2 Controller/integration test: create without coordinates fails validation — 6f5810b
+- [x] 3.3 Full test suite passes — 6f5810b
 
 #### Manual
 
-- [x] 3.4 Browser: grant location, submit succeeds, coordinates persisted
-- [x] 3.5 Browser: deny location, submit stays blocked with clear message
+- [x] 3.4 Browser: grant location, submit succeeds, coordinates persisted — 6f5810b
+- [x] 3.5 Browser: deny location, submit stays blocked with clear message — 6f5810b
 
 ### Phase 4: Walker-side radius-aware list
 
 #### Automated
 
-- [ ] 4.1 Integration test: coordinates present → filtered results
-- [ ] 4.2 Integration test: coordinates absent → placeholder state
-- [ ] 4.3 System test: in-radius Walker sees request, out-of-radius does not
-- [ ] 4.4 Full test suite passes
+- [x] 4.1 Integration test: coordinates present → filtered results
+- [x] 4.2 Integration test: coordinates absent → placeholder state
+- [x] 4.3 System test: in-radius Walker sees request, out-of-radius does not
+- [x] 4.4 Full test suite passes
 
 #### Manual
 
-- [ ] 4.5 Browser: open-requests page resolves from placeholder to list
-- [ ] 4.6 Browser: denial shows "location required", no list, no crash
-- [ ] 4.7 Browser: home dashboard count badge matches same behavior
+- [x] 4.5 Browser: open-requests page resolves from placeholder to list
+- [x] 4.6 Browser: denial shows "location required", no list, no crash
+- [x] 4.7 Browser: home dashboard count badge matches same behavior
 
 ### Phase 5: Live per-Walker broadcast
 

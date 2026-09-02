@@ -10,6 +10,7 @@
           </p>
           <%= button_to "Accept", accept_open_request_path(walk),
                 form_class: "block w-full mt-4",
+                form: { data: { turbo_frame: "_top" } },
                 class: "w-full rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500" %>
         </div>
       <% end %>
