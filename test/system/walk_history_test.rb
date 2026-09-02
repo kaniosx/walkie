@@ -7,7 +7,7 @@ class WalkHistoryTest < ApplicationSystemTestCase
     walker = User.create!(email_address: "walker@example.com", password: "secret123",
                           role: "walker", city: "Kraków")
     dog = owner.dogs.create!(name: "Rex", breed: "Labrador")
-    walk = dog.walks.create!(owner: owner, city: owner.city)
+    walk = dog.walks.create!(owner: owner, city: owner.city, latitude: 50.0647, longitude: 19.9450)
     walk.accept!(walker)
     walk.start!(walker)
     walk.complete!(walker)
@@ -38,7 +38,7 @@ class WalkHistoryTest < ApplicationSystemTestCase
     walker = User.create!(email_address: "walker@example.com", password: "secret123",
                           role: "walker", city: "Kraków")
     dog = owner.dogs.create!(name: "Rex", breed: "Labrador")
-    walk = dog.walks.create!(owner: owner, city: owner.city)
+    walk = dog.walks.create!(owner: owner, city: owner.city, latitude: 50.0647, longitude: 19.9450)
     walk.accept!(walker)
     walk.start!(walker)
     walk.complete!(walker)

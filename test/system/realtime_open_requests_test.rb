@@ -9,7 +9,7 @@ class RealtimeOpenRequestsTest < ApplicationSystemTestCase
     walker_b = User.create!(email_address: "walker-b@example.com", password: "secret123",
                             role: "walker", city: "Kraków")
     dog = owner.dogs.create!(name: "Rex", breed: "Labrador")
-    dog.walks.create!(owner: owner, city: "Kraków")
+    dog.walks.create!(owner: owner, city: "Kraków", latitude: 50.0647, longitude: 19.9450)
 
     using_session("walker_a") do
       sign_in_via_form(walker_a)

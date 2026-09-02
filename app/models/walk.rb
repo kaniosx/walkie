@@ -17,14 +17,33 @@ class Walk < ApplicationRecord
   # cancelled). Used to enforce one active request per dog at creation.
   scope :active, -> { where(state: %w[requested accepted in_progress]) }
 
+  MATCH_RADIUS_KM = 10
+
   # Open requests a walker in this locality can accept: REQUESTED + exact
   # city match (PRD coarse locality, §Open Q #6). Backed by the [state, city]
-  # index. Interim city-only scope — Phase 2 replaces this with a
-  # radius-aware `open_nearby`.
+  # index. Still used by OpenRequestsController#index/HomeController#index
+  # until Phase 4 switches those to `open_nearby`; kept alive here rather
+  # than deleted so those controllers don't break mid-plan.
   scope :open_in_locality, ->(city) { requested.where(city: city) }
+
+  # Radius-aware match: city stays a coarse pre-filter (reuses the existing
+  # [state, city] index before the distance check runs), then earth_distance
+  # narrows to MATCH_RADIUS_KM. earth_distance/ll_to_earth return meters, so
+  # the km constant is scaled up. Filtering only — no distance sort (locked
+  # decision, see plan §What We're NOT Doing).
+  scope :open_nearby, ->(city:, latitude:, longitude:) {
+    requested
+      .where(city: city)
+      .where.not(latitude: nil, longitude: nil)
+      .where(
+        "earth_distance(ll_to_earth(latitude, longitude), ll_to_earth(?, ?)) <= ?",
+        latitude, longitude, MATCH_RADIUS_KM * 1000
+      )
+  }
 
   validates :state, presence: true
   validates :city, presence: true
+  validates :latitude, :longitude, presence: true
   validate :owner_matches_dog_owner
   validate :walker_is_not_owner
   validate :owner_has_owner_role
@@ -106,7 +125,8 @@ class Walk < ApplicationRecord
     end
 
     def broadcast_open_requests_locality
-      walks = self.class.open_in_locality(city).includes(:dog).order(created_at: :asc)
+      walks = self.class.open_nearby(city: city, latitude: latitude, longitude: longitude)
+                  .includes(:dog).order(created_at: :asc)
       broadcast_replace_to([ "open_requests", city ],
                             target: "open_requests_list", partial: "open_requests/list",
                             locals: { walks: walks, city: city })

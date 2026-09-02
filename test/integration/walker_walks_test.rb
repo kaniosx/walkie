@@ -9,7 +9,7 @@ class WalkerWalksTest < ActionDispatch::IntegrationTest
     @walker2 = User.create!(email_address: "walker2@example.com", password: "secret123",
                             role: "walker", city: "Kraków")
     @dog = @owner.dogs.create!(name: "Rex", breed: "Labrador")
-    @walk = @dog.walks.create!(owner: @owner, city: @owner.city)
+    @walk = @dog.walks.create!(owner: @owner, city: @owner.city, latitude: 50.0647, longitude: 19.9450)
     @walk.accept!(@walker)
   end
 
