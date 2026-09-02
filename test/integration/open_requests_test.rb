@@ -28,11 +28,19 @@ class OpenRequestsTest < ActionDispatch::IntegrationTest
     accepted.accept!(@walker2)
 
     sign_in_as "walker@example.com"
-    get open_requests_path
+    get open_requests_path, params: { lat: 50.0647, lng: 19.9450 }
     assert_response :success
     assert_includes response.body, "Rex"
     assert_not_includes response.body, "Fido",  "different city must be hidden"
     assert_not_includes response.body, "Taken", "already-accepted walk must be hidden"
+  end
+
+  test "without coordinates: shows the getting-your-location placeholder, no list" do
+    sign_in_as "walker@example.com"
+    get open_requests_path
+    assert_response :success
+    assert_includes response.body, "Getting your location"
+    assert_not_includes response.body, "Rex"
   end
 
   test "accepting binds the walk to the walker and removes it from the list" do
@@ -44,7 +52,7 @@ class OpenRequestsTest < ActionDispatch::IntegrationTest
     assert @match.accepted?
     assert_equal @walker.id, @match.accepted_by_walker_id
 
-    get open_requests_path
+    get open_requests_path, params: { lat: 50.0647, lng: 19.9450 }
     # The accepted walk is gone — list is empty (assert the empty state rather
     # than absence of "Rex", which the success flash also contains).
     assert_includes response.body, "No open walk requests in Kraków"

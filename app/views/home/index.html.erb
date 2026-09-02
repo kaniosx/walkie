@@ -52,11 +52,19 @@
 
     <%= render "walker_walks/current_walk", walk: @walk %>
 
-    <div class="bg-white rounded-xl shadow-sm ring-1 ring-stone-200 p-6 text-center mb-6">
-      <%= render "home/open_requests_count", count: @open_requests_count, city: current_user.city %>
-      <%= link_to "See open walk requests", open_requests_path,
-            class: "rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 inline-block" %>
-    </div>
+    <turbo-frame id="open_requests_count_frame" class="block"
+        data-controller="walker-location" data-walker-location-url-value="<%= root_path %>">
+      <div class="bg-white rounded-xl shadow-sm ring-1 ring-stone-200 p-6 text-center mb-6">
+        <% if @open_requests_count %>
+          <%= render "home/open_requests_count", count: @open_requests_count, city: current_user.city %>
+        <% else %>
+          <p class="text-stone-500 mb-4">Getting your location&hellip;</p>
+        <% end %>
+        <%= link_to "See open walk requests", open_requests_path,
+              data: { turbo_frame: "_top" },
+              class: "rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 inline-block" %>
+      </div>
+    </turbo-frame>
 
     <p class="text-sm"><%= link_to "My walk history", walker_walks_path, class: "text-primary-600 hover:text-primary-700 font-medium" %></p>
   <% end %>

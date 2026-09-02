@@ -10,6 +10,7 @@ class WalkerAcceptsRequestTest < ApplicationSystemTestCase
     dog.walks.create!(owner: owner, city: "Kraków", latitude: 50.0647, longitude: 19.9450)
 
     sign_in_via_form(walker)
+    set_geolocation(latitude: 50.0647, longitude: 19.9450)
 
     visit open_requests_path
     assert_text dog.name

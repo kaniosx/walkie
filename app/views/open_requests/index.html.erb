@@ -3,5 +3,14 @@
 <div class="max-w-2xl mx-auto px-4 py-8">
   <h1 class="text-2xl font-semibold text-stone-900 mb-6">Open walk requests</h1>
 
-  <%= render "open_requests/list", walks: @walks, city: current_user.city %>
+  <turbo-frame id="open_requests_frame" class="block"
+      data-controller="walker-location" data-walker-location-url-value="<%= open_requests_path %>">
+    <% if @walks %>
+      <%= render "open_requests/list", walks: @walks, city: current_user.city %>
+    <% else %>
+      <div class="bg-white rounded-xl shadow-sm ring-1 ring-stone-200 p-6 text-center">
+        <p class="text-stone-500">Getting your location&hellip;</p>
+      </div>
+    <% end %>
+  </turbo-frame>
 </div>

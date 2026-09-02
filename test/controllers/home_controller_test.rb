@@ -54,9 +54,17 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     dog.walks.create!(owner: @owner, city: @owner.city, latitude: 50.0647, longitude: 19.9450)
 
     sign_in_as "walker@example.com"
-    get root_path
+    get root_path, params: { lat: 50.0647, lng: 19.9450 }
 
     assert_response :success
     assert_includes response.body, "1 open walk request near you right now."
+  end
+
+  test "walker dashboard shows the getting-your-location placeholder without coordinates" do
+    sign_in_as "walker@example.com"
+    get root_path
+
+    assert_response :success
+    assert_includes response.body, "Getting your location"
   end
 end
