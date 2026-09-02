@@ -3,13 +3,13 @@ require "application_system_test_case"
 class RealtimeOpenRequestsTest < ApplicationSystemTestCase
   test "one walker accepting a request removes it live from another walker's open list, without a reload" do
     owner = User.create!(email_address: "owner@example.com", password: "secret123",
-                         role: "owner", city: "Kraków", postcode: "30-001")
+                         role: "owner", city: "Kraków")
     walker_a = User.create!(email_address: "walker-a@example.com", password: "secret123",
-                            role: "walker", city: "Kraków", postcode: "30-001")
+                            role: "walker", city: "Kraków")
     walker_b = User.create!(email_address: "walker-b@example.com", password: "secret123",
-                            role: "walker", city: "Kraków", postcode: "30-001")
+                            role: "walker", city: "Kraków")
     dog = owner.dogs.create!(name: "Rex", breed: "Labrador")
-    dog.walks.create!(owner: owner, city: "Kraków", postcode: "30-001")
+    dog.walks.create!(owner: owner, city: "Kraków")
 
     using_session("walker_a") do
       sign_in_via_form(walker_a)

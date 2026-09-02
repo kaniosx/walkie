@@ -3,13 +3,13 @@ require "test_helper"
 class WalkerWalksTest < ActionDispatch::IntegrationTest
   setup do
     @owner = User.create!(email_address: "owner@example.com", password: "secret123",
-                          role: "owner", city: "Kraków", postcode: "30-001")
+                          role: "owner", city: "Kraków")
     @walker = User.create!(email_address: "walker@example.com", password: "secret123",
-                           role: "walker", city: "Kraków", postcode: "30-001")
+                           role: "walker", city: "Kraków")
     @walker2 = User.create!(email_address: "walker2@example.com", password: "secret123",
-                            role: "walker", city: "Kraków", postcode: "30-001")
+                            role: "walker", city: "Kraków")
     @dog = @owner.dogs.create!(name: "Rex", breed: "Labrador")
-    @walk = @dog.walks.create!(owner: @owner, city: @owner.city, postcode: @owner.postcode)
+    @walk = @dog.walks.create!(owner: @owner, city: @owner.city)
     @walk.accept!(@walker)
   end
 

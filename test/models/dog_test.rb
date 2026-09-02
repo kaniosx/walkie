@@ -7,8 +7,7 @@ class DogTest < ActiveSupport::TestCase
       password: "secret123",
       password_confirmation: "secret123",
       role: "owner",
-      city: "Kraków",
-      postcode: "30-001"
+      city: "Kraków"
     }.merge(attrs))
   end
 

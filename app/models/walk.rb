@@ -18,13 +18,13 @@ class Walk < ApplicationRecord
   scope :active, -> { where(state: %w[requested accepted in_progress]) }
 
   # Open requests a walker in this locality can accept: REQUESTED + exact
-  # city + postcode match (PRD coarse locality, §Open Q #6). Backed by the
-  # [state, city] index; postcode is a cheap residual filter.
-  scope :open_in_locality, ->(city, postcode) { requested.where(city: city, postcode: postcode) }
+  # city match (PRD coarse locality, §Open Q #6). Backed by the [state, city]
+  # index. Interim city-only scope — Phase 2 replaces this with a
+  # radius-aware `open_nearby`.
+  scope :open_in_locality, ->(city) { requested.where(city: city) }
 
   validates :state, presence: true
   validates :city, presence: true
-  validates :postcode, presence: true
   validate :owner_matches_dog_owner
   validate :walker_is_not_owner
   validate :owner_has_owner_role
@@ -106,11 +106,11 @@ class Walk < ApplicationRecord
     end
 
     def broadcast_open_requests_locality
-      walks = self.class.open_in_locality(city, postcode).includes(:dog).order(created_at: :asc)
-      broadcast_replace_to([ "open_requests", city, postcode ],
+      walks = self.class.open_in_locality(city).includes(:dog).order(created_at: :asc)
+      broadcast_replace_to([ "open_requests", city ],
                             target: "open_requests_list", partial: "open_requests/list",
                             locals: { walks: walks, city: city })
-      broadcast_replace_to([ "open_requests", city, postcode ],
+      broadcast_replace_to([ "open_requests", city ],
                             target: "open_requests_count", partial: "home/open_requests_count",
                             locals: { count: walks.size, city: city })
     end

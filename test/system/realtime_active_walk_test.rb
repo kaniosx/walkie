@@ -3,11 +3,11 @@ require "application_system_test_case"
 class RealtimeActiveWalkTest < ApplicationSystemTestCase
   test "an owner watching their walks page sees the walker's start and complete reflected live" do
     owner = User.create!(email_address: "owner@example.com", password: "secret123",
-                         role: "owner", city: "Kraków", postcode: "30-001")
+                         role: "owner", city: "Kraków")
     walker = User.create!(email_address: "walker@example.com", password: "secret123",
-                          role: "walker", city: "Kraków", postcode: "30-001")
+                          role: "walker", city: "Kraków")
     dog = owner.dogs.create!(name: "Rex", breed: "Labrador")
-    walk = dog.walks.create!(owner: owner, city: "Kraków", postcode: "30-001")
+    walk = dog.walks.create!(owner: owner, city: "Kraków")
     walk.accept!(walker)
 
     using_session("owner") do

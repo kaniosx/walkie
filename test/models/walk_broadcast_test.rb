@@ -8,15 +8,15 @@ class WalkBroadcastTest < ActiveSupport::TestCase
 
   def setup
     @owner = User.create!(email_address: "owner@example.com", password: "secret123",
-                          password_confirmation: "secret123", role: "owner", city: "Kraków", postcode: "30-001")
+                          password_confirmation: "secret123", role: "owner", city: "Kraków")
     @walker = User.create!(email_address: "walker@example.com", password: "secret123",
-                           password_confirmation: "secret123", role: "walker", city: "Kraków", postcode: "30-001")
+                           password_confirmation: "secret123", role: "walker", city: "Kraków")
     @dog = Dog.create!(name: "Rex", breed: "Labrador", user: @owner)
-    @walk = Walk.create!(dog: @dog, owner: @owner, city: "Kraków", postcode: "30-001")
+    @walk = Walk.create!(dog: @dog, owner: @owner, city: "Kraków")
   end
 
   def locality_stream
-    [ "open_requests", "Kraków", "30-001" ]
+    [ "open_requests", "Kraków" ]
   end
 
   def owner_stream
@@ -32,7 +32,7 @@ class WalkBroadcastTest < ActiveSupport::TestCase
 
     assert_turbo_stream_broadcasts(locality_stream, count: 2) do
       assert_turbo_stream_broadcasts(owner_stream, count: 2) do
-        Walk.create!(dog: dog, owner: @owner, city: "Kraków", postcode: "30-001")
+        Walk.create!(dog: dog, owner: @owner, city: "Kraków")
       end
     end
     assert_no_turbo_stream_broadcasts(walker_stream)

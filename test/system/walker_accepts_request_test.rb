@@ -3,11 +3,11 @@ require "application_system_test_case"
 class WalkerAcceptsRequestTest < ApplicationSystemTestCase
   test "walker signs in, sees an open request, and accepts it" do
     owner = User.create!(email_address: "owner@example.com", password: "secret123",
-                         role: "owner", city: "Kraków", postcode: "30-001")
+                         role: "owner", city: "Kraków")
     walker = User.create!(email_address: "walker@example.com", password: "secret123",
-                          role: "walker", city: "Kraków", postcode: "30-001")
+                          role: "walker", city: "Kraków")
     dog = owner.dogs.create!(name: "Rex", breed: "Labrador")
-    dog.walks.create!(owner: owner, city: "Kraków", postcode: "30-001")
+    dog.walks.create!(owner: owner, city: "Kraków")
 
     sign_in_via_form(walker)
 

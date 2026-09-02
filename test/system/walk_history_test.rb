@@ -3,11 +3,11 @@ require "application_system_test_case"
 class WalkHistoryTest < ApplicationSystemTestCase
   test "owner sees a completed walk in their walk history" do
     owner = User.create!(email_address: "owner@example.com", password: "secret123",
-                         role: "owner", city: "Kraków", postcode: "30-001")
+                         role: "owner", city: "Kraków")
     walker = User.create!(email_address: "walker@example.com", password: "secret123",
-                          role: "walker", city: "Kraków", postcode: "30-001")
+                          role: "walker", city: "Kraków")
     dog = owner.dogs.create!(name: "Rex", breed: "Labrador")
-    walk = dog.walks.create!(owner: owner, city: owner.city, postcode: owner.postcode)
+    walk = dog.walks.create!(owner: owner, city: owner.city)
     walk.accept!(walker)
     walk.start!(walker)
     walk.complete!(walker)
@@ -24,7 +24,7 @@ class WalkHistoryTest < ApplicationSystemTestCase
     click_on "Sign out"
 
     other_owner = User.create!(email_address: "other_owner@example.com", password: "secret123",
-                               role: "owner", city: "Kraków", postcode: "30-001")
+                               role: "owner", city: "Kraków")
     sign_in_via_form(other_owner)
 
     visit walks_path
@@ -34,11 +34,11 @@ class WalkHistoryTest < ApplicationSystemTestCase
 
   test "walker sees a completed walk in their walk history" do
     owner = User.create!(email_address: "owner@example.com", password: "secret123",
-                         role: "owner", city: "Kraków", postcode: "30-001")
+                         role: "owner", city: "Kraków")
     walker = User.create!(email_address: "walker@example.com", password: "secret123",
-                          role: "walker", city: "Kraków", postcode: "30-001")
+                          role: "walker", city: "Kraków")
     dog = owner.dogs.create!(name: "Rex", breed: "Labrador")
-    walk = dog.walks.create!(owner: owner, city: owner.city, postcode: owner.postcode)
+    walk = dog.walks.create!(owner: owner, city: owner.city)
     walk.accept!(walker)
     walk.start!(walker)
     walk.complete!(walker)
@@ -55,7 +55,7 @@ class WalkHistoryTest < ApplicationSystemTestCase
     click_on "Sign out"
 
     other_walker = User.create!(email_address: "other_walker@example.com", password: "secret123",
-                                role: "walker", city: "Kraków", postcode: "30-001")
+                                role: "walker", city: "Kraków")
     sign_in_via_form(other_walker)
 
     visit walker_walks_path
