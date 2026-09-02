@@ -114,7 +114,7 @@ class DogsTest < ActionDispatch::IntegrationTest
   test "owner cannot deactivate dog with active walk" do
     sign_in_as "owner@example.com"
     dog = @owner.dogs.create!(name: "Buddy", breed: "Labrador")
-    Walk.create!(dog: dog, owner: @owner, state: "requested", city: "Kraków")
+    Walk.create!(dog: dog, owner: @owner, state: "requested", city: "Kraków", latitude: 50.0647, longitude: 19.9450)
 
     delete dog_path(dog)
     assert_redirected_to dogs_path

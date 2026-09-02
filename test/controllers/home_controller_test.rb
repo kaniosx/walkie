@@ -14,7 +14,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
 
   test "owner dashboard renders the active-requests partial with the owner's active walks" do
     dog = @owner.dogs.create!(name: "Rex", breed: "Labrador")
-    dog.walks.create!(owner: @owner, city: @owner.city)
+    dog.walks.create!(owner: @owner, city: @owner.city, latitude: 50.0647, longitude: 19.9450)
 
     sign_in_as "owner@example.com"
     get root_path
@@ -38,7 +38,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     other_owner = User.create!(email_address: "owner2@example.com", password: "secret123",
                                role: "owner", city: "Kraków")
     dog = other_owner.dogs.create!(name: "Fido", breed: "Beagle")
-    walk = dog.walks.create!(owner: other_owner, city: "Kraków")
+    walk = dog.walks.create!(owner: other_owner, city: "Kraków", latitude: 50.0647, longitude: 19.9450)
     walk.accept!(@walker)
 
     sign_in_as "walker@example.com"
@@ -51,7 +51,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
 
   test "walker dashboard renders the open-requests count when they have no current walk" do
     dog = @owner.dogs.create!(name: "Rex", breed: "Labrador")
-    dog.walks.create!(owner: @owner, city: @owner.city)
+    dog.walks.create!(owner: @owner, city: @owner.city, latitude: 50.0647, longitude: 19.9450)
 
     sign_in_as "walker@example.com"
     get root_path

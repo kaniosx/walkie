@@ -718,9 +718,9 @@ columns start nullable with no historical data requiring geocoding (see
 
 #### Manual
 
-- [x] 1.4 Sign-up form has no postcode field
-- [x] 1.5 Profile edit form has no postcode field
-- [x] 1.6 Profile show view has no postcode row
+- [x] 1.4 Sign-up form has no postcode field — b8a9736
+- [x] 1.5 Profile edit form has no postcode field — b8a9736
+- [x] 1.6 Profile show view has no postcode row — b8a9736
 
 ### Phase 2: Schema & radius query foundation
 

@@ -20,7 +20,7 @@ class OpenRequestsTest < ActionDispatch::IntegrationTest
   # Distinct dog per walk to dodge the one-active-per-dog guard.
   def open_walk(dog_name, city:)
     dog = @owner.dogs.create!(name: dog_name, breed: "Labrador")
-    dog.walks.create!(owner: @owner, city: city)
+    dog.walks.create!(owner: @owner, city: city, latitude: 50.0647, longitude: 19.9450)
   end
 
   test "walker sees only requested walks in their exact city" do

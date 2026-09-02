@@ -19,7 +19,7 @@ class WalksTest < ActionDispatch::IntegrationTest
     sign_in_as "owner@example.com"
 
     assert_difference -> { @owner.owned_walks.count }, 1 do
-      post walks_path, params: { dog_id: @dog.id }
+      post walks_path, params: { dog_id: @dog.id, latitude: 50.0647, longitude: 19.9450 }
     end
     walk = @owner.owned_walks.last
     assert walk.requested?
@@ -30,9 +30,9 @@ class WalksTest < ActionDispatch::IntegrationTest
   end
 
   test "index lists only the current owner's walks" do
-    mine = @dog.walks.create!(owner: @owner, city: @owner.city)
+    mine = @dog.walks.create!(owner: @owner, city: @owner.city, latitude: 50.0647, longitude: 19.9450)
     other_dog = @other_owner.dogs.create!(name: "Fido", breed: "Beagle")
-    theirs = other_dog.walks.create!(owner: @other_owner, city: @other_owner.city)
+    theirs = other_dog.walks.create!(owner: @other_owner, city: @other_owner.city, latitude: 50.0647, longitude: 19.9450)
 
     sign_in_as "owner@example.com"
     get walks_path
@@ -42,11 +42,11 @@ class WalksTest < ActionDispatch::IntegrationTest
   end
 
   test "a second active request for the same dog is rejected" do
-    @dog.walks.create!(owner: @owner, city: @owner.city)
+    @dog.walks.create!(owner: @owner, city: @owner.city, latitude: 50.0647, longitude: 19.9450)
     sign_in_as "owner@example.com"
 
     assert_no_difference -> { @dog.walks.count } do
-      post walks_path, params: { dog_id: @dog.id }
+      post walks_path, params: { dog_id: @dog.id, latitude: 50.0647, longitude: 19.9450 }
     end
     assert_redirected_to walks_path
     follow_redirect!
@@ -89,7 +89,7 @@ class WalksTest < ActionDispatch::IntegrationTest
 
   test "past walks section does not show another owner's completed walk" do
     other_dog = @other_owner.dogs.create!(name: "Fido", breed: "Beagle")
-    other_walk = other_dog.walks.create!(owner: @other_owner, city: @other_owner.city)
+    other_walk = other_dog.walks.create!(owner: @other_owner, city: @other_owner.city, latitude: 50.0647, longitude: 19.9450)
     other_walk.accept!(@walker)
     other_walk.start!(@walker)
     other_walk.complete!(@walker)
@@ -101,7 +101,7 @@ class WalksTest < ActionDispatch::IntegrationTest
   end
 
   test "cancelled walk appears in the Past section of the walk index" do
-    walk = @dog.walks.create!(owner: @owner, city: @owner.city)
+    walk = @dog.walks.create!(owner: @owner, city: @owner.city, latitude: 50.0647, longitude: 19.9450)
     walk.cancel!(@owner)
 
     sign_in_as "owner@example.com"
@@ -114,7 +114,7 @@ class WalksTest < ActionDispatch::IntegrationTest
   end
 
   test "completed walk appears in the Past section of the walk index" do
-    walk = @dog.walks.create!(owner: @owner, city: @owner.city)
+    walk = @dog.walks.create!(owner: @owner, city: @owner.city, latitude: 50.0647, longitude: 19.9450)
     walk.accept!(@walker)
     walk.start!(@walker)
     walk.complete!(@walker)
