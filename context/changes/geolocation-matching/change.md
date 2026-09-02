@@ -1,7 +1,7 @@
 ---
 change_id: geolocation-matching
 title: Locality matching precision (city/postcode → geolocation radius)
-status: implementing
+status: implemented
 created: 2026-09-02
 updated: 2026-09-02
 archived_at: null

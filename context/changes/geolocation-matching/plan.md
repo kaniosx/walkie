@@ -767,10 +767,10 @@ columns start nullable with no historical data requiring geocoding (see
 
 #### Automated
 
-- [x] 5.1 Model broadcast test: in-radius Walker's channel receives broadcast, out-of-radius does not
-- [x] 5.2 System test: two-session live update reaches only in-radius Walker's open tab
-- [x] 5.3 Full test suite passes
+- [x] 5.1 Model broadcast test: in-radius Walker's channel receives broadcast, out-of-radius does not — f174384
+- [x] 5.2 System test: two-session live update reaches only in-radius Walker's open tab — f174384
+- [x] 5.3 Full test suite passes — f174384
 
 #### Manual
 
-- [x] 5.4 Two-browser demo: new request appears live only for in-radius Walker
+- [x] 5.4 Two-browser demo: new request appears live only for in-radius Walker — f174384
