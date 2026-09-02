@@ -147,21 +147,6 @@ class WalkTest < ActiveSupport::TestCase
     assert_not_includes Walk.active, @walk # completed
   end
 
-  # --- Open-in-locality scope (walker's open list) -------------------------
-
-  test "open_in_locality returns only requested walks matching city" do
-    # Distinct dogs so each walk dodges the one-active-per-dog guard.
-    match     = make_walk("Match",   city: "Kraków")
-    other_ct  = make_walk("OtherCt", city: "Gdańsk")
-    accepted  = make_walk("Taken",   city: "Kraków")
-    accepted.update_columns(state: "accepted", accepted_by_walker_id: @walker.id, accepted_at: Time.current)
-
-    result = Walk.open_in_locality("Kraków")
-    assert_includes result, match
-    assert_not_includes result, other_ct,  "different city must be excluded"
-    assert_not_includes result, accepted,  "non-requested walk must be excluded"
-  end
-
   # --- Open-nearby scope (radius-based walker's open list) -----------------
 
   test "open_nearby includes walks within the radius and excludes walks beyond it" do

@@ -51,5 +51,14 @@ module ActiveSupport
     # Load fixtures from test/fixtures/*.yml (none yet — users are built inline
     # because has_secure_password needs a real password, not a digest in YAML).
     fixtures :all
+
+    # test.rb activates a real :memory_store (geolocation-matching plan §Phase 5,
+    # for WalkerLocationCache) instead of :null_store. That also makes the
+    # built-in `rate_limit` on Sessions/Registrations/PasswordsController#create
+    # live during tests (it's Rails.cache-backed and was a silent no-op under
+    # :null_store) — without a reset, sign-in attempts accumulate across the
+    # whole single-process suite run and eventually trip "Try again later.",
+    # cascading into every test downstream that depends on being signed in.
+    setup { Rails.cache.clear }
   end
 end

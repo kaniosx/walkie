@@ -32,4 +32,41 @@ class RealtimeOpenRequestsTest < ApplicationSystemTestCase
       assert_text "No open walk requests in Kraków right now."
     end
   end
+
+  test "a new request appears live only in the tab of the walker within radius" do
+    owner = User.create!(email_address: "owner@example.com", password: "secret123",
+                         role: "owner", city: "Kraków")
+    walker_in_radius = User.create!(email_address: "walker-in@example.com", password: "secret123",
+                                    role: "walker", city: "Kraków")
+    walker_out_of_radius = User.create!(email_address: "walker-out@example.com", password: "secret123",
+                                        role: "walker", city: "Kraków")
+    dog = owner.dogs.create!(name: "Rex", breed: "Labrador")
+
+    using_session("walker_in") do
+      sign_in_via_form(walker_in_radius)
+      set_geolocation(latitude: 50.0647, longitude: 19.9450) # Kraków centre
+      visit open_requests_path
+      assert_text "No open walk requests"
+    end
+
+    using_session("walker_out") do
+      sign_in_via_form(walker_out_of_radius)
+      set_geolocation(latitude: 52.2297, longitude: 21.0122) # Warsaw, ~260km away
+      visit open_requests_path
+      assert_text "No open walk requests"
+    end
+
+    using_session("owner") do
+      sign_in_via_form(owner)
+      dog.walks.create!(owner: owner, city: "Kraków", latitude: 50.0647, longitude: 19.9450)
+    end
+
+    using_session("walker_in") do
+      assert_text dog.name
+    end
+
+    using_session("walker_out") do
+      assert_no_text dog.name
+    end
+  end
 end

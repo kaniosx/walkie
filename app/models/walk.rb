@@ -18,13 +18,7 @@ class Walk < ApplicationRecord
   scope :active, -> { where(state: %w[requested accepted in_progress]) }
 
   MATCH_RADIUS_KM = 10
-
-  # Open requests a walker in this locality can accept: REQUESTED + exact
-  # city match (PRD coarse locality, §Open Q #6). Backed by the [state, city]
-  # index. Still used by OpenRequestsController#index/HomeController#index
-  # until Phase 4 switches those to `open_nearby`; kept alive here rather
-  # than deleted so those controllers don't break mid-plan.
-  scope :open_in_locality, ->(city) { requested.where(city: city) }
+  EARTH_RADIUS_KM = 6371.0
 
   # Radius-aware match: city stays a coarse pre-filter (reuses the existing
   # [state, city] index before the distance check runs), then earth_distance
@@ -124,15 +118,42 @@ class Walk < ApplicationRecord
       broadcast_walker_current_walk if accepted_by_walker_id.present?
     end
 
+    # Per-Walker fan-out: every same-city Walker with a live (unexpired)
+    # cached location gets their own broadcast, computed from *their* own
+    # position, not this walk's. "Not currently viewing, no cache entry" is
+    # the expected common case, not an error — silently skipped. Distance
+    # here is a small in-memory Ruby computation (bounded by same-city Walker
+    # count), not a new SQL predicate; see plan §Phase 5.
     def broadcast_open_requests_locality
-      walks = self.class.open_nearby(city: city, latitude: latitude, longitude: longitude)
-                  .includes(:dog).order(created_at: :asc)
-      broadcast_replace_to([ "open_requests", city ],
-                            target: "open_requests_list", partial: "open_requests/list",
-                            locals: { walks: walks, city: city })
-      broadcast_replace_to([ "open_requests", city ],
-                            target: "open_requests_count", partial: "home/open_requests_count",
-                            locals: { count: walks.size, city: city })
+      User.walker.where(city: city).find_each do |walker|
+        location = WalkerLocationCache.read(walker)
+        next if location.nil?
+        next unless distance_km_to(location[:latitude], location[:longitude]) <= MATCH_RADIUS_KM
+
+        walks = self.class.open_nearby(city: city, latitude: location[:latitude], longitude: location[:longitude])
+                    .includes(:dog).order(created_at: :asc)
+        broadcast_replace_to([ walker, :nearby_open_requests ],
+                              target: "open_requests_list", partial: "open_requests/list",
+                              locals: { walks: walks, city: city })
+        broadcast_replace_to([ walker, :nearby_open_requests ],
+                              target: "open_requests_count", partial: "home/open_requests_count",
+                              locals: { count: walks.size, city: city })
+      end
+    end
+
+    # Ruby-side Haversine distance from this walk's own coordinates to an
+    # arbitrary point — used only to decide broadcast eligibility per cached
+    # Walker location in #broadcast_open_requests_locality above. The
+    # DB-side `open_nearby` scope stays the source of truth for actual list
+    # filtering/queries.
+    def distance_km_to(other_latitude, other_longitude)
+      rlat1 = latitude.to_f * Math::PI / 180
+      rlat2 = other_latitude.to_f * Math::PI / 180
+      dlat = rlat2 - rlat1
+      dlng = (other_longitude.to_f - longitude.to_f) * Math::PI / 180
+
+      a = Math.sin(dlat / 2)**2 + Math.cos(rlat1) * Math.cos(rlat2) * Math.sin(dlng / 2)**2
+      2 * EARTH_RADIUS_KM * Math.asin(Math.sqrt(a))
     end
 
     def broadcast_walker_current_walk

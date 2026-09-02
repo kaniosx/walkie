@@ -4,6 +4,8 @@ class OpenRequestsController < ApplicationController
   def index
     return unless params[:lat].present? && params[:lng].present?
 
+    WalkerLocationCache.write(current_user, latitude: params[:lat], longitude: params[:lng])
+
     @walks = Walk.open_nearby(city: current_user.city, latitude: params[:lat], longitude: params[:lng])
                  .includes(:dog).order(created_at: :asc)
   end
