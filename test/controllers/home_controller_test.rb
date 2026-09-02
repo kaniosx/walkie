@@ -67,4 +67,12 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_includes response.body, "Getting your location"
   end
+
+  test "walker dashboard shows the getting-your-location placeholder with malformed coordinates" do
+    sign_in_as "walker@example.com"
+    get root_path, params: { lat: "abc", lng: "19.9450" }
+
+    assert_response :success
+    assert_includes response.body, "Getting your location"
+  end
 end

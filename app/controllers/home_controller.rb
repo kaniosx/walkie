@@ -11,9 +11,11 @@ class HomeController < ApplicationController
       @walk = Walk.where(accepted_by_walker_id: current_user.id, state: %w[accepted in_progress])
                   .includes(:dog, :owner)
                   .first
-      if params[:lat].present? && params[:lng].present?
-        WalkerLocationCache.write(current_user, latitude: params[:lat], longitude: params[:lng])
-        @open_requests_count = Walk.open_nearby(city: current_user.city, latitude: params[:lat], longitude: params[:lng]).count
+      lat = coerce_coordinate(params[:lat])
+      lng = coerce_coordinate(params[:lng])
+      if lat && lng
+        WalkerLocationCache.write(current_user, latitude: lat, longitude: lng)
+        @open_requests_count = Walk.open_nearby(city: current_user.city, latitude: lat, longitude: lng).count
       end
     end
   end
