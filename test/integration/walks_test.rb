@@ -29,6 +29,18 @@ class WalksTest < ActionDispatch::IntegrationTest
     assert_includes response.body, "Walk requested for Rex."
   end
 
+  test "owner creates a request without coordinates: fails validation, redirects with alert" do
+    sign_in_as "owner@example.com"
+
+    assert_no_difference -> { @owner.owned_walks.count } do
+      post walks_path, params: { dog_id: @dog.id }
+    end
+    assert_redirected_to walks_path
+    follow_redirect!
+    assert_includes response.body, "Latitude can't be blank"
+    assert_includes response.body, "Longitude can't be blank"
+  end
+
   test "index lists only the current owner's walks" do
     mine = @dog.walks.create!(owner: @owner, city: @owner.city, latitude: 50.0647, longitude: 19.9450)
     other_dog = @other_owner.dogs.create!(name: "Fido", breed: "Beagle")

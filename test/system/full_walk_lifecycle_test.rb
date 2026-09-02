@@ -2,10 +2,6 @@ require "application_system_test_case"
 
 class FullWalkLifecycleTest < ApplicationSystemTestCase
   test "owner creates a request, walker accepts, starts, and completes it" do
-    skip "Pending Phase 2->3: WalksController#create now requires latitude/longitude " \
-         "(geolocation-matching plan), and the JS that captures them via the browser " \
-         "lands in Phase 3 (Owner-side location capture)."
-
     owner = User.create!(email_address: "owner@example.com", password: "secret123",
                          role: "owner", city: "Kraków")
     walker = User.create!(email_address: "walker@example.com", password: "secret123",
@@ -13,8 +9,10 @@ class FullWalkLifecycleTest < ApplicationSystemTestCase
     dog = owner.dogs.create!(name: "Rex", breed: "Labrador")
 
     sign_in_via_form(owner)
+    set_geolocation(latitude: 50.0647, longitude: 19.9450)
 
     visit dogs_path
+    assert_button "Walk my dog"
     click_on "Walk my dog"
 
     assert_text "Walk requested for #{dog.name}."
