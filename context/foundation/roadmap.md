@@ -3,7 +3,7 @@ project: Walkie
 version: 2
 status: active
 created: 2026-05-25
-updated: 2026-08-21
+updated: 2026-09-02
 decisions:
   q4_remove_dog_policy: soft-delete  # deleted_at on Dog; walks preserved
 prd_version: 1
@@ -60,6 +60,7 @@ PRD §Business Logic §Singleness states: *"the binding IS the confirmation"*. S
 | T-03  | e2e-owner-cancels-request          | (infra) E2E test: Owner creates a request, cancels it while still REQUESTED, sees it reflected in history | T-01, S-06 | FR-010 | done |
 | T-04  | e2e-full-walk-lifecycle            | (infra) E2E test: full lifecycle through the browser — Owner creates → Walker accepts → starts → completes | T-01, S-07 | FR-009, 011..014 | done |
 | T-05  | e2e-walk-history                   | (infra) E2E test: Owner and Walker each see their own walk history rendered correctly after sign-in | T-01, S-08, S-09 | FR-015, 016 | done |
+| R-01  | realtime-walk-status-updates       | Owner and Walker see walk-state changes live (no refresh) on open-requests list, active-walk screens, and home dashboard | S-05, S-07, U-06 | reverses §Non-Goals "No real-time UI updates" | done |
 
 ## Streams
 
@@ -73,6 +74,7 @@ Navigation aid — groups items sharing a Prerequisites chain. Canonical orderin
 | D      | UI/UX layer                        | `U-01` → `U-02` → `U-03` / `U-04` / `U-05` → `U-06`                                | Tailwind + styled flows for auth, Owner, and Walker journeys. U-03/04/05 ran in parallel. U-06 closed the gap U-02..U-05 left on `home#index` and the password-reset screens. |
 | E      | Observability                      | `O-01`                                                                              | Independent of all feature slices — ready to run in parallel with any other work.                           |
 | F      | Testing infrastructure             | `T-01` → `T-02` / `T-03` / `T-04` / `T-05`                                          | T-01 established the pattern (2 tests). T-02..T-05 extend browser coverage across the core flows; each is independent of the others once T-01 lands, and each also needs its underlying feature slice done (already true for all four). |
+| G      | Realtime live-updates              | `R-01`                                                                              | Independent of all other active streams — needs the views it makes live (S-05, S-07, U-06) already built. Reverses the PRD's v1 "no real-time UI updates" non-goal. |
 
 ## Baseline
 
@@ -408,6 +410,20 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Risk:** Low. Cross-account isolation is already proven at the integration layer (`test-plan.md` §2 Risk #3); this e2e test only needs to prove the view renders correctly, not re-prove isolation.
 - **Status:** done
 
+## Realtime
+
+### R-01: Real-time walk status updates via Turbo Streams
+
+- **Outcome:** Owners and Walkers see walk-state changes (REQUESTED → ACCEPTED → IN_PROGRESS → COMPLETED) reflected live via Turbo Streams over Solid Cable — no page refresh — across the Walker's open-requests list, both roles' active-walk screens (S-07 views), and the home dashboard (U-06). Reverses the PRD's v1 non-functional non-goal "No real-time UI updates": the MVP had more runway than the original 3-week budget assumed, so the team picked this back up. Purely additive — no change to the state machine, roles, or any FR.
+- **Change ID:** `realtime-walk-status-updates`
+- **PRD refs:** reverses §Non-Goals "No real-time UI updates"; makes live the views built in S-05, S-07, U-06
+- **Prerequisites:** S-05, S-07, U-06 (the screens being made live must already exist)
+- **Parallel with:** any active stream
+- **Blockers:** —
+- **Unknowns:** —
+- **Risk:** Broadcasting runs synchronously and re-queries the DB per broadcast call (up to 5 small queries per transition); negligible at the PRD's stated `target_scale`. Production readiness (Solid Cable's `cable` database) is provisioned and verified via `db:prepare`; the post-deploy console smoke-test and two-browser live demo against the real deployed app are still pending the next actual deploy (tracked in the archived plan's Progress, items 5.3/5.4).
+- **Status:** done
+
 ## Backlog Handoff
 
 | Roadmap ID | Change ID                          | Suggested issue title                                            | Ready for `/10x-plan` | Notes                                                                       |
@@ -437,6 +453,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 | T-03       | e2e-owner-cancels-request          | Test: E2E test — Owner cancels a requested walk                  | done                  | Archived 2026-07-13 → `context/archive/2026-07-13-e2e-owner-cancels-request/` |
 | T-04       | e2e-full-walk-lifecycle            | Test: E2E test — full lifecycle (request→accept→start→complete)  | done                  | Archived 2026-07-13 → `context/archive/2026-07-13-e2e-full-walk-lifecycle/` |
 | T-05       | e2e-walk-history                   | Test: E2E test — Owner + Walker walk history                     | done                  | Archived 2026-07-13 → `context/archive/2026-07-13-e2e-walk-history/`       |
+| R-01       | realtime-walk-status-updates        | Realtime: Turbo Streams live walk-status updates                 | done                  | Archived 2026-08-21 → `context/archive/2026-08-21-realtime-walk-status-updates/` |
 
 ## Open Roadmap Questions
 
@@ -459,7 +476,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 
 ### From PRD §Non-Goals (non-functional)
 
-- **No real-time UI updates** — Why parked: PRD §Non-Goals.
+- ~~**No real-time UI updates**~~ — **Reversed 2026-08-21** via `R-01` (`realtime-walk-status-updates`, see `## Realtime`): the MVP had more runway than the original 3-week budget assumed. No longer parked.
 - **No offline support** — Why parked: PRD §Non-Goals.
 
 ### From PRD §Open Questions (explicit post-v1)
@@ -495,3 +512,4 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **T-03: (infra) A browser-level system test signs in as an Owner, creates a walk request, clicks "Cancel" while it is still REQUESTED, and asserts the request no longer offers cancellation / shows the cancelled state in history.** — Archived 2026-07-13 → `context/archive/2026-07-13-e2e-owner-cancels-request/`. Lesson: —.
 - **T-04: (infra) One browser-level system test drives the entire lifecycle across two signed-in personas in sequence: Owner creates a request, Walker accepts it, Walker starts it, Walker completes it — asserting the visible state badge after each transition.** — Archived 2026-07-13 → `context/archive/2026-07-13-e2e-full-walk-lifecycle/`. Lesson: —.
 - **T-05: (infra) A browser-level system test signs in as an Owner and asserts their walk-history view renders their own past walks; a second pass signs in as a Walker and asserts the same for the Walker's history view.** — Archived 2026-07-13 → `context/archive/2026-07-13-e2e-walk-history/`. Lesson: —.
+- **R-01: Owner and Walker see walk-state changes live (no refresh) across the open-requests list, active-walk screens, and home dashboard, via Turbo Streams over Solid Cable** — Archived 2026-08-21 → `context/archive/2026-08-21-realtime-walk-status-updates/`. Lesson: —.
