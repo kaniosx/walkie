@@ -3,9 +3,9 @@ require "application_system_test_case"
 class FullWalkLifecycleTest < ApplicationSystemTestCase
   test "owner creates a request, walker accepts, starts, and completes it" do
     owner = User.create!(email_address: "owner@example.com", password: "secret123",
-                         role: "owner", city: "Kraków", postcode: "30-001")
+                         role: "owner", city: "Kraków")
     walker = User.create!(email_address: "walker@example.com", password: "secret123",
-                          role: "walker", city: "Kraków", postcode: "30-001")
+                          role: "walker", city: "Kraków")
     dog = owner.dogs.create!(name: "Rex", breed: "Labrador")
 
     sign_in_via_form(owner)

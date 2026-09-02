@@ -6,8 +6,7 @@ class SessionsTest < ActionDispatch::IntegrationTest
       email_address: "round@example.com",
       password: "secret123",
       role: "owner",
-      city: "Kraków",
-      postcode: "30-001"
+      city: "Kraków"
     )
   end
 

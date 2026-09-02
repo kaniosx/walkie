@@ -11,7 +11,7 @@ class HomeController < ApplicationController
       @walk = Walk.where(accepted_by_walker_id: current_user.id, state: %w[accepted in_progress])
                   .includes(:dog, :owner)
                   .first
-      @open_requests_count = Walk.open_in_locality(current_user.city, current_user.postcode).count
+      @open_requests_count = Walk.open_in_locality(current_user.city).count
     end
   end
 end

@@ -6,8 +6,7 @@ class NavigationTest < ActionDispatch::IntegrationTest
       email_address: "nav@example.com",
       password: "secret123",
       role: "owner",
-      city: "Kraków",
-      postcode: "30-001"
+      city: "Kraków"
     )
   end
 

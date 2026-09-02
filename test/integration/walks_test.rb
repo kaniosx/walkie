@@ -3,11 +3,11 @@ require "test_helper"
 class WalksTest < ActionDispatch::IntegrationTest
   setup do
     @owner = User.create!(email_address: "owner@example.com", password: "secret123",
-                          role: "owner", city: "Kraków", postcode: "30-001")
+                          role: "owner", city: "Kraków")
     @other_owner = User.create!(email_address: "owner2@example.com", password: "secret123",
-                                role: "owner", city: "Gdańsk", postcode: "80-001")
+                                role: "owner", city: "Gdańsk")
     @walker = User.create!(email_address: "walker@example.com", password: "secret123",
-                           role: "walker", city: "Kraków", postcode: "30-001")
+                           role: "walker", city: "Kraków")
     @dog = @owner.dogs.create!(name: "Rex", breed: "Labrador")
   end
 
@@ -24,16 +24,15 @@ class WalksTest < ActionDispatch::IntegrationTest
     walk = @owner.owned_walks.last
     assert walk.requested?
     assert_equal "Kraków", walk.city
-    assert_equal "30-001", walk.postcode
     assert_redirected_to walks_path
     follow_redirect!
     assert_includes response.body, "Walk requested for Rex."
   end
 
   test "index lists only the current owner's walks" do
-    mine = @dog.walks.create!(owner: @owner, city: @owner.city, postcode: @owner.postcode)
+    mine = @dog.walks.create!(owner: @owner, city: @owner.city)
     other_dog = @other_owner.dogs.create!(name: "Fido", breed: "Beagle")
-    theirs = other_dog.walks.create!(owner: @other_owner, city: @other_owner.city, postcode: @other_owner.postcode)
+    theirs = other_dog.walks.create!(owner: @other_owner, city: @other_owner.city)
 
     sign_in_as "owner@example.com"
     get walks_path
@@ -43,7 +42,7 @@ class WalksTest < ActionDispatch::IntegrationTest
   end
 
   test "a second active request for the same dog is rejected" do
-    @dog.walks.create!(owner: @owner, city: @owner.city, postcode: @owner.postcode)
+    @dog.walks.create!(owner: @owner, city: @owner.city)
     sign_in_as "owner@example.com"
 
     assert_no_difference -> { @dog.walks.count } do
@@ -90,7 +89,7 @@ class WalksTest < ActionDispatch::IntegrationTest
 
   test "past walks section does not show another owner's completed walk" do
     other_dog = @other_owner.dogs.create!(name: "Fido", breed: "Beagle")
-    other_walk = other_dog.walks.create!(owner: @other_owner, city: @other_owner.city, postcode: @other_owner.postcode)
+    other_walk = other_dog.walks.create!(owner: @other_owner, city: @other_owner.city)
     other_walk.accept!(@walker)
     other_walk.start!(@walker)
     other_walk.complete!(@walker)
@@ -102,7 +101,7 @@ class WalksTest < ActionDispatch::IntegrationTest
   end
 
   test "cancelled walk appears in the Past section of the walk index" do
-    walk = @dog.walks.create!(owner: @owner, city: @owner.city, postcode: @owner.postcode)
+    walk = @dog.walks.create!(owner: @owner, city: @owner.city)
     walk.cancel!(@owner)
 
     sign_in_as "owner@example.com"
@@ -115,7 +114,7 @@ class WalksTest < ActionDispatch::IntegrationTest
   end
 
   test "completed walk appears in the Past section of the walk index" do
-    walk = @dog.walks.create!(owner: @owner, city: @owner.city, postcode: @owner.postcode)
+    walk = @dog.walks.create!(owner: @owner, city: @owner.city)
     walk.accept!(@walker)
     walk.start!(@walker)
     walk.complete!(@walker)

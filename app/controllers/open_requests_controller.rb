@@ -2,7 +2,7 @@ class OpenRequestsController < ApplicationController
   include WalkerOnly
 
   def index
-    @walks = Walk.open_in_locality(current_user.city, current_user.postcode)
+    @walks = Walk.open_in_locality(current_user.city)
                  .includes(:dog)
                  .order(created_at: :asc)
   end

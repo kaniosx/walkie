@@ -3,7 +3,7 @@ require "application_system_test_case"
 class OwnerCreatesWalkRequestTest < ApplicationSystemTestCase
   test "owner signs in through the real form and creates a walk request" do
     owner = User.create!(email_address: "owner@example.com", password: "secret123",
-                         role: "owner", city: "Kraków", postcode: "30-001")
+                         role: "owner", city: "Kraków")
     dog = owner.dogs.create!(name: "Rex", breed: "Labrador")
 
     sign_in_via_form(owner)
