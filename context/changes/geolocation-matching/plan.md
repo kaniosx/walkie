@@ -712,15 +712,15 @@ columns start nullable with no historical data requiring geocoding (see
 
 #### Automated
 
-- [x] 1.1 Migration applies cleanly
-- [x] 1.2 Full test suite passes
-- [x] 1.3 Linting passes
+- [x] 1.1 Migration applies cleanly — 052db01
+- [x] 1.2 Full test suite passes — 052db01
+- [x] 1.3 Linting passes — 052db01
 
 #### Manual
 
-- [ ] 1.4 Sign-up form has no postcode field
-- [ ] 1.5 Profile edit form has no postcode field
-- [ ] 1.6 Profile show view has no postcode row
+- [x] 1.4 Sign-up form has no postcode field
+- [x] 1.5 Profile edit form has no postcode field
+- [x] 1.6 Profile show view has no postcode row
 
 ### Phase 2: Schema & radius query foundation
 
