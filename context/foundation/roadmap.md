@@ -3,7 +3,7 @@ project: Walkie
 version: 2
 status: active
 created: 2026-05-25
-updated: 2026-09-02
+updated: 2026-09-03
 decisions:
   q4_remove_dog_policy: soft-delete  # deleted_at on Dog; walks preserved
 prd_version: 1
@@ -62,6 +62,7 @@ PRD §Business Logic §Singleness states: *"the binding IS the confirmation"*. S
 | T-05  | e2e-walk-history                   | (infra) E2E test: Owner and Walker each see their own walk history rendered correctly after sign-in | T-01, S-08, S-09 | FR-015, 016 | done |
 | R-01  | realtime-walk-status-updates       | Owner and Walker see walk-state changes live (no refresh) on open-requests list, active-walk screens, and home dashboard | S-05, S-07, U-06 | reverses §Non-Goals "No real-time UI updates" | done |
 | L-01  | geolocation-matching                | Walker sees only REQUESTED walks within 10km (browser-captured lat/lng) instead of exact city+postcode match; postcode removed; per-Walker live broadcast | S-05, S-07, R-01 | reverses §Non-Goals/§Open Q #6 "no radius…no proximity ranking" (filtering only, no sort) | done |
+| U-07  | custom-turbo-confirm-dialog        | Owner/Walker see a styled modal instead of the native browser `window.confirm()` on destructive actions (cancel walk, remove dog, end walk) | U-02, U-06                | §NFR (usability)        | proposed |
 
 ## Streams
 
@@ -72,7 +73,7 @@ Navigation aid — groups items sharing a Prerequisites chain. Canonical orderin
 | A      | Account lifecycle & foundations    | `F-01` / `F-03` → `S-01` → `S-02`                                                  | F-01 and F-03 are parallel. The fixed base for every other slice — without identity+role nothing makes sense. |
 | B      | Owner journey                      | `F-02` → `S-03` → `S-04` → `S-06` / `S-08`; `S-10` (branches from `S-03`)          | Domain schema + Owner's path from adding a dog to posting and managing requests. S-10 ready (soft-delete decided 2026-07-06). |
 | C      | Marketplace binding (north star)   | `S-05` → `S-07` → `S-09`                                                            | Joins Stream B at `S-04` (Walker needs something to accept). Validation milestone delivered at S-05.        |
-| D      | UI/UX layer                        | `U-01` → `U-02` → `U-03` / `U-04` / `U-05` → `U-06`                                | Tailwind + styled flows for auth, Owner, and Walker journeys. U-03/04/05 ran in parallel. U-06 closed the gap U-02..U-05 left on `home#index` and the password-reset screens. |
+| D      | UI/UX layer                        | `U-01` → `U-02` → `U-03` / `U-04` / `U-05` → `U-06` → `U-07`                       | Tailwind + styled flows for auth, Owner, and Walker journeys. U-03/04/05 ran in parallel. U-06 closed the gap U-02..U-05 left on `home#index` and the password-reset screens. U-07 replaces the native `window.confirm()` dialogs with a styled Turbo-driven modal. |
 | E      | Observability                      | `O-01`                                                                              | Independent of all feature slices — ready to run in parallel with any other work.                           |
 | F      | Testing infrastructure             | `T-01` → `T-02` / `T-03` / `T-04` / `T-05`                                          | T-01 established the pattern (2 tests). T-02..T-05 extend browser coverage across the core flows; each is independent of the others once T-01 lands, and each also needs its underlying feature slice done (already true for all four). |
 | G      | Realtime live-updates              | `R-01`                                                                              | Independent of all other active streams — needs the views it makes live (S-05, S-07, U-06) already built. Reverses the PRD's v1 "no real-time UI updates" non-goal. |
@@ -334,6 +335,18 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Status:** done
 - **Note:** Ad hoc fix from a conversational UI-review session, not run through `/10x-plan` — no `context/changes/`/archive folder exists for it. Verified manually (not via an automated test) by driving `ActionDispatch::Integration::Session` through both roles' home-page variants and the full forgot/reset-password flow in the dev container.
 
+### U-07: Custom Turbo confirm dialog (replace native `window.confirm`)
+
+- **Outcome:** The three existing `data: { turbo_confirm: "..." }` call sites (`app/views/walks/_active_table.html.erb` cancel, `app/views/dogs/index.html.erb` remove, `app/views/walker_walks/_current_walk.html.erb` end walk) render a Tailwind-styled `<dialog>`-based modal instead of the browser's native, unstylable `window.confirm()`. Implemented via Turbo's built-in override hook (`Turbo.setConfirmMethod` + a `<template data-turbo-confirm>` in the layout, driven by a small Stimulus controller) — no library dependency, no changes needed to the existing `turbo_confirm:` attributes themselves.
+- **Change ID:** `custom-turbo-confirm-dialog`
+- **PRD refs:** §NFR (usability) — user-requested polish, not directly PRD-derived
+- **Prerequisites:** U-02 (layout shell the `<template>` lives in), U-06 (all three current `turbo_confirm` call sites already exist and are styled)
+- **Parallel with:** any active stream
+- **Blockers:** —
+- **Unknowns:** —
+- **Risk:** Low — purely presentational, no state-machine or authorization changes. `Turbo.setConfirmMethod` is a documented, stable Turbo 8 API. Must verify all three call sites still block/proceed correctly (async Promise-based confirm, not the synchronous native one) and that Cancel truly aborts the Turbo request.
+- **Status:** proposed
+
 ## Observability
 
 ### O-01: Sentry integration
@@ -471,6 +484,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 | T-05       | e2e-walk-history                   | Test: E2E test — Owner + Walker walk history                     | done                  | Archived 2026-07-13 → `context/archive/2026-07-13-e2e-walk-history/`       |
 | R-01       | realtime-walk-status-updates        | Realtime: Turbo Streams live walk-status updates                 | done                  | Archived 2026-08-21 → `context/archive/2026-08-21-realtime-walk-status-updates/` |
 | L-01       | geolocation-matching                | Locality: geolocation-radius Walker↔Owner matching                | done                  | Archived 2026-09-02 → `context/archive/2026-09-02-geolocation-matching/`; opened via `/10x-frame` (weak framing case — user proceeded anyway) |
+| U-07       | custom-turbo-confirm-dialog        | UI: Replace native `window.confirm()` with a styled Turbo modal  | yes                   | Independent styling-only change; no state-machine or authorization impact |
 
 ## Open Roadmap Questions
 

@@ -35,5 +35,22 @@
     </div>
 
     <%= yield %>
+
+    <dialog data-controller="confirm-dialog" data-confirm-dialog-target="dialog"
+            class="m-auto border-0 bg-transparent p-0 backdrop:bg-stone-900/50">
+      <div class="w-80 max-w-[90vw] rounded-lg bg-white p-5 shadow-xl">
+        <p data-confirm-dialog-target="message" class="text-sm text-stone-700"></p>
+        <form method="dialog" class="mt-4 flex justify-end gap-2">
+          <button type="submit" value="cancel" data-confirm-dialog-target="cancelButton" autofocus
+                  class="rounded-md bg-white px-4 py-2 text-sm font-medium text-stone-700 border border-stone-300 hover:bg-stone-50 focus:outline-none focus:ring-2 focus:ring-stone-400">
+            Cancel
+          </button>
+          <button type="submit" value="confirm" data-confirm-dialog-target="confirmButton"
+                  class="rounded-md bg-primary-600 hover:bg-primary-700 px-4 py-2 text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-primary-500">
+            Confirm
+          </button>
+        </form>
+      </div>
+    </dialog>
   </body>
 </html>

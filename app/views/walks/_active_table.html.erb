@@ -12,7 +12,7 @@
         <td class="px-4 py-3 whitespace-nowrap">
           <% if walk.requested? %>
             <%= button_to "Cancel", cancel_walk_path(walk), method: :post,
-                  data: { turbo_confirm: "Cancel this walk request?" },
+                  data: { turbo_confirm: "Cancel this walk request?", turbo_confirm_style: "danger" },
                   class: "rounded-md bg-red-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500" %>
           <% end %>
         </td>
