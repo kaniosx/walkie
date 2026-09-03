@@ -6,9 +6,10 @@ export default class extends Controller {
 
   connect() {
     Turbo.config.forms.confirm = (message, formElement, submitter) => this.confirm(message, submitter)
-    this.dialogTarget.addEventListener("click", (event) => {
-      if (event.target === this.dialogTarget) this.dialogTarget.close()
-    })
+  }
+
+  backdropClick(event) {
+    if (event.target === this.dialogTarget) this.dialogTarget.close()
   }
 
   confirm(message, submitter) {
