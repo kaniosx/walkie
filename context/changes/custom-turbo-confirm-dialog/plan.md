@@ -232,5 +232,5 @@ N/A — no data or schema changes.
 
 #### Automated
 
-- [x] 2.1 `docker compose exec web bin/rails test:system` passes
-- [x] 2.2 `docker compose exec web bin/rails test` passes
+- [x] 2.1 `docker compose exec web bin/rails test:system` passes — 8715f6f
+- [x] 2.2 `docker compose exec web bin/rails test` passes — 8715f6f
