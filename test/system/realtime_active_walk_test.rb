@@ -28,7 +28,8 @@ class RealtimeActiveWalkTest < ApplicationSystemTestCase
     end
 
     using_session("walker") do
-      accept_confirm { click_on "End walk" }
+      click_on "End walk"
+      click_on "Confirm"
       assert_text "Walk completed. Well done!"
     end
 

@@ -15,7 +15,8 @@ class OwnerCancelsRequestTest < ApplicationSystemTestCase
 
     assert_text "Walk requested for #{dog.name}."
 
-    accept_confirm { click_on "Cancel" }
+    click_on "Cancel"
+    click_on "Confirm"
 
     assert_text "Walk request cancelled."
     assert_no_button "Cancel"

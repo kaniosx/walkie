@@ -35,7 +35,8 @@ class FullWalkLifecycleTest < ApplicationSystemTestCase
     assert_text "Walk started — you're on your way!"
     assert_text "In progress"
 
-    accept_confirm { click_on "End walk" }
+    click_on "End walk"
+    click_on "Confirm"
 
     assert_text "Walk completed. Well done!"
   end
