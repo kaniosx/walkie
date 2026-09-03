@@ -1,10 +1,10 @@
 ---
 change_id: custom-turbo-confirm-dialog
 title: Replace native window.confirm with a styled Turbo modal
-status: impl_reviewed
+status: archived
 created: 2026-09-03
 updated: 2026-09-03
-archived_at: null
+archived_at: 2026-09-03T09:42:25Z
 ---
 
 ## Notes
