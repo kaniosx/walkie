@@ -216,21 +216,21 @@ N/A — no data or schema changes.
 
 #### Automated
 
-- [x] 1.1 `docker compose exec web bundle exec rubocop` passes (no new offenses)
-- [x] 1.2 Application boots without JS console errors
+- [x] 1.1 `docker compose exec web bundle exec rubocop` passes (no new offenses) — 79e206f
+- [x] 1.2 Application boots without JS console errors — 79e206f
 
 #### Manual
 
-- [x] 1.3 Cancel-walk modal is styled, not native, with red Confirm
-- [x] 1.4 Remove-dog modal is styled, not native, with red Confirm
-- [x] 1.5 End-walk modal is styled, not native, with primary Confirm
-- [x] 1.6 Cancel has default focus on open
-- [x] 1.7 Backdrop click, Escape, and Cancel button all dismiss without action
-- [x] 1.8 Confirm performs the original action in all three cases
+- [x] 1.3 Cancel-walk modal is styled, not native, with red Confirm — 79e206f
+- [x] 1.4 Remove-dog modal is styled, not native, with red Confirm — 79e206f
+- [x] 1.5 End-walk modal is styled, not native, with primary Confirm — 79e206f
+- [x] 1.6 Cancel has default focus on open — 79e206f
+- [x] 1.7 Backdrop click, Escape, and Cancel button all dismiss without action — 79e206f
+- [x] 1.8 Confirm performs the original action in all three cases — 79e206f
 
 ### Phase 2: Fix existing system tests
 
 #### Automated
 
-- [ ] 2.1 `docker compose exec web bin/rails test:system` passes
-- [ ] 2.2 `docker compose exec web bin/rails test` passes
+- [x] 2.1 `docker compose exec web bin/rails test:system` passes
+- [x] 2.2 `docker compose exec web bin/rails test` passes
