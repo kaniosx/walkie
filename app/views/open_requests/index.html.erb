@@ -1,24 +1,16 @@
+<%= turbo_stream_from [ current_user, :nearby_open_requests ] %>
+
 <div class="max-w-2xl mx-auto px-4 py-8">
   <h1 class="text-2xl font-semibold text-stone-900 mb-6">Open walk requests</h1>
 
-  <% if @walks.any? %>
-    <div class="space-y-4">
-      <% @walks.each do |walk| %>
-        <div class="bg-white rounded-xl shadow-sm ring-1 ring-stone-200 p-6">
-          <p class="text-lg font-semibold text-stone-900"><%= walk.dog&.name %></p>
-          <p class="text-sm text-stone-600 mt-0.5"><%= walk.dog&.breed %></p>
-          <p class="text-sm text-stone-500 mt-2">
-            <%= walk.city %> &middot; <%= time_ago_in_words(walk.created_at) %> ago
-          </p>
-          <%= button_to "Accept", accept_open_request_path(walk),
-                form_class: "block w-full mt-4",
-                class: "w-full rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500" %>
-        </div>
-      <% end %>
-    </div>
-  <% else %>
-    <div class="bg-white rounded-xl shadow-sm ring-1 ring-stone-200 p-6 text-center">
-      <p class="text-stone-500">No open walk requests in <%= current_user.city %> right now.</p>
-    </div>
-  <% end %>
+  <turbo-frame id="open_requests_frame" class="block"
+      data-controller="walker-location" data-walker-location-url-value="<%= open_requests_path %>">
+    <% if @walks %>
+      <%= render "open_requests/list", walks: @walks, city: current_user.city %>
+    <% else %>
+      <div class="bg-white rounded-xl shadow-sm ring-1 ring-stone-200 p-6 text-center">
+        <p class="text-stone-500">Getting your location&hellip;</p>
+      </div>
+    <% end %>
+  </turbo-frame>
 </div>

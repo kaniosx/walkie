@@ -46,8 +46,12 @@ Rails.application.configure do
   # Don't log any deprecations.
   config.active_support.report_deprecations = false
 
-  # Replace the default in-process memory cache store with a durable alternative.
-  # config.cache_store = :mem_cache_store
+  # In-process :memory_store, made explicit. Correctness-safe only because
+  # config/puma.rb defaults to a single Puma worker (WEB_CONCURRENCY unset) —
+  # if that ever changes, per-Walker location caching (used for realtime
+  # broadcast targeting) silently stops working across processes. See plan
+  # §Critical Implementation Details (context/changes/geolocation-matching/plan.md).
+  config.cache_store = :memory_store
 
   # Replace the default in-process and non-durable queuing backend for Active Job.
   # config.active_job.queue_adapter = :resque
@@ -90,6 +94,9 @@ Rails.application.configure do
 
   # Skip DNS rebinding protection for the default health check endpoint.
   config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+
+  # Restrict Action Cable WebSocket connections to the same origins as config.hosts.
+  config.action_cable.allowed_request_origins = [ /.*\.onrender\.com\z/ ]
 
   # tailwindcss-rails ships inter-font.css but we use system font stack — exclude from manifest.
   config.assets.precompile -= %w[inter-font.css]

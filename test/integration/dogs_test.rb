@@ -3,11 +3,11 @@ require "test_helper"
 class DogsTest < ActionDispatch::IntegrationTest
   setup do
     @owner = User.create!(email_address: "owner@example.com", password: "secret123",
-                          role: "owner", city: "Kraków", postcode: "30-001")
+                          role: "owner", city: "Kraków")
     @other_owner = User.create!(email_address: "owner2@example.com", password: "secret123",
-                                role: "owner", city: "Kraków", postcode: "30-001")
+                                role: "owner", city: "Kraków")
     @walker = User.create!(email_address: "walker@example.com", password: "secret123",
-                           role: "walker", city: "Kraków", postcode: "30-001")
+                           role: "walker", city: "Kraków")
   end
 
   def sign_in_as(email)
@@ -114,7 +114,7 @@ class DogsTest < ActionDispatch::IntegrationTest
   test "owner cannot deactivate dog with active walk" do
     sign_in_as "owner@example.com"
     dog = @owner.dogs.create!(name: "Buddy", breed: "Labrador")
-    Walk.create!(dog: dog, owner: @owner, state: "requested", city: "Kraków", postcode: "30-001")
+    Walk.create!(dog: dog, owner: @owner, state: "requested", city: "Kraków", latitude: 50.0647, longitude: 19.9450)
 
     delete dog_path(dog)
     assert_redirected_to dogs_path

@@ -31,11 +31,3 @@ body {
   background: #eafaf0;
   color: #1c6b3c;
 }
-
-.notice-v1 {
-  background: #fff8e1;
-  color: #6b5300;
-  padding: 0.75rem 1rem;
-  border-radius: 4px;
-  max-width: 400px;
-}

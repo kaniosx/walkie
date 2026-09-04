@@ -7,9 +7,9 @@ require "test_helper"
 class WalkConstraintsTest < ActiveSupport::TestCase
   def setup
     @owner = User.create!(email_address: "c-owner@example.com", password: "secret123",
-                          password_confirmation: "secret123", role: "owner", city: "Kraków", postcode: "30-001")
+                          password_confirmation: "secret123", role: "owner", city: "Kraków")
     @walker = User.create!(email_address: "c-walker@example.com", password: "secret123",
-                           password_confirmation: "secret123", role: "walker", city: "Kraków", postcode: "30-001")
+                           password_confirmation: "secret123", role: "walker", city: "Kraków")
     @dog = Dog.create!(name: "Rex", breed: "Labrador", user: @owner)
   end
 

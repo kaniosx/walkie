@@ -1,0 +1,16 @@
+<div id="owner_active_walks_home">
+  <% if walks.any? %>
+    <h2 class="text-lg font-medium text-stone-900 mb-3">Active requests</h2>
+    <div class="space-y-4 mb-8">
+      <% walks.each do |walk| %>
+        <div class="bg-primary-50 rounded-xl shadow-sm ring-2 ring-primary-300 p-6 flex items-center justify-between">
+          <div>
+            <p class="text-lg font-semibold text-stone-900"><%= walk.dog.name %></p>
+            <p class="text-sm text-stone-600"><%= walk.dog.breed %></p>
+          </div>
+          <span class="<%= walk_state_badge_classes(walk.state) %>"><%= walk.state.humanize %></span>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

@@ -3,13 +3,13 @@ require "test_helper"
 class WalksCancelTest < ActionDispatch::IntegrationTest
   setup do
     @owner = User.create!(email_address: "owner@example.com", password: "secret123",
-                          role: "owner", city: "Kraków", postcode: "30-001")
+                          role: "owner", city: "Kraków")
     @other_owner = User.create!(email_address: "owner2@example.com", password: "secret123",
-                                role: "owner", city: "Kraków", postcode: "30-001")
+                                role: "owner", city: "Kraków")
     @walker = User.create!(email_address: "walker@example.com", password: "secret123",
-                           role: "walker", city: "Kraków", postcode: "30-001")
+                           role: "walker", city: "Kraków")
     @dog = @owner.dogs.create!(name: "Rex", breed: "Labrador")
-    @walk = @dog.walks.create!(owner: @owner, city: @owner.city, postcode: @owner.postcode)
+    @walk = @dog.walks.create!(owner: @owner, city: @owner.city, latitude: 50.0647, longitude: 19.9450)
   end
 
   def sign_in_as(email)
@@ -43,7 +43,7 @@ class WalksCancelTest < ActionDispatch::IntegrationTest
 
   test "owner cannot cancel another owner's walk: responds 404" do
     other_dog = @other_owner.dogs.create!(name: "Fido", breed: "Beagle")
-    other_walk = other_dog.walks.create!(owner: @other_owner, city: @other_owner.city, postcode: @other_owner.postcode)
+    other_walk = other_dog.walks.create!(owner: @other_owner, city: @other_owner.city, latitude: 50.0647, longitude: 19.9450)
 
     sign_in_as "owner@example.com"
     post cancel_walk_path(other_walk)

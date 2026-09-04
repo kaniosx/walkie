@@ -27,9 +27,13 @@ class WalksController < ApplicationController
   def create
     # Scoped to the owner's own active dogs: a foreign/absent/soft-deleted
     # dog_id raises RecordNotFound (404), so an owner can only request a walk
-    # for a dog they currently own. Locality is copied from the profile.
+    # for a dog they currently own. City is copied from the profile;
+    # latitude/longitude are the Owner's live-captured coordinates (Phase 3
+    # adds the JS that populates these params) — missing coordinates fail
+    # walk.save via the presence validation, surfaced by the existing flash.
     dog = current_user.dogs.active.find(params[:dog_id])
-    walk = dog.walks.new(owner: current_user, city: current_user.city, postcode: current_user.postcode)
+    walk = dog.walks.new(owner: current_user, city: current_user.city,
+                          latitude: params[:latitude], longitude: params[:longitude])
 
     if walk.save
       redirect_to walks_path, notice: "Walk requested for #{dog.name}."

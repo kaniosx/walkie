@@ -1,0 +1,27 @@
+<div id="walker_current_walk">
+  <% if walk %>
+    <div class="bg-primary-50 rounded-xl shadow-sm ring-2 ring-primary-300 p-6 mb-6">
+      <p class="text-xl font-semibold text-stone-900"><%= walk.dog.name %></p>
+      <p class="text-sm text-stone-600 mt-0.5"><%= walk.dog.breed %></p>
+      <span class="<%= walk_state_badge_classes(walk.state) %> mt-3 inline-block">
+        <%= walk.state.humanize %>
+      </span>
+
+      <% if walk.accepted? %>
+        <%= button_to "Start walk", start_walker_walk_path(walk), method: :post,
+              form_class: "mt-4",
+              class: "rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500" %>
+      <% elsif walk.in_progress? %>
+        <%= button_to "End walk", complete_walker_walk_path(walk), method: :post,
+              form_class: "mt-4",
+              class: "rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500",
+              data: { turbo_confirm: "End walk? This cannot be undone." } %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="bg-white rounded-xl shadow-sm ring-1 ring-stone-200 p-6 mb-6 text-center">
+      <p class="text-stone-500">You have no active walk right now.</p>
+      <p class="mt-2"><%= link_to "See open walk requests", open_requests_path, class: "text-primary-600 hover:text-primary-700 font-medium text-sm" %></p>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,7 @@
+<div id="open_requests_count">
+  <% if count.positive? %>
+    <p class="text-stone-700 mb-4"><%= pluralize(count, "open walk request") %> near you right now.</p>
+  <% else %>
+    <p class="text-stone-500 mb-4">No open walk requests in <%= city %> right now.</p>
+  <% end %>
+</div>
