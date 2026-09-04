@@ -3,7 +3,7 @@ project: Walkie
 version: 2
 status: active
 created: 2026-05-25
-updated: 2026-07-13
+updated: 2026-09-03
 decisions:
   q4_remove_dog_policy: soft-delete  # deleted_at on Dog; walks preserved
 prd_version: 1
@@ -53,12 +53,16 @@ PRD §Business Logic §Singleness states: *"the binding IS the confirmation"*. S
 | U-03  | ui-auth-and-profile                | Sign-in, sign-up, profile edit screens styled                     | U-01, U-02                | FR-001..005             | done     |
 | U-04  | ui-owner-dashboard                 | Dog cards, walk-request form, owner walk-history screen styled    | U-01, U-02                | FR-006..010, FR-015     | done     |
 | U-05  | ui-walker-dashboard                | Open-requests list, accept/start/complete cards, history styled   | U-01, U-02                | FR-011..014, FR-016     | done     |
+| U-06  | ui-home-and-password-polish        | Home dashboard styled + role-aware; password-reset screens styled & copy fixed | U-02..U-05    | FR-001..016 (UX)        | done     |
 | O-01  | sentry-integration                 | (infra) Sentry SDK wired; exceptions + performance traces to Sentry | —                        | §NFR (observability)    | proposed |
 | T-01  | e2e-system-tests                   | (infra) Rails System Tests (Capybara + Selenium) wired into Docker + CI; first browser-level e2e test | — | (user-requested; not PRD-derived) | done |
 | T-02  | e2e-walker-accepts-request         | (infra) E2E test: Walker signs in, sees open request, accepts it (REQ→ACCEPTED) via real browser clicks | T-01, S-05 | FR-011, 012 | done |
 | T-03  | e2e-owner-cancels-request          | (infra) E2E test: Owner creates a request, cancels it while still REQUESTED, sees it reflected in history | T-01, S-06 | FR-010 | done |
 | T-04  | e2e-full-walk-lifecycle            | (infra) E2E test: full lifecycle through the browser — Owner creates → Walker accepts → starts → completes | T-01, S-07 | FR-009, 011..014 | done |
 | T-05  | e2e-walk-history                   | (infra) E2E test: Owner and Walker each see their own walk history rendered correctly after sign-in | T-01, S-08, S-09 | FR-015, 016 | done |
+| R-01  | realtime-walk-status-updates       | Owner and Walker see walk-state changes live (no refresh) on open-requests list, active-walk screens, and home dashboard | S-05, S-07, U-06 | reverses §Non-Goals "No real-time UI updates" | done |
+| L-01  | geolocation-matching                | Walker sees only REQUESTED walks within 10km (browser-captured lat/lng) instead of exact city+postcode match; postcode removed; per-Walker live broadcast | S-05, S-07, R-01 | reverses §Non-Goals/§Open Q #6 "no radius…no proximity ranking" (filtering only, no sort) | done |
+| U-07  | custom-turbo-confirm-dialog        | Owner/Walker see a styled modal instead of the native browser `window.confirm()` on destructive actions (cancel walk, remove dog, end walk) | U-02, U-06                | §NFR (usability)        | done |
 
 ## Streams
 
@@ -69,9 +73,11 @@ Navigation aid — groups items sharing a Prerequisites chain. Canonical orderin
 | A      | Account lifecycle & foundations    | `F-01` / `F-03` → `S-01` → `S-02`                                                  | F-01 and F-03 are parallel. The fixed base for every other slice — without identity+role nothing makes sense. |
 | B      | Owner journey                      | `F-02` → `S-03` → `S-04` → `S-06` / `S-08`; `S-10` (branches from `S-03`)          | Domain schema + Owner's path from adding a dog to posting and managing requests. S-10 ready (soft-delete decided 2026-07-06). |
 | C      | Marketplace binding (north star)   | `S-05` → `S-07` → `S-09`                                                            | Joins Stream B at `S-04` (Walker needs something to accept). Validation milestone delivered at S-05.        |
-| D      | UI/UX layer                        | `U-01` → `U-02` → `U-03` / `U-04` / `U-05`                                         | Tailwind + styled flows for auth, Owner, and Walker journeys. U-03/04/05 ran in parallel.                   |
+| D      | UI/UX layer                        | `U-01` → `U-02` → `U-03` / `U-04` / `U-05` → `U-06` → `U-07`                       | Tailwind + styled flows for auth, Owner, and Walker journeys. U-03/04/05 ran in parallel. U-06 closed the gap U-02..U-05 left on `home#index` and the password-reset screens. U-07 replaces the native `window.confirm()` dialogs with a styled Turbo-driven modal. |
 | E      | Observability                      | `O-01`                                                                              | Independent of all feature slices — ready to run in parallel with any other work.                           |
 | F      | Testing infrastructure             | `T-01` → `T-02` / `T-03` / `T-04` / `T-05`                                          | T-01 established the pattern (2 tests). T-02..T-05 extend browser coverage across the core flows; each is independent of the others once T-01 lands, and each also needs its underlying feature slice done (already true for all four). |
+| G      | Realtime live-updates              | `R-01`                                                                              | Independent of all other active streams — needs the views it makes live (S-05, S-07, U-06) already built. Reverses the PRD's v1 "no real-time UI updates" non-goal. |
+| H      | Locality matching precision        | `L-01`                                                                              | Overrides Open Q #6 / §Non-Goals via `/10x-frame` (2026-09-02) — the frame brief came back weak/proceed-anyway, but the user chose to proceed. Needed S-05, S-07, R-01 already built; independent otherwise. |
 
 ## Baseline
 
@@ -316,6 +322,31 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Risk:** State badge colours must be consistent across Owner history (U-04) and Walker history (U-05). Define badge classes in `tailwind.config.js` as component aliases or use a shared partial, not duplicated inline colours.
 - **Status:** done
 
+### U-06: Home dashboard + password-reset screens (gap-fill)
+
+- **Outcome:** The two views U-02..U-05 left unstyled are now Tailwind-styled and consistent with the rest of the app. `home#index` (the post-login root) became a real role-aware dashboard instead of bare `<h1>`/`<p>`/`<ul>` text: Owner sees an active-request status card (badge-coded) plus per-dog "Walk my dog" cards (disabled copy when a dog already has an active request) and an empty state when they have no dogs; Walker sees their current accepted/in-progress walk with inline Start/End actions, or an open-requests-nearby count + CTA when idle. `passwords/new` and `passwords/edit` (forgot/reset password) were restyled to match the auth card layout used by `sessions/new` and `registrations/new`; the stale copy claiming "password reset by email is not available in this version" was corrected (the feature — `PasswordsMailer` + token flow — is fully implemented). Removed the now-dead `.notice-v1` CSS class and a duplicate manual flash render on the reset-password page (the layout already renders `flash[:alert]` globally).
+- **Change ID:** `ui-home-and-password-polish`
+- **PRD refs:** FR-001..FR-005 (auth UX), FR-006..FR-016 (dashboard actions), §NFR (usability)
+- **Prerequisites:** U-02, U-03, U-04, U-05
+- **Parallel with:** —
+- **Blockers:** —
+- **Unknowns:** —
+- **Risk:** Low — styling-only plus two new read-only queries in `HomeController#index` (Owner's active walks/dogs, Walker's current walk + open-request count), mirroring existing patterns already used in `WalksController`/`WalkerWalksController`. No state-machine or authorization changes.
+- **Status:** done
+- **Note:** Ad hoc fix from a conversational UI-review session, not run through `/10x-plan` — no `context/changes/`/archive folder exists for it. Verified manually (not via an automated test) by driving `ActionDispatch::Integration::Session` through both roles' home-page variants and the full forgot/reset-password flow in the dev container.
+
+### U-07: Custom Turbo confirm dialog (replace native `window.confirm`)
+
+- **Outcome:** The three existing `data: { turbo_confirm: "..." }` call sites (`app/views/walks/_active_table.html.erb` cancel, `app/views/dogs/index.html.erb` remove, `app/views/walker_walks/_current_walk.html.erb` end walk) render a Tailwind-styled `<dialog>`-based modal instead of the browser's native, unstylable `window.confirm()`. Implemented via Turbo's built-in override hook (`Turbo.setConfirmMethod` + a `<template data-turbo-confirm>` in the layout, driven by a small Stimulus controller) — no library dependency, no changes needed to the existing `turbo_confirm:` attributes themselves.
+- **Change ID:** `custom-turbo-confirm-dialog`
+- **PRD refs:** §NFR (usability) — user-requested polish, not directly PRD-derived
+- **Prerequisites:** U-02 (layout shell the `<template>` lives in), U-06 (all three current `turbo_confirm` call sites already exist and are styled)
+- **Parallel with:** any active stream
+- **Blockers:** —
+- **Unknowns:** —
+- **Risk:** Low — purely presentational, no state-machine or authorization changes. `Turbo.setConfirmMethod` is a documented, stable Turbo 8 API. Must verify all three call sites still block/proceed correctly (async Promise-based confirm, not the synchronous native one) and that Cancel truly aborts the Turbo request.
+- **Status:** done
+
 ## Observability
 
 ### O-01: Sentry integration
@@ -394,6 +425,34 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Risk:** Low. Cross-account isolation is already proven at the integration layer (`test-plan.md` §2 Risk #3); this e2e test only needs to prove the view renders correctly, not re-prove isolation.
 - **Status:** done
 
+## Realtime
+
+### R-01: Real-time walk status updates via Turbo Streams
+
+- **Outcome:** Owners and Walkers see walk-state changes (REQUESTED → ACCEPTED → IN_PROGRESS → COMPLETED) reflected live via Turbo Streams over Solid Cable — no page refresh — across the Walker's open-requests list, both roles' active-walk screens (S-07 views), and the home dashboard (U-06). Reverses the PRD's v1 non-functional non-goal "No real-time UI updates": the MVP had more runway than the original 3-week budget assumed, so the team picked this back up. Purely additive — no change to the state machine, roles, or any FR.
+- **Change ID:** `realtime-walk-status-updates`
+- **PRD refs:** reverses §Non-Goals "No real-time UI updates"; makes live the views built in S-05, S-07, U-06
+- **Prerequisites:** S-05, S-07, U-06 (the screens being made live must already exist)
+- **Parallel with:** any active stream
+- **Blockers:** —
+- **Unknowns:** —
+- **Risk:** Broadcasting runs synchronously and re-queries the DB per broadcast call (up to 5 small queries per transition); negligible at the PRD's stated `target_scale`. Production readiness (Solid Cable's `cable` database) is provisioned and verified via `db:prepare`; the post-deploy console smoke-test and two-browser live demo against the real deployed app are still pending the next actual deploy (tracked in the archived plan's Progress, items 5.3/5.4).
+- **Status:** done
+
+## Locality Matching
+
+### L-01: Geolocation-radius Walker↔Owner matching
+
+- **Outcome:** `Walk.open_in_locality`'s exact city+postcode match replaced by a radius-based match (`Walk::MATCH_RADIUS_KM`, 10km, filtering only — no distance sort) using live browser-captured Owner/Walker coordinates; city retained as a coarse pre-filter, `postcode` removed entirely from `users` and `walks`. R-01's shared city-keyed realtime channel re-targeted to a per-Walker channel so live broadcasts respect the radius too. Opened via `/10x-frame`: the frame brief found the framing case weak (no observed friction yet, no real-launch audience, no precedent transfer from R-01, no existing geo infra) — user reviewed it and chose to proceed anyway.
+- **Change ID:** `geolocation-matching`
+- **PRD refs:** reverses §Non-Goals / §Open Q #6 ("no radius, no map, no proximity ranking" — ranking/sort stays out of scope, filtering only)
+- **Prerequisites:** S-05, S-07, R-01 (the list/broadcast being made radius-aware must already exist)
+- **Parallel with:** any active stream
+- **Blockers:** —
+- **Unknowns:** —
+- **Risk:** No configurable per-Walker radius (one fixed 10km constant for all); no map UI or visual radius indicator (filter/list only, per PRD non-goal). Lat/lng params hardened and migration reversibility fixed in impl review (`1ab4895`).
+- **Status:** done
+
 ## Backlog Handoff
 
 | Roadmap ID | Change ID                          | Suggested issue title                                            | Ready for `/10x-plan` | Notes                                                                       |
@@ -416,12 +475,16 @@ Foundations below assume these are present and do NOT re-scaffold them.
 | U-03       | ui-auth-and-profile                | UI: Auth + profile screens                                       | done                  | Archived 2026-06-26 → `context/archive/2026-06-26-ui-auth-and-profile/`    |
 | U-04       | ui-owner-dashboard                 | UI: Owner dashboard (dogs, walk request, history)                | done                  | Archived 2026-06-26 → `context/archive/2026-06-26-ui-owner-dashboard/`     |
 | U-05       | ui-walker-dashboard                | UI: Walker dashboard (open requests, active walk, history)       | done                  | Archived 2026-06-29 → `context/archive/2026-06-29-ui-walker-dashboard/`    |
+| U-06       | ui-home-and-password-polish        | UI: Home dashboard + password-reset screens polish               | done                  | Ad hoc fix, no `/10x-plan` — no `context/changes/` or archive folder       |
 | O-01       | sentry-integration                 | Infra: Sentry error tracking + performance tracing               | yes                   | Independent; DSN from `SENTRY_DSN` env var — do not hard-code              |
 | T-01       | e2e-system-tests                   | Infra: Rails System Tests (Capybara + Selenium) + first e2e test | done                  | Archived 2026-07-09 → `context/archive/2026-07-08-e2e-system-tests/`       |
 | T-02       | e2e-walker-accepts-request         | Test: E2E test — Walker accepts a request                        | done                  | Archived 2026-07-13 → `context/archive/2026-07-13-e2e-walker-accepts-request/` |
 | T-03       | e2e-owner-cancels-request          | Test: E2E test — Owner cancels a requested walk                  | done                  | Archived 2026-07-13 → `context/archive/2026-07-13-e2e-owner-cancels-request/` |
 | T-04       | e2e-full-walk-lifecycle            | Test: E2E test — full lifecycle (request→accept→start→complete)  | done                  | Archived 2026-07-13 → `context/archive/2026-07-13-e2e-full-walk-lifecycle/` |
 | T-05       | e2e-walk-history                   | Test: E2E test — Owner + Walker walk history                     | done                  | Archived 2026-07-13 → `context/archive/2026-07-13-e2e-walk-history/`       |
+| R-01       | realtime-walk-status-updates        | Realtime: Turbo Streams live walk-status updates                 | done                  | Archived 2026-08-21 → `context/archive/2026-08-21-realtime-walk-status-updates/` |
+| L-01       | geolocation-matching                | Locality: geolocation-radius Walker↔Owner matching                | done                  | Archived 2026-09-02 → `context/archive/2026-09-02-geolocation-matching/`; opened via `/10x-frame` (weak framing case — user proceeded anyway) |
+| U-07       | custom-turbo-confirm-dialog        | UI: Replace native `window.confirm()` with a styled Turbo modal  | yes                   | Independent styling-only change; no state-machine or authorization impact |
 
 ## Open Roadmap Questions
 
@@ -438,20 +501,20 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Payments / money flow** — Why parked: PRD §Non-Goals. Trust + compliance + dispute machinery is a project in its own right.
 - **Identity verification, ratings / reviews, insurance, trust & safety machinery** — Why parked: PRD §Non-Goals. A real trust system is a separate project; v1 explicitly accepts the gap (see Open Roadmap Q #2 above).
 - **Real-time UI layer (live GPS, live map, live status push, in-app chat, push notifications)** — Why parked: PRD §Non-Goals. The "no out-of-app coordination" insight is proven through status transitions seen on refresh, not via live telemetry.
-- **Advanced geolocation matching** — Why parked: PRD §Non-Goals and §Open Q #6. v1 filters strictly by city/postcode; no radius, no map, no proximity ranking.
+- ~~**Advanced geolocation matching**~~ — **Reversed 2026-09-02** via `L-01` (`geolocation-matching`, see `## Locality Matching`): radius filtering only (no map, no proximity ranking/sort — that half of the non-goal stays parked). No longer parked for the filtering part.
 - **AI / ML algorithms anywhere in the product** — Why parked: PRD §Non-Goals. The domain rule is deterministic (first-Walker-claims-it).
 - **Advanced Walker-availability scheduling** — Why parked: PRD §Non-Goals. A Walker is "available" iff they sign in and act; load-bearing for the "available right now" insight.
 
 ### From PRD §Non-Goals (non-functional)
 
-- **No real-time UI updates** — Why parked: PRD §Non-Goals.
+- ~~**No real-time UI updates**~~ — **Reversed 2026-08-21** via `R-01` (`realtime-walk-status-updates`, see `## Realtime`): the MVP had more runway than the original 3-week budget assumed. No longer parked.
 - **No offline support** — Why parked: PRD §Non-Goals.
 
 ### From PRD §Open Questions (explicit post-v1)
 
 - **Walker-side insight beyond the "available right now" signal** (local-first matching, no-advance-commitment) — Why parked: PRD §Open Q #2 explicit post-v1.
 - **Post-accept cancellation (FR-010 extension)** — Why parked: PRD §Open Q #5 explicit post-v1.
-- **Coarse city/postcode filtering improvement** — Why parked: PRD §Open Q #6 explicit "deferred to a later release".
+- ~~**Coarse city/postcode filtering improvement**~~ — **Resolved 2026-09-02** via `L-01`: replaced by 10km radius filtering (`Walk::MATCH_RADIUS_KM`); proximity ranking/sort remains out of scope.
 - **Owner confirmation of walk completion (FR-014 extension)** — Why parked: PRD §Open Q #7 explicit post-v1, linked to broader trust/verification work.
 
 ## Done
@@ -473,9 +536,12 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **U-03: Sign-in, sign-up (with role radio), and profile-edit pages fully styled with Tailwind** — Archived 2026-06-26 → `context/archive/2026-06-26-ui-auth-and-profile/`. Lesson: —.
 - **U-04: Dog cards, walk-request form, owner walk-history screen styled** — Archived 2026-06-26 → `context/archive/2026-06-26-ui-owner-dashboard/`. Lesson: —.
 - **U-05: Walker-facing screens styled — open-requests list, "Accept" CTA, active-walk screen ("Start walk" / "End walk"), walk-history list, colour-coded status badges** — Archived 2026-06-29 → `context/archive/2026-06-29-ui-walker-dashboard/`. Lesson: —.
+- **U-06: Home dashboard (role-aware, status + quick actions) and password-reset screens styled; stale "reset unavailable" copy corrected** — Ad hoc fix, 2026-08-21 — no archive folder (not run through `/10x-plan`). Lesson: when scoping a UI slice, explicitly enumerate every controller/view touched by the routes in play (root, auth) — U-02..U-05 covered the nav shell and the four feature dashboards but missed `home#index` and the password-reset screens entirely.
 - **S-10: Owner removes their own dog (soft-delete; history preserved)** — Archived 2026-07-06 → `context/archive/2026-07-06-owner-removes-dog/`. Lesson: —.
 - **T-01: (infra) `capybara` + `selenium-webdriver` gems wired (test group); headless Chromium installed in `Dockerfile.dev`; `test/application_system_test_case.rb` configured for root-in-Docker (`--no-sandbox`, `--disable-dev-shm-usage`); `bin/rails test:system` runs locally and as a step in CI's `test` job. One smoke test plus one real browser-level test ("Owner creates a walk request": sign in via the real form, click through to create a request) prove the pipeline end-to-end.** — Archived 2026-07-09 → `context/archive/2026-07-08-e2e-system-tests/`. Lesson: —.
 - **T-02: (infra) A browser-level system test signs in as a Walker, navigates to the open-requests list, clicks "Accept" on a request created by a separate Owner fixture, and asserts the walk moves to ACCEPTED and disappears from the open list.** — Archived 2026-07-13 → `context/archive/2026-07-13-e2e-walker-accepts-request/`. Lesson: —.
 - **T-03: (infra) A browser-level system test signs in as an Owner, creates a walk request, clicks "Cancel" while it is still REQUESTED, and asserts the request no longer offers cancellation / shows the cancelled state in history.** — Archived 2026-07-13 → `context/archive/2026-07-13-e2e-owner-cancels-request/`. Lesson: —.
 - **T-04: (infra) One browser-level system test drives the entire lifecycle across two signed-in personas in sequence: Owner creates a request, Walker accepts it, Walker starts it, Walker completes it — asserting the visible state badge after each transition.** — Archived 2026-07-13 → `context/archive/2026-07-13-e2e-full-walk-lifecycle/`. Lesson: —.
 - **T-05: (infra) A browser-level system test signs in as an Owner and asserts their walk-history view renders their own past walks; a second pass signs in as a Walker and asserts the same for the Walker's history view.** — Archived 2026-07-13 → `context/archive/2026-07-13-e2e-walk-history/`. Lesson: —.
+- **R-01: Owner and Walker see walk-state changes live (no refresh) across the open-requests list, active-walk screens, and home dashboard, via Turbo Streams over Solid Cable** — Archived 2026-08-21 → `context/archive/2026-08-21-realtime-walk-status-updates/`. Lesson: —.
+- **U-07: The three existing `data: { turbo_confirm: "..." }` call sites (`app/views/walks/_active_table.html.erb` cancel, `app/views/dogs/index.html.erb` remove, `app/views/walker_walks/_current_walk.html.erb` end walk) render a Tailwind-styled `<dialog>`-based modal instead of the browser's native, unstylable `window.confirm()`. Implemented via Turbo's built-in override hook (`Turbo.setConfirmMethod` + a `<template data-turbo-confirm>` in the layout, driven by a small Stimulus controller) — no library dependency, no changes needed to the existing `turbo_confirm:` attributes themselves.** — Archived 2026-09-03 → `context/archive/2026-09-03-custom-turbo-confirm-dialog/`. Lesson: —.

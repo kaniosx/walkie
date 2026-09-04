@@ -15,7 +15,7 @@
               <%= link_to "Edit", edit_dog_path(dog),
                     class: "text-sm text-primary-600 hover:text-primary-700 font-medium" %>
               <%= button_to "Remove", dog_path(dog), method: :delete,
-                    data: { turbo_confirm: "Remove #{dog.name}? Your walk history will be kept." },
+                    data: { turbo_confirm: "Remove #{dog.name}? Your walk history will be kept.", turbo_confirm_style: "danger" },
                     form: { style: "display:contents" },
                     class: "text-sm font-medium text-red-600 hover:text-red-700 bg-transparent border-0 p-0 cursor-pointer" %>
             </div>
@@ -27,9 +27,15 @@
           <% if dog.notes.present? %>
             <p class="text-sm text-stone-500"><%= dog.notes %></p>
           <% end %>
-          <%= button_to "Walk my dog", walks_path, params: { dog_id: dog.id },
-                aria: { label: "Walk my dog — #{dog.name}" },
-                class: "mt-4 w-full rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500" %>
+          <%= form_with url: walks_path, class: "mt-4", data: { controller: "owner-location" } do %>
+            <%= hidden_field_tag :dog_id, dog.id %>
+            <%= hidden_field_tag :latitude, nil, data: { owner_location_target: "latitude" } %>
+            <%= hidden_field_tag :longitude, nil, data: { owner_location_target: "longitude" } %>
+            <%= submit_tag "Walk my dog", disabled: true,
+                  aria: { label: "Walk my dog — #{dog.name}" },
+                  data: { owner_location_target: "submit" },
+                  class: "w-full rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed" %>
+          <% end %>
         </div>
       <% end %>
     </div>

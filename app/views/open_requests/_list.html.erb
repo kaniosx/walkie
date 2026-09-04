@@ -1,0 +1,23 @@
+<div id="open_requests_list">
+  <% if walks.any? %>
+    <div class="space-y-4">
+      <% walks.each do |walk| %>
+        <div class="bg-white rounded-xl shadow-sm ring-1 ring-stone-200 p-6">
+          <p class="text-lg font-semibold text-stone-900"><%= walk.dog&.name %></p>
+          <p class="text-sm text-stone-600 mt-0.5"><%= walk.dog&.breed %></p>
+          <p class="text-sm text-stone-500 mt-2">
+            <%= walk.city %> &middot; <%= time_ago_in_words(walk.created_at) %> ago
+          </p>
+          <%= button_to "Accept", accept_open_request_path(walk),
+                form_class: "block w-full mt-4",
+                form: { data: { turbo_frame: "_top" } },
+                class: "w-full rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500" %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="bg-white rounded-xl shadow-sm ring-1 ring-stone-200 p-6 text-center">
+      <p class="text-stone-500">No open walk requests in <%= city %> right now.</p>
+    </div>
+  <% end %>
+</div>

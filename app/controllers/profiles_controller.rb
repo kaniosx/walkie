@@ -20,6 +20,6 @@ class ProfilesController < ApplicationController
     # Only the three profile fields are editable. role/email/password are never
     # permitted here — role is also immutable at the model (F-01).
     def profile_params
-      params.permit(:display_name, :city, :postcode)
+      params.permit(:display_name, :city)
     end
 end

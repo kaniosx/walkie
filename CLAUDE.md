@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-Walkie — MVP of a dog-walking marketplace. Owners post a walk request, available walkers in the same city/postcode accept it; walks move through `REQUESTED → ACCEPTED → IN_PROGRESS → COMPLETED`. Out of scope for the MVP: realtime GPS, WebSockets, payments, chat, ratings. The product brief is in `@idea-notes.md` and the locked PRD is `@context/foundation/prd.md`. **The codebase is currently an empty Rails skeleton** — `app/models`, `app/controllers`, `config/routes.rb` are bare; no domain models, controllers, or views have been written yet. Feature work starts from zero.
+Walkie — MVP of a dog-walking marketplace. Owners post a walk request; walkers within a 10km radius (browser-captured geolocation, `Walk::MATCH_RADIUS_KM`, filtering only — no distance sort) accept it; walks move through `REQUESTED → ACCEPTED → IN_PROGRESS → COMPLETED`. City/postcode-based matching was replaced by this radius match (`L-01`, 2026-09-02) — `postcode` no longer exists on `users` or `walks`. Owner/Walker accept flows and the open-requests list broadcast live per-Walker over Turbo Streams (`R-01`). Out of scope for the MVP: continuous GPS tracking during a walk, WebSockets (beyond Turbo/Action Cable), payments, chat, ratings. The product brief is in `@idea-notes.md`, the locked PRD is `@context/foundation/prd.md`, and `@context/foundation/roadmap.md` tracks delivered vs. planned slices. **The app is built out** — models (`User`, `Dog`, `Walk`, `Session`, `WalkerLocationCache`), controllers (auth, profiles, dogs, walks, open requests), and views exist; see `app/` directly rather than assuming a bare skeleton.
 
 ## Stack
 

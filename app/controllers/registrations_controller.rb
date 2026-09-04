@@ -19,9 +19,9 @@ class RegistrationsController < ApplicationController
   private
     # role is whitelisted ONLY here, at registration. It is never permitted on
     # any update path — the model also rejects role changes (immutability guard).
-    # city/postcode are required (collected here); display_name is optional and
-    # also editable later on the profile screen.
+    # city is required (collected here); display_name is optional and also
+    # editable later on the profile screen.
     def registration_params
-      params.permit(:email_address, :password, :password_confirmation, :role, :city, :postcode)
+      params.permit(:email_address, :password, :password_confirmation, :role, :city)
     end
 end

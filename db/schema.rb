@@ -10,8 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_16_111721) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_02_105254) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "cube"
+  enable_extension "earthdistance"
   enable_extension "pg_catalog.plpgsql"
 
   create_table "dogs", force: :cascade do |t|
@@ -41,7 +43,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_16_111721) do
     t.string "display_name"
     t.string "email_address", null: false
     t.string "password_digest", null: false
-    t.string "postcode", null: false
     t.string "role", null: false
     t.datetime "updated_at", null: false
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
@@ -55,11 +56,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_16_111721) do
     t.datetime "completed_at"
     t.datetime "created_at", null: false
     t.bigint "dog_id", null: false
+    t.float "latitude"
+    t.float "longitude"
     t.bigint "owner_id", null: false
-    t.string "postcode"
     t.datetime "started_at"
     t.string "state", default: "requested", null: false
     t.datetime "updated_at", null: false
+    t.index "ll_to_earth(latitude, longitude)", name: "index_walks_on_earth_coordinates", where: "((latitude IS NOT NULL) AND (longitude IS NOT NULL))", using: :gist
     t.index ["accepted_by_walker_id"], name: "index_walks_on_accepted_by_walker_id"
     t.index ["dog_id"], name: "index_walks_on_dog_id"
     t.index ["owner_id"], name: "index_walks_on_owner_id"
