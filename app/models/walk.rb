@@ -144,7 +144,9 @@ class Walk < ApplicationRecord
       User.walker.where(city: city).find_each do |walker|
         location = WalkerLocationCache.read(walker)
         next if location.nil?
-        next unless distance_km_to(location[:latitude], location[:longitude]) <= MATCH_RADIUS_KM
+
+        distance = distance_km_to(location[:latitude], location[:longitude])
+        next if distance.nil? || distance > MATCH_RADIUS_KM
 
         walks = self.class.open_nearby(city: city, latitude: location[:latitude], longitude: location[:longitude])
                     .includes(:dog).order(created_at: :asc)
