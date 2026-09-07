@@ -63,7 +63,7 @@ PRD §Business Logic §Singleness states: *"the binding IS the confirmation"*. S
 | R-01  | realtime-walk-status-updates       | Owner and Walker see walk-state changes live (no refresh) on open-requests list, active-walk screens, and home dashboard | S-05, S-07, U-06 | reverses §Non-Goals "No real-time UI updates" | done |
 | L-01  | geolocation-matching                | Walker sees only REQUESTED walks within 10km (browser-captured lat/lng) instead of exact city+postcode match; postcode removed; per-Walker live broadcast | S-05, S-07, R-01 | reverses §Non-Goals/§Open Q #6 "no radius…no proximity ranking" (filtering only, no sort) | done |
 | U-07  | custom-turbo-confirm-dialog        | Owner/Walker see a styled modal instead of the native browser `window.confirm()` on destructive actions (cancel walk, remove dog, end walk) | U-02, U-06                | §NFR (usability)        | done |
-| L-02  | walker-owner-distance-display      | Owner/Walker see the distance between them (static, computed once per page load) on the open-requests list and active-walk screens | L-01                      | extends L-01; stays clear of §Non-Goals "live GPS" (no live/auto-updating tracking) | proposed |
+| L-02  | walker-owner-distance-display      | Owner/Walker see the distance between them (static, computed once per page load) on the open-requests list and active-walk screens | L-01                      | extends L-01; stays clear of §Non-Goals "live GPS" (no live/auto-updating tracking) | done     |
 
 ## Streams
 
@@ -465,7 +465,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Unknowns:**
   - Exact copy/rounding (e.g. "2.3 km" vs "~2 km") and where precisely on each card/screen it renders — Owner: downstream `/10x-plan`. Block: no (UX detail).
 - **Risk:** Low, by design — no non-goal reversal, no new tracking infra, no state-machine change. The one thing to watch in `/10x-plan`: L-01's own risk note explicitly declined "visual radius indicator" — a plain numeric distance is not visual/positional the way a map or indicator would be, but should be scoped narrowly (a number, not a bar/gauge/mini-map) to keep that distinction clean. See `context/changes/walker-owner-distance-display/frame.md` for the full framing.
-- **Status:** proposed
+- **Status:** done
 
 ## Backlog Handoff
 
@@ -560,3 +560,4 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **T-05: (infra) A browser-level system test signs in as an Owner and asserts their walk-history view renders their own past walks; a second pass signs in as a Walker and asserts the same for the Walker's history view.** — Archived 2026-07-13 → `context/archive/2026-07-13-e2e-walk-history/`. Lesson: —.
 - **R-01: Owner and Walker see walk-state changes live (no refresh) across the open-requests list, active-walk screens, and home dashboard, via Turbo Streams over Solid Cable** — Archived 2026-08-21 → `context/archive/2026-08-21-realtime-walk-status-updates/`. Lesson: —.
 - **U-07: The three existing `data: { turbo_confirm: "..." }` call sites (`app/views/walks/_active_table.html.erb` cancel, `app/views/dogs/index.html.erb` remove, `app/views/walker_walks/_current_walk.html.erb` end walk) render a Tailwind-styled `<dialog>`-based modal instead of the browser's native, unstylable `window.confirm()`. Implemented via Turbo's built-in override hook (`Turbo.setConfirmMethod` + a `<template data-turbo-confirm>` in the layout, driven by a small Stimulus controller) — no library dependency, no changes needed to the existing `turbo_confirm:` attributes themselves.** — Archived 2026-09-03 → `context/archive/2026-09-03-custom-turbo-confirm-dialog/`. Lesson: —.
+- **L-02: Owner/Walker see the distance between them (static, computed once per page load) on the open-requests list and active-walk screens** — Archived 2026-09-07 → `context/archive/2026-09-07-walker-owner-distance-display/`. Lesson: —.
