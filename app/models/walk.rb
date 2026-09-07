@@ -35,6 +35,22 @@ class Walk < ApplicationRecord
       )
   }
 
+  # Haversine distance from this walk's own coordinates to an arbitrary
+  # point. Returns nil (not a nonsense number) when either endpoint's
+  # coordinates are missing, since nil.to_f == 0.0 would otherwise silently
+  # produce a wrong-but-plausible-looking distance.
+  def distance_km_to(other_latitude, other_longitude)
+    return nil if latitude.nil? || longitude.nil? || other_latitude.nil? || other_longitude.nil?
+
+    rlat1 = latitude.to_f * Math::PI / 180
+    rlat2 = other_latitude.to_f * Math::PI / 180
+    dlat = rlat2 - rlat1
+    dlng = (other_longitude.to_f - longitude.to_f) * Math::PI / 180
+
+    a = Math.sin(dlat / 2)**2 + Math.cos(rlat1) * Math.cos(rlat2) * Math.sin(dlng / 2)**2
+    2 * EARTH_RADIUS_KM * Math.asin(Math.sqrt(a))
+  end
+
   validates :state, presence: true
   validates :city, presence: true
   validates :latitude, :longitude, presence: true
@@ -139,21 +155,6 @@ class Walk < ApplicationRecord
                               target: "open_requests_count", partial: "home/open_requests_count",
                               locals: { count: walks.size, city: city })
       end
-    end
-
-    # Ruby-side Haversine distance from this walk's own coordinates to an
-    # arbitrary point — used only to decide broadcast eligibility per cached
-    # Walker location in #broadcast_open_requests_locality above. The
-    # DB-side `open_nearby` scope stays the source of truth for actual list
-    # filtering/queries.
-    def distance_km_to(other_latitude, other_longitude)
-      rlat1 = latitude.to_f * Math::PI / 180
-      rlat2 = other_latitude.to_f * Math::PI / 180
-      dlat = rlat2 - rlat1
-      dlng = (other_longitude.to_f - longitude.to_f) * Math::PI / 180
-
-      a = Math.sin(dlat / 2)**2 + Math.cos(rlat1) * Math.cos(rlat2) * Math.sin(dlng / 2)**2
-      2 * EARTH_RADIUS_KM * Math.asin(Math.sqrt(a))
     end
 
     def broadcast_walker_current_walk

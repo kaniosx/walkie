@@ -3,7 +3,7 @@ project: Walkie
 version: 2
 status: active
 created: 2026-05-25
-updated: 2026-09-03
+updated: 2026-09-07
 decisions:
   q4_remove_dog_policy: soft-delete  # deleted_at on Dog; walks preserved
 prd_version: 1
@@ -63,6 +63,7 @@ PRD §Business Logic §Singleness states: *"the binding IS the confirmation"*. S
 | R-01  | realtime-walk-status-updates       | Owner and Walker see walk-state changes live (no refresh) on open-requests list, active-walk screens, and home dashboard | S-05, S-07, U-06 | reverses §Non-Goals "No real-time UI updates" | done |
 | L-01  | geolocation-matching                | Walker sees only REQUESTED walks within 10km (browser-captured lat/lng) instead of exact city+postcode match; postcode removed; per-Walker live broadcast | S-05, S-07, R-01 | reverses §Non-Goals/§Open Q #6 "no radius…no proximity ranking" (filtering only, no sort) | done |
 | U-07  | custom-turbo-confirm-dialog        | Owner/Walker see a styled modal instead of the native browser `window.confirm()` on destructive actions (cancel walk, remove dog, end walk) | U-02, U-06                | §NFR (usability)        | done |
+| L-02  | walker-owner-distance-display      | Owner/Walker see the distance between them (static, computed once per page load) on the open-requests list and active-walk screens | L-01                      | extends L-01; stays clear of §Non-Goals "live GPS" (no live/auto-updating tracking) | proposed |
 
 ## Streams
 
@@ -77,7 +78,7 @@ Navigation aid — groups items sharing a Prerequisites chain. Canonical orderin
 | E      | Observability                      | `O-01`                                                                              | Independent of all feature slices — ready to run in parallel with any other work.                           |
 | F      | Testing infrastructure             | `T-01` → `T-02` / `T-03` / `T-04` / `T-05`                                          | T-01 established the pattern (2 tests). T-02..T-05 extend browser coverage across the core flows; each is independent of the others once T-01 lands, and each also needs its underlying feature slice done (already true for all four). |
 | G      | Realtime live-updates              | `R-01`                                                                              | Independent of all other active streams — needs the views it makes live (S-05, S-07, U-06) already built. Reverses the PRD's v1 "no real-time UI updates" non-goal. |
-| H      | Locality matching precision        | `L-01`                                                                              | Overrides Open Q #6 / §Non-Goals via `/10x-frame` (2026-09-02) — the frame brief came back weak/proceed-anyway, but the user chose to proceed. Needed S-05, S-07, R-01 already built; independent otherwise. |
+| H      | Locality matching precision        | `L-01` → `L-02`                                                                     | Overrides Open Q #6 / §Non-Goals via `/10x-frame` (2026-09-02) — the frame brief came back weak/proceed-anyway, but the user chose to proceed. Needed S-05, S-07, R-01 already built; independent otherwise. L-02 (framed 2026-09-07) scoped **down** from a live-updating ask to a static one, specifically to stay clear of the still-untouched "continuous GPS tracking" non-goal — see its own risk note. |
 
 ## Baseline
 
@@ -453,6 +454,19 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Risk:** No configurable per-Walker radius (one fixed 10km constant for all); no map UI or visual radius indicator (filter/list only, per PRD non-goal). Lat/lng params hardened and migration reversibility fixed in impl review (`1ab4895`).
 - **Status:** done
 
+### L-02: Static Walker↔Owner distance display
+
+- **Outcome:** Owner and Walker each see the distance between them (e.g. "2.3 km") on the open-requests list (Walker) and the active-walk screens (both roles). Computed **once per page load** from the same coordinates and `Walk#distance_km_to` (`app/models/walk.rb:150-157`) L-01 already captures and calculates internally for broadcast-eligibility — no continuous/`watchPosition` tracking, no new broadcast channel. Opened via `/10x-frame`: the user's original ask was a **live**-updating number on both screens, which the frame found would reverse a distinct, never-touched non-goal ("continuous GPS tracking during a walk," `prd.md:192`, restated in CLAUDE.md) requiring materially new infrastructure — functionally the same build as an earlier-discussed "live map" idea, just rendered as text. User chose to scope down to static, riding on L-01's existing precedent instead of opening that non-goal.
+- **Change ID:** `walker-owner-distance-display`
+- **PRD refs:** extends L-01's already-accepted precedent; deliberately stays clear of §Non-Goals "Real-time UI layer (live GPS...)" (`prd.md:192`) — that non-goal remains parked
+- **Prerequisites:** L-01 (needs the captured coordinates + distance calc already established)
+- **Parallel with:** any active stream
+- **Blockers:** —
+- **Unknowns:**
+  - Exact copy/rounding (e.g. "2.3 km" vs "~2 km") and where precisely on each card/screen it renders — Owner: downstream `/10x-plan`. Block: no (UX detail).
+- **Risk:** Low, by design — no non-goal reversal, no new tracking infra, no state-machine change. The one thing to watch in `/10x-plan`: L-01's own risk note explicitly declined "visual radius indicator" — a plain numeric distance is not visual/positional the way a map or indicator would be, but should be scoped narrowly (a number, not a bar/gauge/mini-map) to keep that distinction clean. See `context/changes/walker-owner-distance-display/frame.md` for the full framing.
+- **Status:** proposed
+
 ## Backlog Handoff
 
 | Roadmap ID | Change ID                          | Suggested issue title                                            | Ready for `/10x-plan` | Notes                                                                       |
@@ -485,6 +499,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 | R-01       | realtime-walk-status-updates        | Realtime: Turbo Streams live walk-status updates                 | done                  | Archived 2026-08-21 → `context/archive/2026-08-21-realtime-walk-status-updates/` |
 | L-01       | geolocation-matching                | Locality: geolocation-radius Walker↔Owner matching                | done                  | Archived 2026-09-02 → `context/archive/2026-09-02-geolocation-matching/`; opened via `/10x-frame` (weak framing case — user proceeded anyway) |
 | U-07       | custom-turbo-confirm-dialog        | UI: Replace native `window.confirm()` with a styled Turbo modal  | yes                   | Independent styling-only change; no state-machine or authorization impact |
+| L-02       | walker-owner-distance-display      | Locality: static Walker↔Owner distance display (open-requests + active-walk screens) | yes | Framed via `/10x-frame` (2026-09-07); scoped down from a live ask to static to avoid reversing "continuous GPS tracking" non-goal — see `context/changes/walker-owner-distance-display/frame.md` |
 
 ## Open Roadmap Questions
 
