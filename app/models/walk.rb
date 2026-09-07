@@ -150,7 +150,7 @@ class Walk < ApplicationRecord
                     .includes(:dog).order(created_at: :asc)
         broadcast_replace_to([ walker, :nearby_open_requests ],
                               target: "open_requests_list", partial: "open_requests/list",
-                              locals: { walks: walks, city: city })
+                              locals: { walks: walks, city: city, lat: location[:latitude], lng: location[:longitude] })
         broadcast_replace_to([ walker, :nearby_open_requests ],
                               target: "open_requests_count", partial: "home/open_requests_count",
                               locals: { count: walks.size, city: city })

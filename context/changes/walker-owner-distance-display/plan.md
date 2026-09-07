@@ -260,15 +260,15 @@ No schema changes. No data migration — all coordinates already exist (`walks.l
 
 #### Automated
 
-- [x] 1.1 Unit tests pass: `docker compose exec web bin/rails test test/models/walk_test.rb`
-- [x] 1.2 Rubocop passes: `docker compose exec web bundle exec rubocop app/models/walk.rb`
+- [x] 1.1 Unit tests pass: `docker compose exec web bin/rails test test/models/walk_test.rb` — 7246852
+- [x] 1.2 Rubocop passes: `docker compose exec web bundle exec rubocop app/models/walk.rb` — 7246852
 
 ### Phase 2: Distance on the open-requests list
 
 #### Automated
 
-- [ ] 2.1 Integration tests pass: `docker compose exec web bin/rails test test/controllers/open_requests_controller_test.rb`
-- [ ] 2.2 Rubocop passes: `docker compose exec web bundle exec rubocop app/controllers/open_requests_controller.rb app/views/open_requests/`
+- [x] 2.1 Integration tests pass: `docker compose exec web bin/rails test test/controllers/open_requests_controller_test.rb`
+- [x] 2.2 Rubocop passes: `docker compose exec web bundle exec rubocop app/controllers/open_requests_controller.rb app/views/open_requests/`
 
 #### Manual
 

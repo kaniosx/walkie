@@ -35,6 +35,13 @@ class OpenRequestsTest < ActionDispatch::IntegrationTest
     assert_not_includes response.body, "Taken", "already-accepted walk must be hidden"
   end
 
+  test "with coordinates: shows the distance to each request's owner" do
+    sign_in_as "walker@example.com"
+    get open_requests_path, params: { lat: 50.0700, lng: 19.9450 }
+    assert_response :success
+    assert_includes response.body, "km"
+  end
+
   test "without coordinates: shows the getting-your-location placeholder, no list" do
     sign_in_as "walker@example.com"
     get open_requests_path
