@@ -1,10 +1,10 @@
 ---
 change_id: walker-owner-distance-display
 title: Display live distance between Walker and Owner on UI
-status: impl_reviewed
+status: archived
 created: 2026-09-07
 updated: 2026-09-07
-archived_at: null
+archived_at: 2026-09-07T15:10:55Z
 ---
 
 ## Notes
