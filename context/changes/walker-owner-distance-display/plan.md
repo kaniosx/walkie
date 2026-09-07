@@ -267,26 +267,26 @@ No schema changes. No data migration — all coordinates already exist (`walks.l
 
 #### Automated
 
-- [x] 2.1 Integration tests pass: `docker compose exec web bin/rails test test/controllers/open_requests_controller_test.rb`
-- [x] 2.2 Rubocop passes: `docker compose exec web bundle exec rubocop app/controllers/open_requests_controller.rb app/views/open_requests/`
+- [x] 2.1 Integration tests pass: `docker compose exec web bin/rails test test/controllers/open_requests_controller_test.rb` — c88020a
+- [x] 2.2 Rubocop passes: `docker compose exec web bundle exec rubocop app/controllers/open_requests_controller.rb app/views/open_requests/` — c88020a
 
 #### Manual
 
-- [ ] 2.3 Sign in as a Walker, grant location, confirm each open-request card shows a distance figure.
-- [ ] 2.4 Deny location and confirm cards render as today, with no distance line and no error.
+- [x] 2.3 Sign in as a Walker, grant location, confirm each open-request card shows a distance figure.
+- [x] 2.4 Deny location and confirm cards render as today, with no distance line and no error.
 
 ### Phase 3: Distance on the Walker's active-walk screen
 
 #### Automated
 
-- [ ] 3.1 Integration tests pass: `docker compose exec web bin/rails test test/controllers/walker_walks_controller_test.rb`
-- [ ] 3.2 Rubocop passes: `docker compose exec web bundle exec rubocop app/controllers/walker_walks_controller.rb app/views/walker_walks/`
+- [x] 3.1 Integration tests pass: `docker compose exec web bin/rails test test/controllers/walker_walks_controller_test.rb`
+- [x] 3.2 Rubocop passes: `docker compose exec web bundle exec rubocop app/controllers/walker_walks_controller.rb app/views/walker_walks/`
 
 #### Manual
 
-- [ ] 3.3 Confirm Start/End button and walk info appear immediately, before any location prompt resolves.
-- [ ] 3.4 Grant location and confirm the distance line appears shortly after, without the rest of the card re-rendering or flashing.
-- [ ] 3.5 Deny location and confirm the card still works fully, just without a distance line.
+- [x] 3.3 Confirm Start/End button and walk info appear immediately, before any location prompt resolves.
+- [x] 3.4 Grant location and confirm the distance line appears shortly after, without the rest of the card re-rendering or flashing.
+- [x] 3.5 Deny location and confirm the card still works fully, just without a distance line.
 
 ### Phase 4: Distance on the Owner's active-walk screens
 

@@ -10,6 +10,13 @@ class WalkerWalksController < ApplicationController
                 .includes(:dog)
                 .first
 
+    lat = coerce_coordinate(params[:lat])
+    lng = coerce_coordinate(params[:lng])
+    if lat && lng
+      WalkerLocationCache.write(current_user, latitude: lat, longitude: lng)
+      @distance_km = @walk.distance_km_to(lat, lng) if @walk
+    end
+
     # Strictly scoped to accepted_by_walker_id (not all visible walks) so open
     # requests from other Owners can never leak into this walker's history.
     @past_walks = Walk.where(accepted_by_walker_id: current_user.id, state: %w[completed cancelled])

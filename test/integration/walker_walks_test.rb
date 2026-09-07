@@ -136,6 +136,39 @@ class WalkerWalksTest < ActionDispatch::IntegrationTest
     assert_not_includes response.body, "Rex"
   end
 
+  test "walker with lat/lng sees distance to the owner" do
+    sign_in_as "walker@example.com"
+    get walker_walks_path, params: { lat: 50.0647, lng: 19.9450 }
+    assert_response :success
+    assert_includes response.body, "km away"
+  end
+
+  test "walker without lat/lng sees no distance line, walk info still renders" do
+    sign_in_as "walker@example.com"
+    get walker_walks_path
+    assert_response :success
+    assert_includes response.body, "Rex"
+    assert_includes response.body, "Start walk"
+    assert_not_includes response.body, "km away"
+  end
+
+  test "walker with lat/lng and no active walk sees no distance line, no error" do
+    @walk.start!(@walker)
+    @walk.complete!(@walker)
+
+    sign_in_as "walker@example.com"
+    get walker_walks_path, params: { lat: 50.0647, lng: 19.9450 }
+    assert_response :success
+    assert_not_includes response.body, "km away"
+  end
+
+  test "walker with lat/lng writes their location to the cache" do
+    sign_in_as "walker@example.com"
+    get walker_walks_path, params: { lat: 50.0647, lng: 19.9450 }
+    assert_response :success
+    assert_equal({ latitude: 50.0647, longitude: 19.9450 }, WalkerLocationCache.read(@walker))
+  end
+
   test "unauthenticated access redirects to sign-in" do
     get walker_walks_path
     assert_redirected_to new_session_path
