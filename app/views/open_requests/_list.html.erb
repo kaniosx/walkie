@@ -7,6 +7,9 @@
           <p class="text-sm text-stone-600 mt-0.5"><%= walk.dog&.breed %></p>
           <p class="text-sm text-stone-500 mt-2">
             <%= walk.city %> &middot; <%= time_ago_in_words(walk.created_at) %> ago
+            <% if (distance_km = walk.distance_km_to(local_assigns[:lat], local_assigns[:lng])) %>
+              &middot; <%= number_with_precision(distance_km, precision: 1) %> km
+            <% end %>
           </p>
           <%= button_to "Accept", accept_open_request_path(walk),
                 form_class: "block w-full mt-4",

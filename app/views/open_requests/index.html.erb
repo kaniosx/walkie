@@ -6,7 +6,7 @@
   <turbo-frame id="open_requests_frame" class="block"
       data-controller="walker-location" data-walker-location-url-value="<%= open_requests_path %>">
     <% if @walks %>
-      <%= render "open_requests/list", walks: @walks, city: current_user.city %>
+      <%= render "open_requests/list", walks: @walks, city: current_user.city, lat: @lat, lng: @lng %>
     <% else %>
       <div class="bg-white rounded-xl shadow-sm ring-1 ring-stone-200 p-6 text-center">
         <p class="text-stone-500">Getting your location&hellip;</p>

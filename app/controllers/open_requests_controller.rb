@@ -2,13 +2,13 @@ class OpenRequestsController < ApplicationController
   include WalkerOnly
 
   def index
-    lat = coerce_coordinate(params[:lat])
-    lng = coerce_coordinate(params[:lng])
-    return if lat.nil? || lng.nil?
+    @lat = coerce_coordinate(params[:lat])
+    @lng = coerce_coordinate(params[:lng])
+    return if @lat.nil? || @lng.nil?
 
-    WalkerLocationCache.write(current_user, latitude: lat, longitude: lng)
+    WalkerLocationCache.write(current_user, latitude: @lat, longitude: @lng)
 
-    @walks = Walk.open_nearby(city: current_user.city, latitude: lat, longitude: lng)
+    @walks = Walk.open_nearby(city: current_user.city, latitude: @lat, longitude: @lng)
                  .includes(:dog).order(created_at: :asc)
   end
 
