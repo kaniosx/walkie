@@ -292,12 +292,12 @@ No schema changes. No data migration — all coordinates already exist (`walks.l
 
 #### Automated
 
-- [x] 4.1 Integration tests pass: `docker compose exec web bin/rails test test/controllers/walks_controller_test.rb test/controllers/home_controller_test.rb`
-- [x] 4.2 Rubocop passes: `docker compose exec web bundle exec rubocop app/controllers/walks_controller.rb app/controllers/home_controller.rb app/helpers/ app/views/walks/ app/views/home/`
-- [x] 4.3 No N+1 introduced on `@active_walks`
+- [x] 4.1 Integration tests pass: `docker compose exec web bin/rails test test/controllers/walks_controller_test.rb test/controllers/home_controller_test.rb` — ff4fd4a
+- [x] 4.2 Rubocop passes: `docker compose exec web bundle exec rubocop app/controllers/walks_controller.rb app/controllers/home_controller.rb app/helpers/ app/views/walks/ app/views/home/` — ff4fd4a
+- [x] 4.3 No N+1 introduced on `@active_walks` — ff4fd4a
 
 #### Manual
 
-- [x] 4.4 Owner with a Walker who recently viewed their active-walk screen sees distance on both `/walks` and the home dashboard.
-- [x] 4.5 Owner whose Walker hasn't visited their active-walk screen (cache empty) sees both views render normally with no distance line.
-- [x] 4.6 Owner with a still-`requested` walk sees no distance line for that row.
+- [x] 4.4 Owner with a Walker who recently viewed their active-walk screen sees distance on both `/walks` and the home dashboard. — ff4fd4a
+- [x] 4.5 Owner whose Walker hasn't visited their active-walk screen (cache empty) sees both views render normally with no distance line. — ff4fd4a
+- [x] 4.6 Owner with a still-`requested` walk sees no distance line for that row. — ff4fd4a
