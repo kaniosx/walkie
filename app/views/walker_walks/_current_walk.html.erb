@@ -18,6 +18,12 @@
               data: { turbo_confirm: "End walk? This cannot be undone." } %>
       <% end %>
     </div>
+
+    <%= turbo_frame_tag "walker_current_walk_distance", data: { controller: "walker-location", walker_location_url_value: walker_walks_path } do %>
+      <% if @distance_km %>
+        <p class="text-sm text-stone-500 mb-6">Owner is <%= number_with_precision(@distance_km, precision: 1) %> km away</p>
+      <% end %>
+    <% end %>
   <% else %>
     <div class="bg-white rounded-xl shadow-sm ring-1 ring-stone-200 p-6 mb-6 text-center">
       <p class="text-stone-500">You have no active walk right now.</p>
