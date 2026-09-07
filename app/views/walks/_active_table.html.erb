@@ -7,6 +7,9 @@
         </td>
         <td class="px-4 py-3 whitespace-nowrap">
           <span class="<%= walk_state_badge_classes(walk.state) %>"><%= walk.state.humanize %></span>
+          <% if (distance_km = distance_to_walker_km(walk)) %>
+            <span class="block text-xs text-stone-500 mt-1">Walker is <%= number_with_precision(distance_km, precision: 1) %> km away</span>
+          <% end %>
         </td>
         <td class="px-4 py-3 text-sm text-stone-700 whitespace-nowrap"><%= walk.created_at.to_fs(:short) %></td>
         <td class="px-4 py-3 whitespace-nowrap">

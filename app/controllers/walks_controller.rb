@@ -2,7 +2,7 @@ class WalksController < ApplicationController
   include OwnerOnly
 
   def index
-    @active_walks = current_user.owned_walks.active.includes(:dog).order(created_at: :desc)
+    @active_walks = current_user.owned_walks.active.includes(:dog, :accepted_by_walker).order(created_at: :desc)
     @past_walks   = current_user.owned_walks
                                 .where(state: %w[completed cancelled])
                                 .includes(:dog, :accepted_by_walker)

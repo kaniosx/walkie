@@ -139,4 +139,53 @@ class WalksTest < ActionDispatch::IntegrationTest
     assert_not_includes response.body, "No past walks yet."
     assert_includes response.body, "No active walk requests."
   end
+
+  test "owner sees the distance to the accepted walker when the walker's location is cached" do
+    walk = @dog.walks.create!(owner: @owner, city: @owner.city, latitude: 50.0647, longitude: 19.9450)
+    walk.accept!(@walker)
+    WalkerLocationCache.write(@walker, latitude: 50.08, longitude: 19.95)
+
+    sign_in_as "owner@example.com"
+    get walks_path
+
+    assert_response :success
+    assert_includes response.body, "km away"
+  end
+
+  test "owner sees no distance line when the walker's cached location is absent" do
+    walk = @dog.walks.create!(owner: @owner, city: @owner.city, latitude: 50.0647, longitude: 19.9450)
+    walk.accept!(@walker)
+
+    sign_in_as "owner@example.com"
+    get walks_path
+
+    assert_response :success
+    assert_not_includes response.body, "km away"
+  end
+
+  test "owner sees no distance line for a still-requested walk with no walker yet" do
+    @dog.walks.create!(owner: @owner, city: @owner.city, latitude: 50.0647, longitude: 19.9450)
+
+    sign_in_as "owner@example.com"
+    get walks_path
+
+    assert_response :success
+    assert_not_includes response.body, "km away"
+  end
+
+  test "active_walks eager-loads accepted_by_walker so per-row distance lookups don't N+1" do
+    other_walker = User.create!(email_address: "walker3@example.com", password: "secret123",
+                                role: "walker", city: "Kraków")
+    dog2 = @owner.dogs.create!(name: "Fido", breed: "Beagle")
+    walk1 = @dog.walks.create!(owner: @owner, city: @owner.city, latitude: 50.0647, longitude: 19.9450)
+    walk2 = dog2.walks.create!(owner: @owner, city: @owner.city, latitude: 50.0647, longitude: 19.9450)
+    walk1.accept!(@walker)
+    walk2.accept!(other_walker)
+
+    walks = @owner.owned_walks.active.includes(:dog, :accepted_by_walker).order(created_at: :desc).to_a
+
+    assert_no_queries do
+      walks.each(&:accepted_by_walker)
+    end
+  end
 end

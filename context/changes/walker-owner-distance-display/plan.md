@@ -279,25 +279,25 @@ No schema changes. No data migration — all coordinates already exist (`walks.l
 
 #### Automated
 
-- [x] 3.1 Integration tests pass: `docker compose exec web bin/rails test test/controllers/walker_walks_controller_test.rb`
-- [x] 3.2 Rubocop passes: `docker compose exec web bundle exec rubocop app/controllers/walker_walks_controller.rb app/views/walker_walks/`
+- [x] 3.1 Integration tests pass: `docker compose exec web bin/rails test test/controllers/walker_walks_controller_test.rb` — 0ee3251
+- [x] 3.2 Rubocop passes: `docker compose exec web bundle exec rubocop app/controllers/walker_walks_controller.rb app/views/walker_walks/` — 0ee3251
 
 #### Manual
 
-- [x] 3.3 Confirm Start/End button and walk info appear immediately, before any location prompt resolves.
-- [x] 3.4 Grant location and confirm the distance line appears shortly after, without the rest of the card re-rendering or flashing.
-- [x] 3.5 Deny location and confirm the card still works fully, just without a distance line.
+- [x] 3.3 Confirm Start/End button and walk info appear immediately, before any location prompt resolves. — 0ee3251
+- [x] 3.4 Grant location and confirm the distance line appears shortly after, without the rest of the card re-rendering or flashing. — 0ee3251
+- [x] 3.5 Deny location and confirm the card still works fully, just without a distance line. — 0ee3251
 
 ### Phase 4: Distance on the Owner's active-walk screens
 
 #### Automated
 
-- [ ] 4.1 Integration tests pass: `docker compose exec web bin/rails test test/controllers/walks_controller_test.rb test/controllers/home_controller_test.rb`
-- [ ] 4.2 Rubocop passes: `docker compose exec web bundle exec rubocop app/controllers/walks_controller.rb app/controllers/home_controller.rb app/helpers/ app/views/walks/ app/views/home/`
-- [ ] 4.3 No N+1 introduced on `@active_walks`
+- [x] 4.1 Integration tests pass: `docker compose exec web bin/rails test test/controllers/walks_controller_test.rb test/controllers/home_controller_test.rb`
+- [x] 4.2 Rubocop passes: `docker compose exec web bundle exec rubocop app/controllers/walks_controller.rb app/controllers/home_controller.rb app/helpers/ app/views/walks/ app/views/home/`
+- [x] 4.3 No N+1 introduced on `@active_walks`
 
 #### Manual
 
-- [ ] 4.4 Owner with a Walker who recently viewed their active-walk screen sees distance on both `/walks` and the home dashboard.
-- [ ] 4.5 Owner whose Walker hasn't visited their active-walk screen (cache empty) sees both views render normally with no distance line.
-- [ ] 4.6 Owner with a still-`requested` walk sees no distance line for that row.
+- [x] 4.4 Owner with a Walker who recently viewed their active-walk screen sees distance on both `/walks` and the home dashboard.
+- [x] 4.5 Owner whose Walker hasn't visited their active-walk screen (cache empty) sees both views render normally with no distance line.
+- [x] 4.6 Owner with a still-`requested` walk sees no distance line for that row.

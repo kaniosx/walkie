@@ -166,7 +166,7 @@ class Walk < ApplicationRecord
     end
 
     def broadcast_owner_active_walks
-      walks = owner.owned_walks.active.includes(:dog).order(created_at: :desc)
+      walks = owner.owned_walks.active.includes(:dog, :accepted_by_walker).order(created_at: :desc)
       broadcast_replace_to([ owner, :active_walks ],
                             target: "owner_active_walks_home", partial: "home/owner_active_walks",
                             locals: { walks: walks })

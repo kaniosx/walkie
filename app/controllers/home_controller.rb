@@ -5,7 +5,7 @@ class HomeController < ApplicationController
   def index
     if current_user.owner?
       @dogs = current_user.dogs.active
-      @active_walks = current_user.owned_walks.active.includes(:dog).order(created_at: :desc)
+      @active_walks = current_user.owned_walks.active.includes(:dog, :accepted_by_walker).order(created_at: :desc)
       @active_dog_ids = @active_walks.map(&:dog_id)
     elsif current_user.walker?
       @walk = Walk.where(accepted_by_walker_id: current_user.id, state: %w[accepted in_progress])
