@@ -8,7 +8,12 @@
             <p class="text-lg font-semibold text-stone-900"><%= walk.dog.name %></p>
             <p class="text-sm text-stone-600"><%= walk.dog.breed %></p>
           </div>
-          <span class="<%= walk_state_badge_classes(walk.state) %>"><%= walk.state.humanize %></span>
+          <div class="text-right">
+            <span class="<%= walk_state_badge_classes(walk.state) %>"><%= walk.state.humanize %></span>
+            <% if (distance_km = distance_to_walker_km(walk)) %>
+              <p class="text-xs text-stone-500 mt-1">Walker is <%= number_with_precision(distance_km, precision: 1) %> km away</p>
+            <% end %>
+          </div>
         </div>
       <% end %>
     </div>
