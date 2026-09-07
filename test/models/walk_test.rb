@@ -182,6 +182,38 @@ class WalkTest < ActiveSupport::TestCase
     assert_not_includes result, nil_coords
   end
 
+  # --- distance_km_to (public, nil-safe Haversine) --------------------------
+
+  test "distance_km_to is callable from outside the model" do
+    assert_nothing_raised do
+      @walk.distance_km_to(NEAR_LAT, KRAKOW_LNG)
+    end
+  end
+
+  test "distance_km_to returns the correct known-good Haversine value" do
+    # @walk sits at KRAKOW_LAT/LNG; NEAR_LAT is ~2km north at the same longitude.
+    distance = @walk.distance_km_to(NEAR_LAT, KRAKOW_LNG)
+    assert_in_delta 2.0, distance, 0.2
+  end
+
+  test "distance_km_to returns nil when this walk's own latitude is missing" do
+    @walk.latitude = nil
+    assert_nil @walk.distance_km_to(NEAR_LAT, KRAKOW_LNG)
+  end
+
+  test "distance_km_to returns nil when this walk's own longitude is missing" do
+    @walk.longitude = nil
+    assert_nil @walk.distance_km_to(NEAR_LAT, KRAKOW_LNG)
+  end
+
+  test "distance_km_to returns nil when the other point's latitude is missing" do
+    assert_nil @walk.distance_km_to(nil, KRAKOW_LNG)
+  end
+
+  test "distance_km_to returns nil when the other point's longitude is missing" do
+    assert_nil @walk.distance_km_to(NEAR_LAT, nil)
+  end
+
   private
     def make_walk(dog_name, city:, latitude: KRAKOW_LAT, longitude: KRAKOW_LNG)
       dog = @owner.dogs.create!(name: dog_name, breed: "Labrador")
