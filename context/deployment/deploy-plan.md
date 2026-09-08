@@ -1,6 +1,7 @@
 ---
 project: Walkie
 deployed_at: 2026-05-25
+resumed_at: 2026-09-08
 platform: Render
 region: frankfurt
 status: live
@@ -13,9 +14,17 @@ infra_ref: context/foundation/infrastructure.md
 
 ## Outcome
 
-Walkie's first end-to-end deploy is live on Render. `https://walkie-web.onrender.com/up` returns `HTTP/2 200` with Rails 8's health-check body (`<body style="background-color: green">`). `/` returns `404` — expected, `config/routes.rb` is still empty (no domain controllers exist yet).
+Walkie's first end-to-end deploy went live on Render 2026-05-25. `https://walkie-web.onrender.com/up` returned `HTTP/2 200` with Rails 8's health-check body. `/` returned `404` at the time — `config/routes.rb` was still empty (no domain controllers existed yet).
 
-This is a **smoke deploy on free-tier Postgres** — a deliberate deviation from `infrastructure.md` (which rejected the free tier for production due to 60s cold start + 30-day expire). It exists to validate the deploy pipeline end-to-end before any real MVP traffic.
+This was a **smoke deploy on free-tier Postgres** — a deliberate deviation from `infrastructure.md` (which rejected the free tier for production due to 60s cold start + 30-day expire). It existed to validate the deploy pipeline end-to-end before any real MVP traffic.
+
+### Resume (2026-09-08)
+
+Paused after the free Postgres expired (~2026-06-24) to avoid cost while not actively using the platform. `walkie-web` (paid Starter, $7/mo) kept running unpaid and the Render **account** was suspended for two unpaid invoices ($7.00 June + $5.07 July = $12.07, settled 2026-09-08). The `walkie-web` **service** itself carried a separate suspended state that needed an explicit dashboard **Resume** before any Blueprint sync could touch it.
+
+On resume, `walkie-postgres` had already been fully removed by its 30-day expiry (Render doesn't just disable an expired free DB, it deletes it) — confirmed via dashboard (only `walkie-web` was listed). Decision this time: **both** web and Postgres go to Render's genuine free tier (not just Postgres) since the app is only needed intermittently right now — see `render.yaml` (`walkie-web` plan `starter → free`, `WEB_CONCURRENCY` `2 → 1` to fit the free instance's 0.1 vCPU/512MB). Blueprint sync recreated `walkie-postgres` (free, PG 17) from scratch. Verified 2026-09-08: `/up` → `200`, `/` → `302` to `/session/new` (real auth flow now exists, unlike the May smoke deploy).
+
+**New expiry clock**: `walkie-postgres` provisioned 2026-09-08 → expect auto-expiry ~2026-10-08 (30 days) with a 14-day grace to ~2026-10-22. `walkie-web` free plan additionally spins down after 15 min of inactivity (cold start ~1 min) — expected/acceptable for intermittent use, not present under the old paid Starter plan.
 
 ## What's deployed
 
@@ -23,7 +32,7 @@ This is a **smoke deploy on free-tier Postgres** — a deliberate deviation from
 |---|---|
 | Platform | Render |
 | Region | Frankfurt (`fra`) |
-| Web Service | `walkie-web` — runtime: Docker, plan: Starter ($7/mo) |
+| Web Service | `walkie-web` — runtime: Docker, plan: **free** (since 2026-09-08 resume; was Starter $7/mo) |
 | Database | `walkie-postgres` — plan: **free**, PG 17, 1 GB |
 | Image source | `./Dockerfile` at repo root (Rails 8 default with Thruster + Puma) |
 | Deploy mode | Render Blueprint (`render.yaml` is the source of truth) |
@@ -37,7 +46,7 @@ This is a **smoke deploy on free-tier Postgres** — a deliberate deviation from
 | `DATABASE_URL` | `fromDatabase: walkie-postgres / connectionString` | Auto-populated by Render Blueprint |
 | `RAILS_MASTER_KEY` | `config/master.key` (local file, `.gitignore`d) | Manually pasted in dashboard during Blueprint apply (`sync: false`) |
 | `RAILS_LOG_LEVEL` | `info` | render.yaml literal |
-| `WEB_CONCURRENCY` | `2` | render.yaml literal |
+| `WEB_CONCURRENCY` | `1` (was `2` under Starter; dropped to fit free instance's 0.1 vCPU/512MB) | render.yaml literal |
 | `RAILS_MAX_THREADS` | `3` | render.yaml literal |
 
 ## What's intentionally NOT wired
