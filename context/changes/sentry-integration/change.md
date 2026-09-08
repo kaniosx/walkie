@@ -1,7 +1,7 @@
 ---
 change_id: sentry-integration
 title: Sentry error tracking + performance tracing (O-01)
-status: implementing
+status: implemented
 created: 2026-09-08
 updated: 2026-09-08
 archived_at: null
@@ -33,5 +33,14 @@ shell/console. Decided to skip a temporary debug route and instead rely on a
 naturally occurring unhandled exception in production — Sentry's Rack
 middleware captures any unhandled request-cycle exception automatically, no
 console needed. `SENTRY_DSN` is set and `walkie-web` redeployed (2.2/2.3
-done); 2.4-2.7 stay open until a real exception surfaces and is spot-checked
-in the Sentry dashboard.
+done).
+
+Closed without live-event verification (2026-09-08): decided not to wait for
+a naturally occurring exception. Progress 2.4-2.7 (event actually appears in
+Sentry with correct `environment`/`release` tags and no PII in the payload)
+are intentionally left unchecked/unverified — the plan is closed on the
+strength of the code-level config test (`test/sentry_configuration_test.rb`,
+Phase 1) plus the manual dashboard/deploy setup (2.1-2.3), not an observed
+production event. If Sentry never shows an event, or shows one with wrong
+tags or leaked PII, that would only surface later via manual inspection of
+the Sentry dashboard — nothing in CI guards this end-to-end path.
