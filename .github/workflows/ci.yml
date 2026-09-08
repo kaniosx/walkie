@@ -104,6 +104,9 @@ jobs:
         with:
           bundler-cache: true
 
+      - name: Install libvips
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y libvips
+
       - name: Prepare test database
         run: bin/rails db:prepare
 
