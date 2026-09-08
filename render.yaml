@@ -21,6 +21,8 @@ services:
           property: connectionString
       - key: RAILS_MASTER_KEY
         sync: false
+      - key: SENTRY_DSN
+        sync: false
       - key: RAILS_LOG_LEVEL
         value: info
       - key: WEB_CONCURRENCY

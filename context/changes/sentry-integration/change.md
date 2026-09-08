@@ -26,3 +26,12 @@ decisions made during planning (see plan-brief.md for full table):
 - Add a light automated config test alongside the roadmap's manual smoke-test.
 - Tag events with `environment` (Rails.env) + `release` (Render's built-in
   `RENDER_GIT_COMMIT`).
+
+Phase 2 deviation (2026-09-08): the plan assumed Rails console access on
+Render to trigger the smoke-test exception, but the free compute plan has no
+shell/console. Decided to skip a temporary debug route and instead rely on a
+naturally occurring unhandled exception in production — Sentry's Rack
+middleware captures any unhandled request-cycle exception automatically, no
+console needed. `SENTRY_DSN` is set and `walkie-web` redeployed (2.2/2.3
+done); 2.4-2.7 stay open until a real exception surfaces and is spot-checked
+in the Sentry dashboard.
