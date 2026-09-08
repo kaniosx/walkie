@@ -212,12 +212,12 @@ None — no schema or data changes.
 
 #### Automated
 
-- [x] 2.1 `render.yaml` diff is exactly the one new `envVars` entry
+- [x] 2.1 `render.yaml` diff is exactly the one new `envVars` entry — d77ec1d
 
 #### Manual
 
-- [x] 2.2 `SENTRY_DSN` set on `walkie-web` in the Render dashboard
-- [x] 2.3 Redeploy `walkie-web` on Render
+- [x] 2.2 `SENTRY_DSN` set on `walkie-web` in the Render dashboard — d77ec1d
+- [x] 2.3 Redeploy `walkie-web` on Render — d77ec1d
 - [ ] 2.4 Deliberately-raised exception captured via `Sentry.capture_exception` in Render Rails console
 - [ ] 2.5 Event appears in the Sentry project dashboard
 - [ ] 2.6 Event's `environment`/`release` tags correct
