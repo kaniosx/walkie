@@ -196,28 +196,28 @@ None — no schema or data changes.
 
 #### Automated
 
-- [x] 1.1 `bundle install` resolves cleanly inside the `web` container, `Gemfile.lock` updated
-- [x] 1.2 `docker compose exec web bin/rails test test/sentry_configuration_test.rb` passes
-- [x] 1.3 `docker compose exec web bundle exec rubocop` passes
-- [x] 1.4 `docker compose exec web bundle exec brakeman --no-pager` passes
-- [x] 1.5 `docker compose exec web bin/bundler-audit` passes (pre-existing `net-imap` CVE from `mail`/Action Mailer transitive dep, untouched by this diff, is out of scope — the new gems themselves have zero findings)
-- [x] 1.6 Full suite still passes: `docker compose exec web bin/rails test`
+- [x] 1.1 `bundle install` resolves cleanly inside the `web` container, `Gemfile.lock` updated — f751092
+- [x] 1.2 `docker compose exec web bin/rails test test/sentry_configuration_test.rb` passes — f751092
+- [x] 1.3 `docker compose exec web bundle exec rubocop` passes — f751092
+- [x] 1.4 `docker compose exec web bundle exec brakeman --no-pager` passes — f751092
+- [x] 1.5 `docker compose exec web bin/bundler-audit` passes (pre-existing `net-imap` CVE from `mail`/Action Mailer transitive dep, untouched by this diff, is out of scope — the new gems themselves have zero findings) — f751092
+- [x] 1.6 Full suite still passes: `docker compose exec web bin/rails test` — f751092
 
 #### Manual
 
-- [x] 1.7 Boot locally with no `SENTRY_DSN` set — app boots normally, safe no-op confirmed
-- [x] 1.8 Deliberately raised exception in dev does not crash the container unexpectedly
+- [x] 1.7 Boot locally with no `SENTRY_DSN` set — app boots normally, safe no-op confirmed — f751092
+- [x] 1.8 Deliberately raised exception in dev does not crash the container unexpectedly — f751092
 
 ### Phase 2: Render deploy wiring + production smoke test
 
 #### Automated
 
-- [ ] 2.1 `render.yaml` diff is exactly the one new `envVars` entry
+- [x] 2.1 `render.yaml` diff is exactly the one new `envVars` entry
 
 #### Manual
 
-- [ ] 2.2 `SENTRY_DSN` set on `walkie-web` in the Render dashboard
-- [ ] 2.3 Redeploy `walkie-web` on Render
+- [x] 2.2 `SENTRY_DSN` set on `walkie-web` in the Render dashboard
+- [x] 2.3 Redeploy `walkie-web` on Render
 - [ ] 2.4 Deliberately-raised exception captured via `Sentry.capture_exception` in Render Rails console
 - [ ] 2.5 Event appears in the Sentry project dashboard
 - [ ] 2.6 Event's `environment`/`release` tags correct
