@@ -1,10 +1,10 @@
 ---
 change_id: sentry-integration
 title: Sentry error tracking + performance tracing (O-01)
-status: impl_reviewed
+status: archived
 created: 2026-09-08
 updated: 2026-09-08
-archived_at: null
+archived_at: 2026-09-08T08:49:30Z
 ---
 
 ## Notes

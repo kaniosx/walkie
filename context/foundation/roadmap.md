@@ -3,7 +3,7 @@ project: Walkie
 version: 2
 status: active
 created: 2026-05-25
-updated: 2026-09-07
+updated: 2026-09-08
 decisions:
   q4_remove_dog_policy: soft-delete  # deleted_at on Dog; walks preserved
 prd_version: 1
@@ -54,7 +54,7 @@ PRD §Business Logic §Singleness states: *"the binding IS the confirmation"*. S
 | U-04  | ui-owner-dashboard                 | Dog cards, walk-request form, owner walk-history screen styled    | U-01, U-02                | FR-006..010, FR-015     | done     |
 | U-05  | ui-walker-dashboard                | Open-requests list, accept/start/complete cards, history styled   | U-01, U-02                | FR-011..014, FR-016     | done     |
 | U-06  | ui-home-and-password-polish        | Home dashboard styled + role-aware; password-reset screens styled & copy fixed | U-02..U-05    | FR-001..016 (UX)        | done     |
-| O-01  | sentry-integration                 | (infra) Sentry SDK wired; exceptions + performance traces to Sentry | —                        | §NFR (observability)    | proposed |
+| O-01  | sentry-integration                 | (infra) Sentry SDK wired; exceptions + performance traces to Sentry | —                        | §NFR (observability)    | done |
 | T-01  | e2e-system-tests                   | (infra) Rails System Tests (Capybara + Selenium) wired into Docker + CI; first browser-level e2e test | — | (user-requested; not PRD-derived) | done |
 | T-02  | e2e-walker-accepts-request         | (infra) E2E test: Walker signs in, sees open request, accepts it (REQ→ACCEPTED) via real browser clicks | T-01, S-05 | FR-011, 012 | done |
 | T-03  | e2e-owner-cancels-request          | (infra) E2E test: Owner creates a request, cancels it while still REQUESTED, sees it reflected in history | T-01, S-06 | FR-010 | done |
@@ -362,7 +362,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
   - `traces_sample_rate = 1.0` and `profiles_sample_rate = 1.0` are correct for early-MVP signal-gathering, but should be tuned down before high-traffic production use. No blocker for v1.
   - `send_default_pii = true` captures request headers and IPs — acceptable for an internal MVP; revisit before GDPR-sensitive public launch.
 - **Risk:** DSN **must** come from an environment variable (`SENTRY_DSN`), never hard-coded in the initializer committed to git. A hard-coded DSN is a secret leak — rotatable on Sentry but noisy.
-- **Status:** proposed
+- **Status:** done
 
 ## Testing Infrastructure
 
@@ -561,3 +561,4 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **R-01: Owner and Walker see walk-state changes live (no refresh) across the open-requests list, active-walk screens, and home dashboard, via Turbo Streams over Solid Cable** — Archived 2026-08-21 → `context/archive/2026-08-21-realtime-walk-status-updates/`. Lesson: —.
 - **U-07: The three existing `data: { turbo_confirm: "..." }` call sites (`app/views/walks/_active_table.html.erb` cancel, `app/views/dogs/index.html.erb` remove, `app/views/walker_walks/_current_walk.html.erb` end walk) render a Tailwind-styled `<dialog>`-based modal instead of the browser's native, unstylable `window.confirm()`. Implemented via Turbo's built-in override hook (`Turbo.setConfirmMethod` + a `<template data-turbo-confirm>` in the layout, driven by a small Stimulus controller) — no library dependency, no changes needed to the existing `turbo_confirm:` attributes themselves.** — Archived 2026-09-03 → `context/archive/2026-09-03-custom-turbo-confirm-dialog/`. Lesson: —.
 - **L-02: Owner/Walker see the distance between them (static, computed once per page load) on the open-requests list and active-walk screens** — Archived 2026-09-07 → `context/archive/2026-09-07-walker-owner-distance-display/`. Lesson: —.
+- **O-01: (infra) `sentry-ruby` + `sentry-rails` (+ `stackprof` for profiling) gems added and configured. An initializer at `config/initializers/sentry.rb` reads `SENTRY_DSN` from the environment and enables breadcrumb loggers, performance tracing, and profiling. Unhandled exceptions are automatically captured; `Sentry.capture_exception` / `Sentry.capture_message` work from anywhere. A smoke-test (`1/0` inside a `begin/rescue`) is run in the Rails console on Render to confirm the first event lands in the Sentry project.** — Archived 2026-09-08 → `context/archive/2026-09-08-sentry-integration/`. Lesson: —.
