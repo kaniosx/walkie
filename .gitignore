@@ -53,3 +53,9 @@ desktop.ini
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
+
+# Local AI skills — not published (removed from history 2026-11-18)
+/.claude/skills/
+/.agents/
+/skills-lock.json
+/.claude/prompts/skill-explainer.md
